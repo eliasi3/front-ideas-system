@@ -41,7 +41,7 @@
       <div class="flex items-center justify-center min-h-full px-4 py-12 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8">
           <div>
-            <img class="w-auto h-12 mx-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow">
+            <img class="w-auto h-12 mx-auto" src="" alt="Workflow">
             <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900">
               Faça login em sua conta
             </h2>
@@ -113,7 +113,7 @@
         methods: {
             login(){
               
-                alert('Comunicando com o Servidor API....');
+                // alert('Comunicando com o Servidor API....');
                 
                 store.dispatch('login', this.user)
                     .then((response) => {
@@ -124,7 +124,7 @@
                         if (responseError.status === 400) {
                             this.error.message = responseError.data.error;
                         } else {
-                            this.error.message = 'Login falhou!!'
+                            this.error.message = 'Login falhou!'
                         }
                     })
             }

@@ -15,7 +15,7 @@ require('./interceptors');
 export class Jwt{
 
     static accessToken(email, password){
-        return Vue.http.post('http://localhost:3000/api/login', {
+        return Vue.http.post('http://localhost:3000/auth', {
             email,
             password
         });
@@ -26,8 +26,8 @@ export class Jwt{
     }
 }
 
-const Time = Vue.resource('http://localhost:3000/api/times');
+//const Time = Vue.resource('http://localhost:3000/api/times');
 
-//const User = Vue.resource('http://localhost:3000/api/users');
+const User = Vue.resource('http://localhost:3000/users');
 
 export {Time, User};

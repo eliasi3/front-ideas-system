@@ -18,12 +18,6 @@ export default [
         meta: {auth: false}
     },
     {
-        name: 'auth.login',
-        path: '/login',
-        component: LoginComponent,
-        meta: {auth: false}
-    },
-    {
         name: 'auth.logout',
         path: '/logout',
         component: LogoutComponent,
