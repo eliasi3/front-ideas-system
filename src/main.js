@@ -6,12 +6,15 @@
 import Vue from 'vue';
 import App from './components/App.vue';
 import router from './router';
+import vuetify from './plugins/vuetify'
+
 
 // import dos style Tailwind Css
 import './style.css';
 
 new Vue({
   router,
+  vuetify,
   el: '#app',
   render: h => h(App)
 })

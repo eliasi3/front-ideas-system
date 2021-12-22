@@ -24,10 +24,12 @@ export class Jwt{
     static refreshToken(){
         return Vue.http.post('http://localhost:3000/api/refresh_token');
     }
+    
 }
 
 //const Time = Vue.resource('http://localhost:3000/api/times');
 
 const User = Vue.resource('http://localhost:3000/users');
+const Livro = Vue.resource('http://localhost:3000/livros');
 
-export {Time, User};
+export {Time, User, Livro};

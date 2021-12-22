@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {TimeModel} from './time-model';
+import {LivrosModel} from './livros-model';
 import JwtToken from './services/jwt-token';
-import {Time, User} from './services/resources';
+import {Livro, User} from './services/resources';
 import SessionStorage from './services/session-storage';
 
 
@@ -11,15 +12,21 @@ Vue.use(Vuex);
 
 const state = {
     times: [],
+    livros: [],
     auth: {
         check: JwtToken.token != null,
         user: SessionStorage.getObject('user')
-    }
+    },
+    
 };
 
 const mutations = {
     'set-times'(state, times){
         state.times = times;
+    },
+    'set-livros'(state, livros){
+        state.livros = livros;
+        console.log(state.livros);
     },
     update(state, time){
         let index = state.times.findIndex(element => time.id == element.id);
@@ -49,6 +56,22 @@ const actions = {
             context.commit('set-times', times);
         });
     },
+    'load-livros'(context){
+        Livro.query().then(response => {
+
+            var an_obj = response.data.data;
+
+                // console.log(an_obj)
+
+            var responseobj = Object.values(an_obj);
+
+                // console.log(responseobj)
+
+            let livros = responseobj.map(element => new LivrosModel(element.id, element.name, element.author, element.description));  
+            context.commit('set-livros', livros);
+            
+        });
+    },
 
     login(context, {email, password}){
         
@@ -64,7 +87,7 @@ const actions = {
         User.query().then(response => {
             context.commit('setUser', response.data.user);
         })
-    }
+    },
 };
 
 export default new Vuex.Store({
