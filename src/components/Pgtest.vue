@@ -24,34 +24,46 @@
 </template>
 
 <script>
-import store from '../store';
-// import { Livro } from '../services/resources';
+ //import store from '../store';
+import { Livro } from '../services/resources';
    export default {
     name: 'Pgtest',
     data(){
         return {
           livro: {
-            nome: null,
-            autor: null,
-            descricao: null,
+            name: null,
+            author: null,
+            description: null,
           },
           msg: null,
         }
     },
      methods: {  
-      savelivro() {          
-          //const dataJson = JSON.stringify(this.livro) 
-           //const req = fetch("http://localhost:3000/livros", {
-                // method: "POST",
-                // headers: { "Content-Type" : "application/json" },
-                // body: dataJson
-           // });
+      savelivro() { 
+         var msg = '';
+         
+         if ( this.livro.name == null) {
+		        msg += "\n Voce deve informar um nome com pelo menos 2 carecteres ";
+	        }
 
-          store.dispatch('savelivro', this.livro)
+          if (msg.length < 2) {
+          Livro.save({}, {livro: this.livro}).then(response => {
+            // success callback
+            return response.data.msg
+            
+            }, response => {    
+            // error callback
+            return response.data.msg
+            });
+           } else {
+		        alert(msg);
+	        }
+
+          // store.dispatch('savelivro', this.livro)
              
-          // this.$router.push({name: 'dashboard'});
-          
+          //this.$router.push({name: 'dashboard'});
           },
+          
       },
    }  
     

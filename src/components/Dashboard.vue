@@ -37,7 +37,6 @@ export default {
     data () {
         return {
             menuPerfil: false,
-
             }
     },
     created(){
@@ -67,6 +66,16 @@ export default {
         // MethoddeTextoTeste() {
         //     return 'TESTE'
         // }
+         deletelivro(id){
+             if (confirm('Deseja excluir este livro?')){
+              const req = fetch(`http://localhost:3000/livros/${id}`,{
+                method: "DELETE"
+              });
+   
+             }
+            
+
+        }
     },
     
   
