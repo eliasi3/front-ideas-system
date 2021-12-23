@@ -113,7 +113,7 @@
         methods: {
             login(){
               
-                // alert('Comunicando com o Servidor API....');
+                //alert('Comunicando com o Servidor API....');
                 
                 store.dispatch('login', this.user)
                     .then((response) => {

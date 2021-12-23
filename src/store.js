@@ -82,6 +82,16 @@ const actions = {
             return response;
         })
     },
+    savelivro(context, {livro}){
+        Livro.save({}, {livro: livro}).then(response => {
+            // success callback
+            return response.data.msg
+        }, response => {    
+            // error callback
+            return response.data.msg
+        });
+    },
+    
     
     getUser(context){
         User.query().then(response => {

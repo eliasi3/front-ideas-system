@@ -14,7 +14,7 @@
             <v-card class="mx-auto">
                 <v-card-title>{{ book.name }}</v-card-title>
                 <v-card-text>Autor:{{ book.author }}
-                            Descrição:{{ book.description | truncate 50 }}
+                            Descrição:{{ book.description }}
                 </v-card-text>
                     
 
@@ -31,7 +31,6 @@
 <script>
 
 import store from '../store.js';
-// import {User} from '../services/resources.js';
 
 export default {
     
@@ -44,7 +43,7 @@ export default {
     created(){
             if(this.isAuth) {
                 store.dispatch('load-livros');
-                console.log('entrou')
+                //console.log('entrou')
             }
     },
     computed: {

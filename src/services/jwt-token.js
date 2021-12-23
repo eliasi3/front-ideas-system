@@ -7,7 +7,7 @@
 import SessionStorage from './session-storage';
 
 //importar a class que faz o controle da biblioteca JWT
-import {Jwt} from './resources';
+import {Jwt, Criarlivro} from './resources';
 
 export default {
 
@@ -40,5 +40,10 @@ export default {
     getAuthorizationHeader(){
         
         return `Bearer ${this.token}`;
+    },
+    criarlivro(){
+        return Criarlivro.criarlivro(name, author, description).then((response) => {
+            this.livro = response.data.livro;
+        });  
     }
 }

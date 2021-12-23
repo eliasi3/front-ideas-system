@@ -26,10 +26,22 @@ export class Jwt{
     }
     
 }
+export class Criarlivro{
+
+    static criarlivro(name, author, description){
+        return Vue.http.post('http://localhost:3000/livros', {
+            name,
+            author,
+            description
+        });
+    }
+    
+}
+
 
 //const Time = Vue.resource('http://localhost:3000/api/times');
 
 const User = Vue.resource('http://localhost:3000/users');
 const Livro = Vue.resource('http://localhost:3000/livros');
 
-export {Time, User, Livro};
+export { User, Livro};
