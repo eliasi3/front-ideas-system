@@ -13,9 +13,9 @@
 
             <div class="input-container">
               <label for="name">Nome do autor</label>
-              <select v-model="livro.author"> 
-                <option>Nenhum</option>
-                <option v-for="option in options" v-bind:key="option.id" :value="option.name" > 
+              <select v-model="livro.author" name="author" id="author"> 
+                <option>Desconhecido</option>
+                <option v-for="option in options" v-bind:key="option.id" :value="option.id" > 
                     {{ option.name }}
                 </option>
              </select>
@@ -43,7 +43,7 @@ import { Livro, Autor } from '../services/resources';
         return {
           livro: {
             name: null,
-            author: 'Nenhum',
+            author: 'Desconhecido',
             description: null,
           },
           msg: null,

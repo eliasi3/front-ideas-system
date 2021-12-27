@@ -3,6 +3,14 @@
     Você está logado com E-mail: {{ isEmail }}, e se encontra na sua tela de estante de livros cadastrado.
     <br>
     <br>
+
+    <select v-model="selected" name="fil_autor" id="fil_autor" :onChange="filtro()"> 
+                <option :value='0'>Desconhecido/todos</option>
+                <option v-for="option in options" v-bind:key="option.id" :value="option.id" > 
+                    {{ option.name }}
+                </option>
+    </select>
+     <br>
     <v-row>
         <v-col
             v-for="(book, i) in isLivros"
@@ -23,6 +31,7 @@
                     <router-link v-bind:to="{ name: 'editarlivro', params: {id: book.id} }">
                         <v-btn text small color="primary"> Editar </v-btn>
                     </router-link>
+                    
                 </v-card-actions>
             </v-card>  
         </v-col>
@@ -34,19 +43,36 @@
 <script>
 
 import store from '../store.js';
+import { Autor, Livro } from '../services/resources';
+import axios from 'axios';
+
 
 export default {
     
     data () {
         return {
             menuPerfil: false,
+            selected: '0',
+            options: [],
+            // index: this.selected
             }
+            
     },
     created(){
             if(this.isAuth) {
-                store.dispatch('load-livros');
+                
+                // store.dispatch('load-livros', this.selected);
                 //console.log('entrou')
+                
+                // const res = axios.get('http://localhost:3000/livros');
+                // console.log(res),
+
+                Autor.query().then(response => {
+                this.options = response.data.autores
+                // this.id_livro = response.data.id 
+                })
             }
+       
     },
     computed: {
         isEmail() {
@@ -60,6 +86,13 @@ export default {
         },
     },
     methods: {
+        filtro(){
+            
+            console.log(this.selected)
+            store.dispatch('load-livros', this.selected);
+            return false;
+            // console.log(this.selected)
+        },
         abrir() {
             this.menuPerfil = this.menuPerfil == false ? true : false;
             },

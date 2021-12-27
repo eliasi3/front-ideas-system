@@ -4,7 +4,7 @@ import {TimeModel} from './time-model';
 import {LivrosModel} from './livros-model';
 import {AutoresModel} from './autores-model';
 import JwtToken from './services/jwt-token';
-import {Livro, User, Autor} from './services/resources';
+import {Livro, User, Autor, Livroaut} from './services/resources';
 import SessionStorage from './services/session-storage';
 
 
@@ -62,21 +62,32 @@ const actions = {
             context.commit('set-times', times);
         });
     },
-    'load-livros'(context){
-        Livro.query().then(response => {
-
+    'load-livros'(context, filtro){
+        if(filtro != 0){
+            console.log('filtro autor_id filtro:', filtro);
+            Livroaut.query({author: filtro}).then(response => {
+            
             var an_obj = response.data.data;
-
                 // console.log(an_obj)
-
             var responseobj = Object.values(an_obj);
-
                 // console.log(responseobj)
-
             let livros = responseobj.map(element => new LivrosModel(element.id, element.name, element.author, element.description));  
             context.commit('set-livros', livros);
             
-        });
+            });
+        }else {
+            console.log('oi');
+            Livro.query().then(response => {
+            
+                var an_obj = response.data.data;
+                    // console.log(an_obj)
+                var responseobj = Object.values(an_obj);
+                    // console.log(responseobj)
+                let livros = responseobj.map(element => new LivrosModel(element.id, element.name, element.author, element.description));  
+                context.commit('set-livros', livros);
+            
+            });
+        }
     },
     'load-autores'(context){
         Autor.query().then(response => {

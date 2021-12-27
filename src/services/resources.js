@@ -52,8 +52,9 @@ export class Criarautor{
 //const Time = Vue.resource('http://localhost:3000/api/times');
 
 const User = Vue.resource('http://localhost:3000/users');
-const Livro = Vue.resource('http://localhost:3000/livros');
+const Livro = Vue.resource(`http://localhost:3000/livros`);
+const Livroaut = Vue.resource(`http://localhost:3000/livros/?author={author}`);
 const Autor = Vue.resource('http://localhost:3000/autores');
 const Livroid = Vue.resource(`http://localhost:3000/livros{/id}`);
 
-export { User, Livro, Autor, Livroid};
+export { User, Livro, Autor, Livroid, Livroaut};

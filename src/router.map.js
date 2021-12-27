@@ -12,6 +12,8 @@ import Dashboard from './components/Dashboard.vue';
 import Caixas from './components/Caixas.vue';
 import Autores from './components/Autores.vue';
 import Editarlivro from './components/Editarlivro.vue';
+// import Axios from './components/Axios.vue';
+
 
 export default [
     {
@@ -50,11 +52,16 @@ export default [
         component : Autores,
         meta: {auth: true}
     },
-
     {
         name: 'editarlivro',
         path: '/editarlivro',
         component : Editarlivro,
         meta: {auth: true}
-    },
+    }
+    // {
+    //     name: 'axios',
+    //     path: '/axios',
+    //     component : Axios,
+    //     meta: {auth: true}
+    // },
 ];
