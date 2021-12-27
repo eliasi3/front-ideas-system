@@ -1,29 +1,14 @@
 <template>
     <div class="container">
         <div class="row">
-            <form id="livro-form" @submit.prevent="savelivro()" method="post">
+            <form id="livro-form" @submit.prevent="saveautor()" method="post">
              <div class="input-container">
-                <label for="name">Nome do Livro</label>
-                <input type="text" id="name" name="name" v-model="livro.name" placeholder="Digite o nome do livro">
+                <label for="name">Nome do Autor</label>
+                <input type="text" id="name" name="name" v-model="autor.name" placeholder="Digite o nome do livro">
             </div>
-            <!-- <div class="input-container">
-                <label for="author">Autor</label>
-                <input type="text" id="author" name="author" v-model="livro.author" placeholder="Digite nome do autor">
-            </div> -->
-
-            <div class="input-container">
-              <label for="name">Nome do autor</label>
-              <select v-model="livro.author"> 
-                <option>Nenhum</option>
-                <option v-for="option in options" v-bind:key="option.id" :value="option.name" > 
-                    {{ option.name }}
-                </option>
-             </select>
-            </div>
-
             <div class="input-container">
                 <label for="description">Descrição</label>
-                <textarea type="text" id="description" name="description" v-model="livro.description" placeholder="Digite a descrição" rows="5" cols="33"/>
+                <textarea type="text" id="description" name="description" v-model="autor.description" placeholder="Digite a descrição" rows="5" cols="33"/>
             </div>
             <div class="input-container">
                 <input class="submit-btn" type="submit" value="Cadastrar">
@@ -36,43 +21,30 @@
 
 <script>
  //import store from '../store';
-import { Livro, Autor } from '../services/resources';
+import { Autor } from '../services/resources';
    export default {
     name: 'Pgtest',
     data(){
         return {
-          livro: {
+          autor: {
             name: null,
-            author: 'Nenhum',
             description: null,
           },
           msg: null,
-          selected: '',
-            options: []
         }
     },
-    created(){
-       Autor.query({}).then(response => {
-            this.options = response.data.autores
-            // this.id_livro = response.data.id 
-            // console.log(response.data.autores)
-            // console.log(this.options)
-        })
-    },
-    
      methods: {  
-      savelivro() { 
+      saveautor() { 
          var msg = '';
          
-         if ( this.livro.name == null) {
+         if ( this.autor.name == null) {
 		        msg += "\n Voce deve informar um nome com pelo menos 2 carecteres ";
 	        }
 
           if (msg.length < 2) {
-          Livro.save({}, {livro: this.livro}).then(response => {
+          Autor.save({}, {autor: this.autor}).then(response => {
             // success callback
-            //return response.data.msg,
-            console.log(this.livro)
+            return response.data.msg
             
             }, response => {    
             // error callback

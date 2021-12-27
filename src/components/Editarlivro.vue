@@ -1,33 +1,24 @@
 <template>
     <div class="container">
         <div class="row">
-            <form id="livro-form" @submit.prevent="savelivro()" method="post">
+            <form id="livro-form" @submit.prevent="updatelivro()" method="post">
              <div class="input-container">
-                <label for="name">Nome do Livro</label>
+                 <h2 style='font-size:30px;border-bottom:4px solid darkblue; border-top:4px solid darkblue;border-radius:10px;padding:10px;align:center;'>Edição do Livro {{id_livro}}</h2><br>
+                <label for="name">Nome do Livro </label>
                 <input type="text" id="name" name="name" v-model="livro.name" placeholder="Digite o nome do livro">
             </div>
-            <!-- <div class="input-container">
+            <div class="input-container">
                 <label for="author">Autor</label>
                 <input type="text" id="author" name="author" v-model="livro.author" placeholder="Digite nome do autor">
-            </div> -->
-
-            <div class="input-container">
-              <label for="name">Nome do autor</label>
-              <select v-model="livro.author"> 
-                <option>Nenhum</option>
-                <option v-for="option in options" v-bind:key="option.id" :value="option.name" > 
-                    {{ option.name }}
-                </option>
-             </select>
             </div>
-
             <div class="input-container">
                 <label for="description">Descrição</label>
                 <textarea type="text" id="description" name="description" v-model="livro.description" placeholder="Digite a descrição" rows="5" cols="33"/>
             </div>
             <div class="input-container">
-                <input class="submit-btn" type="submit" value="Cadastrar">
+                <input class="submit-btn" type="submit" value="Atualizar">
             </div>
+            
         </form>
             
         </div>
@@ -35,63 +26,64 @@
 </template>
 
 <script>
- //import store from '../store';
-import { Livro, Autor } from '../services/resources';
+// import store from '../store';
+import { Livroid } from '../services/resources';
    export default {
-    name: 'Pgtest',
+    name: 'Editarlivro',
     data(){
         return {
           livro: {
             name: null,
-            author: 'Nenhum',
+            author: null,
             description: null,
           },
-          msg: null,
-          selected: '',
-            options: []
+          id_livro: this.$route.params.id,
+          msg: null,    
         }
     },
-    created(){
-       Autor.query({}).then(response => {
-            this.options = response.data.autores
+     created() {
+      // this.getLivros(this.$route.params.id);
+      Livroid.query({id: this.id_livro}).then(response => {
+            this.livro.name = response.data.name,
+            this.livro.author = response.data.author,
+            this.livro.description = response.data.description
             // this.id_livro = response.data.id 
-            // console.log(response.data.autores)
-            // console.log(this.options)
         })
     },
-    
-     methods: {  
-      savelivro() { 
-         var msg = '';
-         
-         if ( this.livro.name == null) {
-		        msg += "\n Voce deve informar um nome com pelo menos 2 carecteres ";
-	        }
 
-          if (msg.length < 2) {
-          Livro.save({}, {livro: this.livro}).then(response => {
-            // success callback
-            //return response.data.msg,
-            console.log(this.livro)
+     methods: {  
+      updatelivro() { 
+            if(confirm("deseja realmente editar esse cadatro?")){
+            Livroid.update({id: this.id_livro}, {livro: this.livro}).then(response => {
+              // success callback
+            console.log(this.id_livro)
+            // return response.data.msg
             
             }, response => {    
-            // error callback
-            return response.data.msg
+              // error callback
+            console.log('DEU ERRADO!')
+            // return response.data.msg
             });
-           } else {
-		        alert(msg);
-	        }
 
           // store.dispatch('savelivro', this.livro)
              
-          //this.$router.push({name: 'dashboard'});
+          this.$router.push({name: 'dashboard'});
+          }else{
+
+          }
+          
           },
+          cancel(){
+              this.$router.push({name: 'dashboard'});
+          }
+          
           
       },
    }  
     
     
 </script>
+
 <style scoped>
 .logo {
   margin-top: -160px

@@ -1,11 +1,11 @@
 <template>
     <div>
-    Você está logado com E-mail: {{ isEmail }}, e se encontra na sua tela de estante de livros cadastrado.
+    Listas de autores
     <br>
     <br>
     <v-row>
         <v-col
-            v-for="(book, i) in isLivros"
+            v-for="(book, i) in isAutores"
             :key="i"
             cols="12"
             md="4"
@@ -13,19 +13,17 @@
             >
             <v-card class="mx-auto">
                 <v-card-title>{{ book.name }}</v-card-title>
-                <v-card-text>Autor:{{ book.author }}
+                <v-card-text>
                             Descrição:{{ book.description }}
                 </v-card-text>
                     
 
                 <v-card-actions>
-                    <v-btn text small color="primary" @click="deletelivro(book.id)"> Excluir </v-btn>
-                    <router-link v-bind:to="{ name: 'editarlivro', params: {id: book.id} }">
-                        <v-btn text small color="primary"> Editar </v-btn>
-                    </router-link>
-                </v-card-actions>
-            </v-card>  
-        </v-col>
+                     <v-btn text small color="primary" @click="deleteautor(book.id)"> Excluir </v-btn>
+                    <!-- <v-btn text small color="primary" @click="editarlivro(book.id)"> Editar </v-btn> -->
+                    </v-card-actions>
+                </v-card>  
+             </v-col>
     </v-row>
         
     </div>
@@ -44,7 +42,7 @@ export default {
     },
     created(){
             if(this.isAuth) {
-                store.dispatch('load-livros');
+                store.dispatch('load-autores');
                 //console.log('entrou')
             }
     },
@@ -52,8 +50,8 @@ export default {
         isEmail() {
             return store.state.auth.user.email
         },
-        isLivros(){
-            return store.state.livros;
+        isAutores(){
+            return store.state.autores;
         },
         isAuth() {
             return store.state.auth.check;
@@ -69,22 +67,22 @@ export default {
         // MethoddeTextoTeste() {
         //     return 'TESTE'
         // }
-         deletelivro(id){
-             if (confirm('Deseja excluir este livro?')){
-              const req = fetch(`http://localhost:3000/livros/${id}`,{
+         deleteautor(id){
+            if (confirm('Deseja excluir este autor?')){
+               const req = fetch(`http://localhost:3000/autores/${id}`,{
                 method: "DELETE"
               });
    
-             }
-        },
-        editarlivro(id){
-             if (confirm('Deseja editar este livro?')){
-              const req = fetch(`http://localhost:3000/livros/${id}`,{
-                method: "GET"
-              });
+          }
+         },
+        // editarlivro(id){
+        //      if (confirm('Deseja editar este livro?')){
+        //       const req = fetch(`http://localhost:3000/livros/${id}`,{
+        //         method: "GET"
+        //       });
    
-             }
-        }
+        //      }
+        // }
     },
     
   

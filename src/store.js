@@ -2,8 +2,9 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import {TimeModel} from './time-model';
 import {LivrosModel} from './livros-model';
+import {AutoresModel} from './autores-model';
 import JwtToken from './services/jwt-token';
-import {Livro, User} from './services/resources';
+import {Livro, User, Autor} from './services/resources';
 import SessionStorage from './services/session-storage';
 
 
@@ -13,6 +14,7 @@ Vue.use(Vuex);
 const state = {
     times: [],
     livros: [],
+    autores: [],
     auth: {
         check: JwtToken.token != null,
         user: SessionStorage.getObject('user')
@@ -27,6 +29,10 @@ const mutations = {
     'set-livros'(state, livros){
         state.livros = livros;
         console.log(state.livros);
+    },
+    'set-autores'(state, autores){
+        state.autores = autores;
+        console.log(state.autores);
     },
     update(state, time){
         let index = state.times.findIndex(element => time.id == element.id);
@@ -72,6 +78,23 @@ const actions = {
             
         });
     },
+    'load-autores'(context){
+        Autor.query().then(response => {
+
+            var an_obj = response.data.autores;
+
+                // console.log(an_obj)
+
+            var responseobj = Object.values(an_obj);
+
+                // console.log(responseobj)
+
+            let autores = responseobj.map(element => new AutoresModel(element.id, element.name, element.description));  
+            context.commit('set-autores', autores);
+            
+        });
+    },
+   
 
     login(context, {email, password}){
         

@@ -9,6 +9,9 @@ import LoginComponent from './components/auth/Login.vue';
 import LogoutComponent from './components/auth/Logout.vue';
 import Pgtest from './components/Pgtest.vue';
 import Dashboard from './components/Dashboard.vue';
+import Caixas from './components/Caixas.vue';
+import Autores from './components/Autores.vue';
+import Editarlivro from './components/Editarlivro.vue';
 
 export default [
     {
@@ -34,5 +37,24 @@ export default [
         path: '/dashboard',
         component : Dashboard,
         meta: {auth: true}
-    }
+    },
+    {
+        name: 'caixas',
+        path: '/caixas',
+        component : Caixas,
+        meta: {auth: true}
+    },
+    {
+        name: 'autores',
+        path: '/autores',
+        component : Autores,
+        meta: {auth: true}
+    },
+
+    {
+        name: 'editarlivro',
+        path: '/editarlivro',
+        component : Editarlivro,
+        meta: {auth: true}
+    },
 ];
