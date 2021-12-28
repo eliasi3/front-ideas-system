@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {TimeModel} from './time-model';
-import {LivrosModel} from './livros-model';
+import {DeptosModel} from './deptos-model';
 import {AutoresModel} from './autores-model';
 import JwtToken from './services/jwt-token';
-import {Livro, User, Autor, Livroaut} from './services/resources';
+import {Deptos, User, Autor, Livroaut} from './services/resources';
 import SessionStorage from './services/session-storage';
 
 
@@ -13,7 +13,7 @@ Vue.use(Vuex);
 
 const state = {
     times: [],
-    livros: [],
+    depts: [],
     autores: [],
     auth: {
         check: JwtToken.token != null,
@@ -26,9 +26,9 @@ const mutations = {
     'set-times'(state, times){
         state.times = times;
     },
-    'set-livros'(state, livros){
-        state.livros = livros;
-        console.log(state.livros);
+    'set-deptos'(state, depts){
+        state.depts = depts;
+        // console.log(state.livros);
     },
     'set-autores'(state, autores){
         state.autores = autores;
@@ -62,32 +62,30 @@ const actions = {
             context.commit('set-times', times);
         });
     },
-    'load-livros'(context, filtro){
-        if(filtro != 0){
-            console.log('filtro autor_id filtro:', filtro);
-            Livroaut.query({author: filtro}).then(response => {
+    'load-depts'(context){
+        // if(filtro != 0){
+            // Deptos.query({author: filtro}).then(response => {
             
-            var an_obj = response.data.data;
-                // console.log(an_obj)
-            var responseobj = Object.values(an_obj);
-                // console.log(responseobj)
-            let livros = responseobj.map(element => new LivrosModel(element.id, element.name, element.author, element.description));  
-            context.commit('set-livros', livros);
+            // var an_obj = response.data.data;
+            //     // console.log(an_obj)
+            // var responseobj = Object.values(an_obj);
+            //     // console.log(responseobj)
+            // let livros = responseobj.map(element => new LivrosModel(element.id, element.name, element.author, element.description));  
+            // context.commit('set-livros', livros);
             
-            });
-        }else {
-            console.log('oi');
-            Livro.query().then(response => {
-            
-                var an_obj = response.data.data;
+            // });
+        // }else {
+            Deptos.query().then(response => {
+                var an_obj = response.data;
+                console.log(an_obj)
                     // console.log(an_obj)
                 var responseobj = Object.values(an_obj);
                     // console.log(responseobj)
-                let livros = responseobj.map(element => new LivrosModel(element.id, element.name, element.author, element.description));  
-                context.commit('set-livros', livros);
+                let depts = responseobj.map(element => new DeptosModel(element.id, element.dep_name, element.created_at));  
+                context.commit('set-deptos', depts);
             
             });
-        }
+        // }
     },
     'load-autores'(context){
         Autor.query().then(response => {
@@ -107,9 +105,9 @@ const actions = {
     },
    
 
-    login(context, {email, password}){
-        
-        return JwtToken.accessToken(email, password)
+    login(context, {email, password_digest}){
+        console.log(email, password_digest)
+        return JwtToken.accessToken(email, password_digest)
             .then(response => {
                 context.commit('authenticated');
                 context.dispatch('getUser');

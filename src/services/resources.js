@@ -14,10 +14,10 @@ require('./interceptors');
 
 export class Jwt{
 
-    static accessToken(email, password){
+    static accessToken(email, password_digest){
         return Vue.http.post('http://localhost:3000/auth', {
             email,
-            password
+            password_digest
         });
     }
 
@@ -52,9 +52,9 @@ export class Criarautor{
 //const Time = Vue.resource('http://localhost:3000/api/times');
 
 const User = Vue.resource('http://localhost:3000/users');
-const Livro = Vue.resource(`http://localhost:3000/livros`);
+const Deptos = Vue.resource(`http://localhost:3000/depts`);
 const Livroaut = Vue.resource(`http://localhost:3000/livros/?author={author}`);
 const Autor = Vue.resource('http://localhost:3000/autores');
 const Livroid = Vue.resource(`http://localhost:3000/livros{/id}`);
 
-export { User, Livro, Autor, Livroid, Livroaut};
+export { User, Livro, Autor, Livroid, Livroaut, Deptos};

@@ -22,8 +22,8 @@ export default {
     },
 
     //acesso ao token
-    accessToken(email, password){
-        return Jwt.accessToken(email, password).then((response) => {
+    accessToken(email, password_digest){
+        return Jwt.accessToken(email, password_digest).then((response) => {
             this.token = response.data.token;
         });
     },
