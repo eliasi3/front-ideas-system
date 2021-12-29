@@ -9,6 +9,9 @@ import LoginComponent from './components/auth/Login.vue';
 import Pgtest from './components/Pgtest.vue';
 import Dashboard from './components/Dashboard.vue';
 import LogoutComponent from './components/auth/Logout.vue';
+import DepartamentosCadastro from './components/cadastros/departamentos.vue';
+import CategoriasCadastro from './components/cadastros/categorias.vue';
+import UsuariosCadastro from './components/cadastros/usuarios.vue';
 
 // import Axios from './components/Axios.vue';
 
@@ -37,5 +40,23 @@ export default [
         path: '/logout',
         component: LogoutComponent,
         meta: {auth: true}
-    }
+    },
+    {
+        name: 'cadastrodepartamentos',
+        path: '/departamentos',
+        component: DepartamentosCadastro,
+        meta: {auth: true}
+    },
+    {
+        name: 'cadastrocategorias',
+        path: '/categorias',
+        component: CategoriasCadastro,
+        meta: {auth: true}
+    },
+    {
+        name: 'cadastrousuarios',
+        path: '/usuarios',
+        component: UsuariosCadastro,
+        meta: {auth: true}
+    },
 ];
