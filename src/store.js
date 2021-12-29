@@ -4,7 +4,7 @@ import {TimeModel} from './time-model';
 import {DeptosModel} from './deptos-model';
 import {AutoresModel} from './autores-model';
 import JwtToken from './services/jwt-token';
-import {Deptos, User, Autor, Livroaut} from './services/resources';
+import {Deptos, User} from './services/resources';
 import SessionStorage from './services/session-storage';
 
 
@@ -12,9 +12,7 @@ Vue.use(Vuex);
 
 
 const state = {
-    times: [],
     depts: [],
-    autores: [],
     auth: {
         check: JwtToken.token != null,
         user: SessionStorage.getObject('user')
@@ -23,16 +21,9 @@ const state = {
 };
 
 const mutations = {
-    'set-times'(state, times){
-        state.times = times;
-    },
     'set-deptos'(state, depts){
         state.depts = depts;
         // console.log(state.livros);
-    },
-    'set-autores'(state, autores){
-        state.autores = autores;
-        console.log(state.autores);
     },
     update(state, time){
         let index = state.times.findIndex(element => time.id == element.id);
@@ -56,12 +47,6 @@ const mutations = {
 };
 
 const actions = {
-    'load-times'(context){
-        Time.query().then(response => {
-            let times = response.data.map(element => new TimeModel(element.id, element.nome, element.escudo));
-            context.commit('set-times', times);
-        });
-    },
     'load-depts'(context){
         // if(filtro != 0){
             // Deptos.query({author: filtro}).then(response => {
@@ -87,22 +72,6 @@ const actions = {
             });
         // }
     },
-    'load-autores'(context){
-        Autor.query().then(response => {
-
-            var an_obj = response.data.autores;
-
-                // console.log(an_obj)
-
-            var responseobj = Object.values(an_obj);
-
-                // console.log(responseobj)
-
-            let autores = responseobj.map(element => new AutoresModel(element.id, element.name, element.description));  
-            context.commit('set-autores', autores);
-            
-        });
-    },
    
 
     login(context, {email, password_digest}){
@@ -114,13 +83,15 @@ const actions = {
             return response;
         })
     },
-    savelivro(context, {livro}){
-        Livro.save({}, {livro: livro}).then(response => {
+
+    saveuser(context, user){
+        User.save({user: user}).then(response => {
+            console.log('Cadastro feito com sucesso!')
             // success callback
-            return response.data.msg
+            console.log(response.data)
         }, response => {    
             // error callback
-            return response.data.msg
+            console.log('erro no cadastro')
         });
     },
     

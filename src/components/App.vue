@@ -1,7 +1,7 @@
 <template>
   <div> 
     <div class="min-h-full">
-        <nav  v-if="isAuth" class='dark:bg-blue-700'>
+        <nav  v-if="isAuth" class='bg-blue-700'>
             <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
                     <div class="flex items-center">
@@ -28,7 +28,7 @@
 
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1"><router-link class="btn btn-primary" :to="{name: 'cadastrocategorias'}">Categorias</router-link></a>
 
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1"><router-link class="btn btn-primary" :to="{name: 'cadastrousuario'}">Usuários</router-link></a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1"><router-link class="btn btn-primary" :to="{name: 'cadastrousuarios'}">Usuários</router-link></a>
                             
                         </div>
                     </div>
@@ -51,6 +51,29 @@
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Ideias</a>
 
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2"><router-link class="btn btn-primary" :to="{name: 'user'}">Comentario</router-link></a>
+                            
+                        </div>
+                     </div>
+
+
+                     <div class="relative ml-3">
+                        <div> 
+                            <button type="button" @click="menuLista()" id="cadastro-menu-button" aria-expanded="false" aria-haspopup="true">
+                                <span class="sr-only">Open user menu</span>
+                                <router-link id='hoverbottom' class="px-3 py-2 text-sm font-medium text-white rounded-md" :to="{name: ''}">LISTAGEM</router-link>
+                            </button>
+                        </div>
+
+                         <div v-if="menuList" class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="cadastro-menu-button" tabindex="-1">
+                         <!-- Active: "bg-gray-100", Not Active: "" -->
+                            
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0"><router-link class="btn btn-primary" :to="{name: ''}">Missões</router-link></a>
+
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1" ><router-link class="btn btn-primary" :to="{name: ''}">Departamentos</router-link></a>
+
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2"><router-link class="btn btn-primary" :to="{name: ''}">Usuários</router-link></a>
+
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2"><router-link class="btn btn-primary" :to="{name: ''}">Categorias</router-link></a>
                             
                         </div>
                      </div>
@@ -164,6 +187,7 @@ export default {
             menuPerfil: false,
             menuCadastro: false,
             menuMovimento: false,
+            menuList: false,
             }
     },
     methods: {
@@ -175,6 +199,9 @@ export default {
         },
         movimento() {
             this.menuMovimento = this.menuMovimento == false ? true : false;
+        },
+        menuLista() {
+            this.menuList = this.menuList == false ? true : false;
         },
     },
     computed:{
