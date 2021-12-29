@@ -1,11 +1,9 @@
 <template>
-    <div>
-   
+<div>
     <br>
-    
     <v-row>
         <table class="divide-y divide-gray-300 "  width='100%' style=''>
-                    <thead class="bg-gray-50">
+                    <thead class="bg-blue-200">
                         <tr>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
                                 ID
@@ -15,6 +13,9 @@
                             </th>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
                                 CRIADO EM
+                            </th>
+                            <th class="px-6 py-2 text-xs text-gray-500 text-left">
+                                
                             </th>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
                                 
@@ -50,30 +51,8 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
-       
-        <!-- <v-col
-            v-for="(depts, i) in isDept"
-            :key="i"
-            cols="12"
-            md="4"
-            lg="2"
-            >
-            <v-card class="mx-auto">
-                <v-card-title>{{ depts.dep_name }}</v-card-title>
-                
-<!-- 
-                <v-card-actions>
-                    <v-btn text small color="primary" @click="deletelivro(depts.id)"> Excluir </v-btn>
-                    <router-link v-bind:to="{ name: 'editarlivro', params: {id: depts.id} }">
-                        <v-btn text small color="primary"> Editar </v-btn>
-                    </router-link>
-                    
-                </v-card-actions> -->
-            </v-card>  
-        </v-col> 
-    </v-row>
-        
+                </table>    
+    </v-row>   
     </div>
 </template>
 

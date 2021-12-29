@@ -71,7 +71,7 @@
                 
                 store.dispatch('login', this.user)
                     .then((response) => {
-                        this.$router.push({name: 'pgtest'});
+                        this.$router.push({name: 'dashboard'});
                     })
                     .catch((responseError) => {
                         this.error.error = true;

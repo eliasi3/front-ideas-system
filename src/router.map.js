@@ -8,6 +8,7 @@
 import LoginComponent from './components/auth/Login.vue';
 import Pgtest from './components/Pgtest.vue';
 import Dashboard from './components/Dashboard.vue';
+import LogoutComponent from './components/auth/Logout.vue';
 
 // import Axios from './components/Axios.vue';
 
@@ -29,6 +30,12 @@ export default [
         name: 'dashboard',
         path: '/dashboard',
         component : Dashboard,
+        meta: {auth: true}
+    },
+    {
+        name: 'auth.logout',
+        path: '/logout',
+        component: LogoutComponent,
         meta: {auth: true}
     }
 ];

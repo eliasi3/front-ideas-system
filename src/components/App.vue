@@ -30,11 +30,9 @@
                         <div class="flex items-baseline ml-10 space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         <!-- <a href="#"  aria-current="page"></a> -->
-                            <router-link id='hoverbottom' class="px-3 py-2 text-sm font-medium text-white rounded-md" :to="{name: 'dashboard'}">DEPARTAMENTOS</router-link>
+                            <router-link id='hoverbottom' class="px-3 py-2 text-sm font-medium text-white rounded-md" :to="{name: 'dashboard'}">CADASTROS</router-link>
 
-                            <router-link id='hoverbottom' class="px-3 py-2 text-sm font-medium text-white rounded-md" :to="{name: ''}">CATEGORIAS</router-link>
-
-                            <router-link id='hoverbottom' class="px-3 py-2 text-sm font-medium text-white rounded-md" :to="{name: ''}">USUÁRIOS</router-link>
+                            <router-link id='hoverbottom' class="px-3 py-2 text-sm font-medium text-white rounded-md" :to="{name: ''}">MOVIMENTOS</router-link>
 
                         </div>
                     </div>
