@@ -217,6 +217,9 @@ export default {
 </script>
 
 <style>
+body{
+    background: #eaebed;
+ }
 #hoverbottom:hover {
     background-color: rgba(0, 62, 156, 0.212);
 }
