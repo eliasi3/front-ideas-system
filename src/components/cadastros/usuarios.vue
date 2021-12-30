@@ -37,8 +37,7 @@
                             <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
                             <div class="text-center flex items-center border-b border-gray-500 py-2">
                                 <select v-model="user.dept_id" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
-                                    <option value='1'>exemple</option>
-                                    <option value='2'>exemple 2</option>
+                                    <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
                                 </select>    
                             </div><br>
                             
@@ -64,6 +63,7 @@
 
 <script type="text/javascript">
     import store from '../../store';
+    // import Deptos from '../../services/resources.js';
 
     export default {
         data(){
@@ -76,8 +76,18 @@
                     user_phone: null,
                     dept_id: null,
                 },
-                
+                options: [],
+                id_depto: null,
+
             }
+        },
+        created(){
+            store.dispatch('load-depts');
+        },
+        computed: {
+            isDept(){
+            return  store.state.depts;
+            },
         },
         methods: {
             cadastrar(){
@@ -86,15 +96,10 @@
                 // console.log( this.user)
                 store.dispatch('saveuser', this.user)
                     .then((response) => {
-                        // this.$router.push({name: 'dashboard'});
+                        this.$router.push({name: 'dashboard'});
                     })
                     .catch((responseError) => {
-                        this.error.error = true;
-                        if (responseError.status === 400) {
-                            this.error.message = responseError.data.error;
-                        } else {
-                            this.error.message = 'Login inválido!'
-                        }
+                        console.log('erro no cadastro de user: /usuarios.vue')
                     })
             }
         }

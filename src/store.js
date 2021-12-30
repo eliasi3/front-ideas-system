@@ -62,7 +62,7 @@ const actions = {
         // }else {
             Deptos.query().then(response => {
                 var an_obj = response.data;
-                console.log(an_obj)
+                // console.log(an_obj)
                     // console.log(an_obj)
                 var responseobj = Object.values(an_obj);
                     // console.log(responseobj)

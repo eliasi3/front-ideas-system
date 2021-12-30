@@ -24,11 +24,11 @@
                          <div v-if="menuCadastro" class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="cadastro-menu-button" tabindex="-1">
                          <!-- Active: "bg-gray-100", Not Active: "" -->
                             
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0" :to="{name: 'cadastrodepartamentos'}"><router-link class="btn btn-primary" :to="{name: 'cadastrodepartamentos'}">Departamentos</router-link></a>
+                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'cadastrodepartamentos'}">Departamentos</router-link></span>
 
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1"><router-link class="btn btn-primary" :to="{name: 'cadastrocategorias'}">Categorias</router-link></a>
+                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'cadastrocategorias'}">Categorias</router-link></span>
 
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1"><router-link class="btn btn-primary" :to="{name: 'cadastrousuarios'}">Usuários</router-link></a>
+                               <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'cadastrousuarios'}">Usuários</router-link></span>
                             
                         </div>
                     </div>
@@ -46,11 +46,11 @@
                          <div v-if="menuMovimento" class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="cadastro-menu-button" tabindex="-1">
                          <!-- Active: "bg-gray-100", Not Active: "" -->
                             
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Missões</a>
+                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: ''}">Missões</router-link></span>
 
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Ideias</a>
+                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: ''}">Ideias</router-link></span>
 
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2"><router-link class="btn btn-primary" :to="{name: 'user'}">Comentario</router-link></a>
+                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'user'}">Comentario</router-link></span>
                             
                         </div>
                      </div>
@@ -67,13 +67,13 @@
                          <div v-if="menuList" class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="cadastro-menu-button" tabindex="-1">
                          <!-- Active: "bg-gray-100", Not Active: "" -->
                             
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0"><router-link class="btn btn-primary" :to="{name: ''}">Missões</router-link></a>
+                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'listmiss'}">Missões</router-link></span>
 
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1" ><router-link class="btn btn-primary" :to="{name: ''}">Departamentos</router-link></a>
+                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'listdep'}">Departamentos</router-link></span>
 
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2"><router-link class="btn btn-primary" :to="{name: ''}">Usuários</router-link></a>
+                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'listuser'}">Usuários</router-link></span>
 
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2"><router-link class="btn btn-primary" :to="{name: ''}">Categorias</router-link></a>
+                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'listcat'}">Categorias</router-link></span>
                             
                         </div>
                      </div>

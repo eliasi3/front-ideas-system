@@ -3,20 +3,43 @@
  * controle de segurançã usando o JWT
  * autor: Antonio Junior Data: 10/12/2021 13:06
  */
-
 // Importes dos componentes da pasta de components
-import LoginComponent from './components/auth/Login.vue';
+// import Axios from './components/Axios.vue';
+
 import Pgtest from './components/Pgtest.vue';
-import Dashboard from './components/Dashboard.vue';
+
+import LoginComponent from './components/auth/Login.vue';
 import LogoutComponent from './components/auth/Logout.vue';
+
 import DepartamentosCadastro from './components/cadastros/departamentos.vue';
 import CategoriasCadastro from './components/cadastros/categorias.vue';
 import UsuariosCadastro from './components/cadastros/usuarios.vue';
 
-// import Axios from './components/Axios.vue';
+import Listamissions from './components/listagem/listamissions.vue';
+import Listacategories from './components/listagem/listcategories.vue';
+import Listausers from './components/listagem/listusers.vue';
+import ListaDeptos from './components/listagem/Dashboard.vue';
 
 
 export default [
+    {
+        name: 'listmiss',
+        path: '/listamissions',
+        component: Listamissions,
+        meta: {auth: false}
+    },
+    {
+        name: 'listcat',
+        path: '/listcategories',
+        component: Listacategories,
+        meta: {auth: false}
+    },
+    {
+        name: 'listuser',
+        path: '/listusers',
+        component: Listausers,
+        meta: {auth: false}
+    },
     {
         name: 'auth.login',
         path: '/',
@@ -30,9 +53,9 @@ export default [
         meta: {auth: true}
     },
     {
-        name: 'dashboard',
-        path: '/dashboard',
-        component : Dashboard,
+        name: 'listdep',
+        path: '/listdeptos',
+        component : ListaDeptos,
         meta: {auth: true}
     },
     {
