@@ -1,7 +1,7 @@
 <template>
 <div>
     <br>
-    <v-row>
+    <v-row><span class='px-3 text-gray-500 ' style="font-size:30px;">DEPARTAMENTOS: </span>
         <table class="divide-y divide-gray-300 "  width='100%' style=''>
                     <thead class="bg-blue-200">
                         <tr>
@@ -13,9 +13,6 @@
                             </th>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
                                 CRIADO EM
-                            </th>
-                            <th class="px-6 py-2 text-xs text-gray-500 text-left">
-                                
                             </th>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
                                 
@@ -47,7 +44,7 @@
                                 <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full">Edit</a>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deletedepto(depts.id)'>Delete</a>
+                                <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deletedepto(depts.id, depts.dep_name)'>Delete</a>
                             </td>
                         </tr>
                     </tbody>
@@ -118,23 +115,16 @@ export default {
         // MethoddeTextoTeste() {
         //     return 'TESTE'
         // }
-         deletedepto(id){
-             if (confirm('Deseja excluir este departamento?')){
+         deletedepto(id, dep_name){
+             if (confirm('Deseja excluir o departamento '+ dep_name +' permanentemente?')){
               const req = fetch(`http://localhost:3000/depts/${id}`,{
                 method: "DELETE"
               });
                 alert('Departamento excluido com sucesso!')
                 // store.dispatch('load-depts');
-             }this.$router.push({name: 'dashboard'});
-        },
-        editarlivro(id){
-             if (confirm('Deseja editar este departamento?')){
-              const req = fetch(`http://localhost:3000/livros/${id}`,{
-                method: "GET"
-              });
+                location.reload(true);
              }
-             
-        }
+        },
     },
     
   
