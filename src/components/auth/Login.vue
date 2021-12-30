@@ -71,7 +71,7 @@
                 
                 store.dispatch('login', this.user)
                     .then((response) => {
-                        this.$router.push({name: 'dashboard'});
+                        this.$router.push({name: 'listdep'});
                     })
                     .catch((responseError) => {
                         this.error.error = true;
