@@ -47,7 +47,7 @@
                                 <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full">Edit</a>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full">Delete</a>
+                                <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deletedepto(depts.id)'>Delete</a>
                             </td>
                         </tr>
                     </tbody>
@@ -58,7 +58,7 @@
 
 <script>
 
-import store from '../store.js';
+import store from '../../store.js';
 // import { Autor, Livro } from '../services/resources';
 
 
@@ -118,21 +118,22 @@ export default {
         // MethoddeTextoTeste() {
         //     return 'TESTE'
         // }
-         deletelivro(id){
-             if (confirm('Deseja excluir este livro?')){
-              const req = fetch(`http://localhost:3000/livros/${id}`,{
+         deletedepto(id){
+             if (confirm('Deseja excluir este departamento?')){
+              const req = fetch(`http://localhost:3000/depts/${id}`,{
                 method: "DELETE"
               });
-   
-             }
+                alert('Departamento excluido com sucesso!')
+                // store.dispatch('load-depts');
+             }this.$router.push({name: 'dashboard'});
         },
         editarlivro(id){
-             if (confirm('Deseja editar este livro?')){
+             if (confirm('Deseja editar este departamento?')){
               const req = fetch(`http://localhost:3000/livros/${id}`,{
                 method: "GET"
               });
-   
              }
+             
         }
     },
     
