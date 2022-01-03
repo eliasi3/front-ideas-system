@@ -77,7 +77,7 @@ export default {
                 store.dispatch('load-depts');
                 //console.log('entrou')
                 
-                // const res = axios.get('http://localhost:3000/livros');
+                // const res = axios.get('http://localhost:3000/depts');
                 // console.log(res),
 
                 // Autor.query().then(response => {
@@ -88,9 +88,6 @@ export default {
        
     },
     computed: {
-        isEmail() {
-            return store.state.auth.user.email
-        },
         isDept(){
             return store.state.depts;
         },

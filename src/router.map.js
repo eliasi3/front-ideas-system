@@ -6,7 +6,7 @@
 // Importes dos componentes da pasta de components
 // import Axios from './components/Axios.vue';
 
-import Pgtest from './components/Pgtest.vue';
+// import Pgtest from './components/Pgtest.vue';
 
 import LoginComponent from './components/auth/Login.vue';
 import LogoutComponent from './components/auth/Logout.vue';
@@ -46,12 +46,6 @@ export default [
         path: '/',
         component: LoginComponent,
         meta: {auth: false}
-    },
-    {
-        name: 'pgtest',
-        path: '/pg',
-        component : Pgtest,
-        meta: {auth: true}
     },
     {
         name: 'listdep',

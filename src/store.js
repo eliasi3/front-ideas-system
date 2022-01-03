@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {DeptosModel} from './deptos-model';
+import {UsersModel} from './users-model';
 import {CategoriesModel} from './categories-model';
 import JwtToken from './services/jwt-token';
 import {Deptos, User, Categories} from './services/resources';
@@ -87,14 +88,38 @@ const actions = {
                 // console.log(an_obj)
                     // console.log(an_obj)
                 var responseobj = Object.values(an_obj);
-                    // console.log(responseobj)
+                    console.log(responseobj)
                 let categories = responseobj.map(element => new CategoriesModel(element.id, element.cat_name, element.created_at));  
                 context.commit('set-categories', categories);
             
             });
         // }
     },
-
+    'load-users'(context){
+        // if(filtro != 0){
+            // Deptos.query({author: filtro}).then(response => {
+            
+            // var an_obj = response.data.data;
+            //     // console.log(an_obj)
+            // var responseobj = Object.values(an_obj);
+            //     // console.log(responseobj)
+            // let livros = responseobj.map(element => new LivrosModel(element.id, element.name, element.author, element.description));  
+            // context.commit('set-livros', livros);
+            
+            // });
+        // }else {
+            User.query().then(response => {
+                var response = response.data;
+                // console.log(response)
+                var responseinobj = Object.values(response);
+                    
+                let user = responseinobj.map(element => new UsersModel(element.id, element.dept, element.username, element.email, element.user_name, element.user_phone, element.dept_id));  
+                // console.log('load', user)
+                context.commit('set-users', user);
+            
+            });
+        // }
+    },
     login(context, {email, password_digest}){
         console.log(email, password_digest)
         return JwtToken.accessToken(email, password_digest)
