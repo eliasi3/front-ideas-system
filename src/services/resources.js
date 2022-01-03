@@ -55,5 +55,6 @@ export class Criarautor{
 
 const User = Vue.resource('http://localhost:3000/users');
 const Deptos = Vue.resource(`http://localhost:3000/depts`);
+const Categories = Vue.resource(`http://localhost:3000/categories`);
 
-export {User, Deptos};
+export {User, Deptos, Categories};

@@ -1,10 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {TimeModel} from './time-model';
 import {DeptosModel} from './deptos-model';
-import {AutoresModel} from './autores-model';
+import {CategoriesModel} from './categories-model';
 import JwtToken from './services/jwt-token';
-import {Deptos, User} from './services/resources';
+import {Deptos, User, Categories} from './services/resources';
 import SessionStorage from './services/session-storage';
 
 
@@ -13,6 +12,7 @@ Vue.use(Vuex);
 
 const state = {
     depts: [],
+    categories: [],
     auth: {
         check: JwtToken.token != null,
         user: SessionStorage.getObject('user')
@@ -21,6 +21,10 @@ const state = {
 };
 
 const mutations = {
+    'set-categories'(state, categories){
+        state.categories = categories;
+        // console.log(state.livros);
+    },
     'set-deptos'(state, depts){
         state.depts = depts;
         // console.log(state.livros);
@@ -72,6 +76,19 @@ const actions = {
             });
         // }
     },
+    'load-categories'(context){
+        Categories.query().then(response => {
+                var an_obj = response.data;
+                // console.log(an_obj)
+                    // console.log(an_obj)
+                var responseobj = Object.values(an_obj);
+                    // console.log(responseobj)
+                let categories = responseobj.map(element => new CategoriesModel(element.id, element.cat_name, element.created_at));  
+                context.commit('set-categories', categories);
+            
+            });
+        // }
+    },
    
 
     login(context, {email, password_digest}){
@@ -86,6 +103,16 @@ const actions = {
 
     saveuser(context, user){
         User.save({user: user}).then(response => {
+            console.log('Cadastro feito com sucesso!')
+            // success callback
+            console.log(response.data)
+        }, response => {    
+            // error callback
+            console.log('erro no cadastro')
+        });
+    },
+    savecat(context, category){
+        Categories.save({category: category}).then(response => {
             console.log('Cadastro feito com sucesso!')
             // success callback
             console.log(response.data)

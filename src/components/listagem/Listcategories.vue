@@ -17,7 +17,9 @@
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
                                 
                             </th>
-                        
+                            <th class="px-6 py-2 text-xs text-gray-500 text-left">
+                                
+                            </th>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
                                 
                             </th>
@@ -42,10 +44,10 @@
                                 {{cats.created_at}}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" v-bind:to="{ name: 'editarlivro', params: {id: cats.id} }">Edit</a>
+                                <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full">Edit</a>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deletecat(cats.id,cats.cat_name)'>Excluir</a>
+                                <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deletedepto(depts.id)'>Delete</a>
                             </td>
                         </tr>
                     </tbody>
@@ -62,12 +64,13 @@ import store from '../../store.js';
 
 
 export default {
+    name:'listcategories',
     
     data () {
         return {
             menuPerfil: false,
             selected: '0',
-            options: [],
+            catsd: [],
             // index: this.selected
             }
             
@@ -75,7 +78,16 @@ export default {
     created(){
             if(this.isAuth) {
                 
-                store.dispatch('load-categories');
+                store.dispatch('load-cat');
+                //console.log('entrou')
+                
+                // const res = axios.get('http://localhost:3000/livros');
+                // console.log(res),
+
+                // Autor.query().then(response => {
+                // this.options = response.data.autores
+                // this.id_livro = response.data.id 
+                // })
             }
        
     },
@@ -107,25 +119,6 @@ export default {
         // MethoddeTextoTeste() {
         //     return 'TESTE'
         // }
-         deletecat(id, cat_name){
-             if (confirm('Deseja excluir a categoria ' +cat_name+ ' permanentemente?')){
-              const req = fetch(`http://localhost:3000/categories/${id}`,{
-                method: "DELETE"
-              });
-                
-                // store.dispatch('load-depts');
-             };
-             location.reload(true);
-             alert('Categoria excluida com sucesso!')
-        },
-    },
-    
-  
-}
-</script>
-
-<style scoped>
-.mx-auto{
-    text-align: justify;
-}
-</style>
+         deletedepto(id){
+             if (confirm('Deseja excluir este departamento?')){
+             
