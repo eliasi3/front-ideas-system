@@ -1,12 +1,12 @@
 <template>
  
-<div class="min-w-screen min-h-screen flex items-center justify-center px-5 py-5" style="margin-top:-180px; margin-bottom:-90px"> 
-    <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:500px">
+<div class="min-w-screen min-h-screen flex items-center justify-center px-5 py-5" style="margin-bottom:-90px"> 
+    <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden position-fixed" style="max-width:500px">
         <div class="md:flex w-full">
             
             <div class="w-full md:w-1/1 py-10 px-5 md:px-10">
                 <div class="text-center mb-100">
-                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR DEPARTAMENTO</h1></br>
+                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR DEPARTAMENTO</h1>
                 </div>
                 <form  @submit.prevent="cadastrar()" method="POST">
                 <div>

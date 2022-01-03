@@ -14,6 +14,7 @@ import LogoutComponent from './components/auth/Logout.vue';
 import DepartamentosCadastro from './components/cadastros/departamentos.vue';
 import CategoriasCadastro from './components/cadastros/categorias.vue';
 import UsuariosCadastro from './components/cadastros/usuarios.vue';
+import MissoesCadastro from './components/cadastros/missoes.vue';
 
 import Listamissions from './components/listagem/listamissions.vue';
 import Listacategories from './components/listagem/listcategories.vue';
@@ -22,6 +23,7 @@ import ListaDeptos from './components/listagem/Dashboard.vue';
 import UsuariosEditar from './components/edit/Editaruser.vue';
 import Editardep from './components/edit/Editardep.vue';
 import Editarcat from './components/edit/Editarcat.vue';
+
 
 
 export default [
@@ -77,6 +79,12 @@ export default [
         name: 'cadastrousuarios',
         path: '/usuarios',
         component: UsuariosCadastro,
+        meta: {auth: true}
+    },
+    {
+        name: 'cadastromissoes',
+        path: '/missoes',
+        component: MissoesCadastro,
         meta: {auth: true}
     },
     {

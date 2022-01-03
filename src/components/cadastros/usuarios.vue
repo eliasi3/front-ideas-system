@@ -20,7 +20,7 @@
                             </div><br>
                             <label for="" class="text-xs font-semibold px-3">SENHA</label>
                             <div class="text-center items-center border-b border-gray-500 py-2">
-                                <input v-model="user.password_digest" type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome e Sobrenome do Usuário" >
+                                <input v-model="user.password_digest" type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Digite a Senha" >
                             </div><br>
                             <label for="" class="text-xs font-semibold px-3">NOME</label>
                             <div class="text-center flex items-center border-b border-gray-500 py-2">
@@ -32,15 +32,14 @@
                             </div><br>
                             <label for="" class="text-xs font-semibold px-3">TELEFONE</label>
                             <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <input v-model="user.user_phone" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="E-mail do usuário" >
+                                <input v-model="user.user_phone" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Telefone do usuário" >
                             </div><br>
                             <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
-                            <div class="text-center flex items-center border-b border-gray-500 py-2">
+                            <div class="text-center flex items-center border border-gray-500 py-2" >
                                 <select v-model="user.dept_id" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
                                     <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
                                 </select>    
                             </div><br>
-                            
                         </div>
                     </div>
  
