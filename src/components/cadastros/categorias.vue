@@ -6,12 +6,17 @@
             
             <div class="w-full md:w-1/1 py-10 px-5 md:px-10" >
                 <div class="text-center mb-100">
+<<<<<<< HEAD
                     <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR CATEGORIA</h1>
                     <br><br>
+=======
+                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR CATEGORIA</h1></br>
+>>>>>>> 9c7bd32db688d0aab967865ab74cf87b72d22588
                 </div>
                 <form  @submit.prevent="cadastrar()" method="POST">
                 <div>
                     <div class="text-center">
+<<<<<<< HEAD
                         <div class="w-full px-3 mb-5 text-left">
                             
                             <label for="" class="text-xs font-semibold px-3">CATEGORIA</label>
@@ -20,6 +25,13 @@
                             </div><br>
                             
                             
+=======
+                       <div class="w-full px-3 mb-5 text-left">
+                            <label for="" class="text-xs font-semibold px-3">NOME</label>
+                            <div class="text-center flex items-center border-b border-gray-500 py-2">
+                                <input type="text"  class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome da Categoria" >
+                            </div>
+>>>>>>> 9c7bd32db688d0aab967865ab74cf87b72d22588
                         </div>
                     </div>
  

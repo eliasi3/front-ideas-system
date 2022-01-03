@@ -1,7 +1,7 @@
 <template>
 <div>
     <br>
-    <v-row>
+    <v-row><div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">USUÁRIOS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adduser()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span></div>
         <table class="divide-y divide-gray-300 "  width='100%' style=''>
                     <thead class="bg-blue-200">
                         <tr>
@@ -9,13 +9,19 @@
                                 ID
                             </th>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
-                                NOME
+                                NOME DO USUÁRIO
                             </th>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
-                                CRIADO EM
+                                USERNAME
                             </th>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
-                                
+                                EMAIL
+                            </th>
+                            <th class="px-6 py-2 text-xs text-gray-500 text-left">
+                                TELEFONE
+                            </th>
+                            <th class="px-6 py-2 text-xs text-gray-500 text-left">
+                                DEPARTAMENTO
                             </th>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
                                 
@@ -27,27 +33,44 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-300">
                         <tr class="whitespace-nowrap"
-                        v-for="(depts, i) in isDept"
+                        v-for="(users, i) in isUser"
                         :key="i"
                         cols="12"
                         md="4"
                         lg="2">
                             <td class="px-6 py-4 text-sm text-gray-500">
-                                {{depts.id}}
+                                {{users.id}}
                             </td>
                             <td class="px-6 py-4">
                                 <div class="text-sm text-gray-900">
-                                    {{depts.dep_name}}
+                                    {{users.user_name}}
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="text-sm text-gray-900">
+                                    {{users.username}}
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-500">
-                                {{depts.created_at}}
+                                <div class="text-sm text-gray-900">
+                                    {{users.email}}
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">
+                                <div class="text-sm text-gray-900">
+                                    {{users.user_phone}}
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">
+                                <div class="text-sm text-gray-900">
+                                    {{users.dept.dep_name}}
+                                </div>
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full">Edit</a>
+                                <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="#" @click='deletedepto(depts.id)' class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full">Delete</a>
+                                <a href="#" @click='deleteuser(users.id, users.user_name)' class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full">Deletar</a>
                             </td>
                         </tr>
                     </tbody>
@@ -61,8 +84,6 @@
 import store from '../../store.js';
 // import { Autor, Livro } from '../services/resources';
 
-
-
 export default {
     
     data () {
@@ -72,7 +93,6 @@ export default {
             options: [],
             // index: this.selected
             }
-            
     },
     created(){
             if(this.isAuth) {
@@ -91,8 +111,8 @@ export default {
        
     },
     computed: {
-        isDept(){
-            return store.state.depts;
+        isUser(){
+            return store.state.users;
         },
         isAuth() {
             return store.state.auth.check;
@@ -115,30 +135,31 @@ export default {
         // MethoddeTextoTeste() {
         //     return 'TESTE'
         // }
-         deletedepto(id){
-            //  if (confirm('Deseja excluir este livro?')){
-            //   const req = fetch(`http://localhost:3000/livros/${id}`,{
-            //     method: "DELETE"
-            //   });
-                alert(id)
-            //  }
+        deleteuser(id, user_name){
+            if (confirm('Deseja excluir o usuário ' +user_name+ ' permanentemente?')){
+            const req = fetch(`http://localhost:3000/users/${id}`,{
+            method: "DELETE"
+            });
+            alert('Excluido com sucesso');
+            location.reload(true);
+            }
         },
-        editarlivro(id){
-             if (confirm('Deseja editar este livro?')){
-              const req = fetch(`http://localhost:3000/depts/${id}`,{
-                method: "GET"
-              });
-   
-             }
+        adduser(){
+                this.$router.push({name: 'cadastrousuarios'});
+            }
+        
         }
-    },
+    }
     
   
-}
+
 </script>
 
 <style scoped>
 .mx-auto{
     text-align: justify;
+}
+#add:hover{
+    cursor:pointer;
 }
 </style>

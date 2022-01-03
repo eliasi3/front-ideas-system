@@ -1,7 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {DeptosModel} from './deptos-model';
+<<<<<<< HEAD
 import {CategoriesModel} from './categories-model';
+=======
+import {UsersModel} from './users-model';
+>>>>>>> 9c7bd32db688d0aab967865ab74cf87b72d22588
 import JwtToken from './services/jwt-token';
 import {Deptos, User, Categories} from './services/resources';
 import SessionStorage from './services/session-storage';
@@ -12,7 +16,11 @@ Vue.use(Vuex);
 
 const state = {
     depts: [],
+<<<<<<< HEAD
     categories: [],
+=======
+    users: [],
+>>>>>>> 9c7bd32db688d0aab967865ab74cf87b72d22588
     auth: {
         check: JwtToken.token != null,
         user: SessionStorage.getObject('user')
@@ -27,7 +35,11 @@ const mutations = {
     },
     'set-deptos'(state, depts){
         state.depts = depts;
-        // console.log(state.livros);
+        // console.log(state.depts);
+    },
+    'set-users'(state, user){
+        state.users = user;
+        // console.log(state.users);
     },
     update(state, time){
         let index = state.times.findIndex(element => time.id == element.id);
@@ -71,11 +83,13 @@ const actions = {
                 var responseobj = Object.values(an_obj);
                     // console.log(responseobj)
                 let depts = responseobj.map(element => new DeptosModel(element.id, element.dep_name, element.created_at));  
+                
                 context.commit('set-deptos', depts);
             
             });
         // }
     },
+<<<<<<< HEAD
     'load-categories'(context){
         Categories.query().then(response => {
                 var an_obj = response.data;
@@ -85,11 +99,37 @@ const actions = {
                     // console.log(responseobj)
                 let categories = responseobj.map(element => new CategoriesModel(element.id, element.cat_name, element.created_at));  
                 context.commit('set-categories', categories);
+=======
+    'load-users'(context){
+        // if(filtro != 0){
+            // Deptos.query({author: filtro}).then(response => {
+            
+            // var an_obj = response.data.data;
+            //     // console.log(an_obj)
+            // var responseobj = Object.values(an_obj);
+            //     // console.log(responseobj)
+            // let livros = responseobj.map(element => new LivrosModel(element.id, element.name, element.author, element.description));  
+            // context.commit('set-livros', livros);
+            
+            // });
+        // }else {
+            User.query().then(response => {
+                var response = response.data;
+                // console.log(response)
+                var responseinobj = Object.values(response);
+                    console.log(responseinobj)
+                let user = responseinobj.map(element => new UsersModel(element.id, element.dept, element.username, element.email, element.user_name, element.user_phone, element.dept_id));  
+                // console.log('load', user)
+                context.commit('set-users', user);
+>>>>>>> 9c7bd32db688d0aab967865ab74cf87b72d22588
             
             });
         // }
     },
+<<<<<<< HEAD
    
+=======
+>>>>>>> 9c7bd32db688d0aab967865ab74cf87b72d22588
 
     login(context, {email, password_digest}){
         console.log(email, password_digest)
@@ -105,10 +145,9 @@ const actions = {
         User.save({user: user}).then(response => {
             console.log('Cadastro feito com sucesso!')
             // success callback
-            console.log(response.data)
         }, response => {    
             // error callback
-            console.log('erro no cadastro')
+            alert('erro no cadastro');
         });
     },
     savecat(context, category){
