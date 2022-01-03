@@ -1,7 +1,7 @@
 <template>
 <div>
     <br>
-    <v-row><div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">CATEGORIAS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='addcat()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span></div>
+    <v-row>
         <table class="divide-y divide-gray-300 "  width='100%' style=''>
                     <thead class="bg-blue-200">
                         <tr>
@@ -17,7 +17,9 @@
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
                                 
                             </th>
-                        
+                            <th class="px-6 py-2 text-xs text-gray-500 text-left">
+                                
+                            </th>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
                                 
                             </th>
@@ -42,12 +44,10 @@
                                 {{cats.created_at}}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <router-link v-bind:to="{ name: 'editusuarios', params: {id: cats.id} }">
-                                    <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
-                                </router-link>
+                                <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full">Edit</a>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deletecat(cats.id,cats.cat_name)'>Excluir</a>
+                                <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deletedepto(depts.id)'>Delete</a>
                             </td>
                         </tr>
                     </tbody>
@@ -64,12 +64,13 @@ import store from '../../store.js';
 
 
 export default {
+    name:'listcategories',
     
     data () {
         return {
             menuPerfil: false,
             selected: '0',
-            options: [],
+            catsd: [],
             // index: this.selected
             }
             
@@ -77,7 +78,16 @@ export default {
     created(){
             if(this.isAuth) {
                 
-                store.dispatch('load-categories');
+                store.dispatch('load-cat');
+                //console.log('entrou')
+                
+                // const res = axios.get('http://localhost:3000/livros');
+                // console.log(res),
+
+                // Autor.query().then(response => {
+                // this.options = response.data.autores
+                // this.id_livro = response.data.id 
+                // })
             }
        
     },
@@ -109,20 +119,23 @@ export default {
         // MethoddeTextoTeste() {
         //     return 'TESTE'
         // }
-         deletecat(id, cat_name){
-             if (confirm('Deseja excluir a categoria ' +cat_name+ ' permanentemente?')){
-              const req = fetch(`http://localhost:3000/categories/${id}`,{
+         deletedepto(id){
+             if (confirm('Deseja excluir este departamento?')){
+              const req = fetch(`http://localhost:3000/depts/${id}`,{
                 method: "DELETE"
               });
-                
+                alert('Departamento excluido com sucesso!')
                 // store.dispatch('load-depts');
-             };
-             location.reload(true);
-             alert('Categoria excluida com sucesso!')
+             }this.$router.push({name: 'dashboard'});
         },
-        addcat(){
-                this.$router.push({name: 'cadastrocategorias'});
-            }
+        editarlivro(id){
+             if (confirm('Deseja editar este departamento?')){
+              const req = fetch(`http://localhost:3000/livros/${id}`,{
+                method: "GET"
+              });
+             }
+             
+        }
     },
     
   
@@ -131,6 +144,4 @@ export default {
 
 <style scoped>
 .mx-auto{
-    text-align: justify;
-}
-</style>
+    tex
