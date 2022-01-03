@@ -6,7 +6,7 @@
 // Importes dos componentes da pasta de components
 // import Axios from './components/Axios.vue';
 
-import Pgtest from './components/Pgtest.vue';
+// import Pgtest from './components/Pgtest.vue';
 
 import LoginComponent from './components/auth/Login.vue';
 import LogoutComponent from './components/auth/Logout.vue';
@@ -20,6 +20,8 @@ import Listacategories from './components/listagem/listcategories.vue';
 import Listausers from './components/listagem/listusers.vue';
 import ListaDeptos from './components/listagem/Dashboard.vue';
 import UsuariosEditar from './components/edit/Editaruser.vue';
+import Editardep from './components/edit/Editardep.vue';
+import Editarcat from './components/edit/Editarcat.vue';
 
 
 export default [
@@ -46,12 +48,6 @@ export default [
         path: '/',
         component: LoginComponent,
         meta: {auth: false}
-    },
-    {
-        name: 'pgtest',
-        path: '/pg',
-        component : Pgtest,
-        meta: {auth: true}
     },
     {
         name: 'listdep',
@@ -87,6 +83,18 @@ export default [
         name: 'editusuarios',
         path: '/editusuarios',
         component: UsuariosEditar,
+        meta: {auth: true}
+    },
+    {
+        name: 'editdep',
+        path: '/editdep',
+        component: Editardep,
+        meta: {auth: true}
+    },
+    {
+        name: 'editcat',
+        path: '/editcat',
+        component: Editarcat,
         meta: {auth: true}
     },
 ];

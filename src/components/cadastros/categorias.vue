@@ -71,6 +71,8 @@
                 store.dispatch('savecat', this.cat)
                     .then((response) => {
                         this.$router.push({name: 'listcat'});
+                        location.reload(true);
+                        alert('Categoria cadastrada com sucesso!')
                     })
                     .catch((responseError) => {
                         console.log('erro no cadastro de categoria: /categorias.vue')

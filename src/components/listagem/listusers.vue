@@ -5,7 +5,6 @@
         <table class="divide-y divide-gray-300 "  width='100%' style=''>
                     <thead class="bg-blue-200">
                         <tr>
-                            
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
                                 ID
                             </th>
@@ -96,7 +95,7 @@ export default {
                 store.dispatch('load-users');
                 //console.log('entrou')
                 
-                // const res = axios.get('http://localhost:3000/livros');
+                // const res = axios.get('http://localhost:3000/users');
                 // console.log(res),
 
                 // Autor.query().then(response => {
@@ -109,6 +108,7 @@ export default {
     computed: {
         isUser(){
             return store.state.users;
+            
         },
         isAuth() {
             return store.state.auth.check;
@@ -133,9 +133,9 @@ export default {
         // }
         deleteuser(id, user_name){
             if (confirm('Deseja excluir o usuário ' +user_name+ ' permanentemente?')){
-            const req = fetch(`http://localhost:3000/users/${id}`,{
-            method: "DELETE"
-            });
+                const req = fetch(`http://localhost:3000/users/${id}`,{
+                method: "DELETE"
+                });
             alert('Excluido com sucesso');
             location.reload(true);
             }
