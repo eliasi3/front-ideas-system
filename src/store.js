@@ -27,7 +27,7 @@ const mutations = {
     },
     'set-users'(state, user){
         state.users = user;
-        console.log(state.users);
+        // console.log(state.users);
     },
     update(state, time){
         let index = state.times.findIndex(element => time.id == element.id);
@@ -91,13 +91,12 @@ const actions = {
             // });
         // }else {
             User.query().then(response => {
-                var reponse = response.data.user;
-                // console.log(reponse)
-                    // console.log(an_obj)
-                var responseinobj = Object.values(reponse);
-                    // console.log(responseinobj)
-                let user = responseinobj.map(element => new UsersModel(element.id, element.username, element.email, element.user_name, element.user_phone, element.dept_id));  
-                console.log('load', user)
+                var response = response.data;
+                // console.log(response)
+                var responseinobj = Object.values(response);
+                    console.log(responseinobj)
+                let user = responseinobj.map(element => new UsersModel(element.id, element.dept, element.username, element.email, element.user_name, element.user_phone, element.dept_id));  
+                // console.log('load', user)
                 context.commit('set-users', user);
             
             });
@@ -118,10 +117,9 @@ const actions = {
         User.save({user: user}).then(response => {
             console.log('Cadastro feito com sucesso!')
             // success callback
-            console.log(response.data)
         }, response => {    
             // error callback
-            console.log('erro no cadastro')
+            alert('erro no cadastro');
         });
     },
     

@@ -1,7 +1,8 @@
 export class UsersModel{
 
-    constructor(id, username, email, user_name, user_phone, dept_id){
+    constructor(id, dept, username, email, user_name, user_phone, dept_id){
         this.id = id;
+        this.dept = dept;
         this.username = username;
         this.email = email;
         this.user_name = user_name;

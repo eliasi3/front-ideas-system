@@ -1,7 +1,7 @@
 <template>
 <div>
     <br>
-    <v-row><span class='px-3 text-gray-500 ' style="font-size:30px;">USUÁRIOS: </span>
+    <v-row><div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">USUÁRIOS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adduser()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span></div>
         <table class="divide-y divide-gray-300 "  width='100%' style=''>
                     <thead class="bg-blue-200">
                         <tr>
@@ -63,14 +63,14 @@
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-500">
                                 <div class="text-sm text-gray-900">
-                                    {{users.dept_id}}
+                                    {{users.dept.dep_name}}
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="#" @click='deletedepto(users.id, users.user_name)' class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full">Deletar</a>
+                                <a href="#" @click='deleteuser(users.id, users.user_name)' class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full">Deletar</a>
                             </td>
                         </tr>
                     </tbody>
@@ -135,15 +135,19 @@ export default {
         // MethoddeTextoTeste() {
         //     return 'TESTE'
         // }
-         deletedepto(id, user_name){
-             if (confirm('Deseja excluir o usuário ' +user_name+ ' permanentemente?')){
-                const req = fetch(`http://localhost:3000/livros/${id}`,{
-                method: "DELETE"
-              });
-                alert('Excluido com sucesso');
-                location.reload(true);
-              }
-            },
+        deleteuser(id, user_name){
+            if (confirm('Deseja excluir o usuário ' +user_name+ ' permanentemente?')){
+            const req = fetch(`http://localhost:3000/users/${id}`,{
+            method: "DELETE"
+            });
+            alert('Excluido com sucesso');
+            location.reload(true);
+            }
+        },
+        adduser(){
+                this.$router.push({name: 'cadastrousuarios'});
+            }
+        
         }
     }
     
@@ -154,5 +158,8 @@ export default {
 <style scoped>
 .mx-auto{
     text-align: justify;
+}
+#add:hover{
+    cursor:pointer;
 }
 </style>

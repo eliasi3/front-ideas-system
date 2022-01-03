@@ -94,9 +94,10 @@
               
                 //alert('Comunicando com o Servidor API....');
                 // console.log( this.user)
+                
                 store.dispatch('saveuser', this.user)
                     .then((response) => {
-                        this.$router.push({name: 'dashboard'});
+                        this.$router.push({name: 'listuser'});
                     })
                     .catch((responseError) => {
                         console.log('erro no cadastro de user: /usuarios.vue')
