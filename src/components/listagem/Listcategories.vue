@@ -121,4 +121,27 @@ export default {
         // }
          deletedepto(id){
              if (confirm('Deseja excluir este departamento?')){
+              const req = fetch(`http://localhost:3000/depts/${id}`,{
+                method: "DELETE"
+              });
+                alert('Departamento excluido com sucesso!')
+                // store.dispatch('load-depts');
+             }this.$router.push({name: 'dashboard'});
+        },
+        editarlivro(id){
+             if (confirm('Deseja editar este departamento?')){
+              const req = fetch(`http://localhost:3000/livros/${id}`,{
+                method: "GET"
+              });
+             }
              
+        }
+    },
+    
+  
+}
+</script>
+
+<style scoped>
+.mx-auto{
+    tex
