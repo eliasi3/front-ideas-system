@@ -67,7 +67,7 @@
         methods: {
             login(){
               
-                //alert('Comunicando com o Servidor API....');
+                // console.log(this.user);
                 
                 store.dispatch('login', this.user)
                     .then((response) => {

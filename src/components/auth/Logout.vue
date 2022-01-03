@@ -14,13 +14,15 @@
         mounted(){
             setTimeout(() => {
                 this.logout();
-            },2000)
+            },1000)
         },
         methods: {
             logout(){
+                alert('Volte sempre!');
                 store.commit('unauthenticated');
                 this.$router.push({name: 'auth.login'});
             }
+            
         }
     }
 </script>

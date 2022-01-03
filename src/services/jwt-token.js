@@ -23,8 +23,11 @@ export default {
 
     //acesso ao token
     accessToken(email, password_digest){
+        // console.log(email, password_digest)
         return Jwt.accessToken(email, password_digest).then((response) => {
+            // console.log(response.data)
             this.token = response.data.token;
+            // user_id = response.data.id;
         });
     },
 

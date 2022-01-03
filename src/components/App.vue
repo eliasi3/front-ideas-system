@@ -86,7 +86,7 @@
 
                         <!-- Profile dropdown --> 
                         
-                        <span><b id='nameuser' style='color:white'>ELIAS</b></span>
+                        <span id='nameuser' style='color:white;'>Seja bem-vindo, {{ userId.user_name.toUpperCase() }}</span>
                         <div class="relative ml-3">
                           
                         <div> 
@@ -208,8 +208,8 @@ export default {
         isAuth() {
             return store.state.auth.check;
         },
-        user() {
-            return store.state.auth.user ? store.state.auth.user : {'name': ''}; 
+        userId() {
+            return store.state.auth.user ? store.state.auth.user : {'user_name': ''}; 
         }
     }
 }

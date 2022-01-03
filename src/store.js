@@ -13,6 +13,7 @@ Vue.use(Vuex);
 
 const state = {
     depts: [],
+    users: [],
     categories: [],
     auth: {
         check: JwtToken.token != null,
@@ -88,7 +89,7 @@ const actions = {
                 // console.log(an_obj)
                     // console.log(an_obj)
                 var responseobj = Object.values(an_obj);
-                    console.log(responseobj)
+                    // console.log(responseobj)
                 let categories = responseobj.map(element => new CategoriesModel(element.id, element.cat_name, element.created_at));  
                 context.commit('set-categories', categories);
             
@@ -121,12 +122,22 @@ const actions = {
         // }
     },
     login(context, {email, password_digest}){
-        console.log(email, password_digest)
+        // console.log(email, password_digest)
+        
         return JwtToken.accessToken(email, password_digest)
             .then(response => {
+                // console.log(response.data.token)
                 context.commit('authenticated');
                 context.dispatch('getUser');
+                
             return response;
+        })
+    },
+
+    getUser(context){
+        User.query().then(response => {
+            
+            context.commit('setUser', response.data[1]);
         })
     },
 
@@ -151,11 +162,6 @@ const actions = {
     },
     
     
-    getUser(context){
-        User.query().then(response => {
-            context.commit('setUser', response.data.user);
-        })
-    },
 };
 
 export default new Vuex.Store({
