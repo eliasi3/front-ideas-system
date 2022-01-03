@@ -19,6 +19,7 @@ import Listamissions from './components/listagem/listamissions.vue';
 import Listacategories from './components/listagem/listcategories.vue';
 import Listausers from './components/listagem/listusers.vue';
 import ListaDeptos from './components/listagem/Dashboard.vue';
+import UsuariosEditar from './components/edit/Editaruser.vue';
 
 
 export default [
@@ -80,6 +81,12 @@ export default [
         name: 'cadastrousuarios',
         path: '/usuarios',
         component: UsuariosCadastro,
+        meta: {auth: true}
+    },
+    {
+        name: 'editusuarios',
+        path: '/editusuarios',
+        component: UsuariosEditar,
         meta: {auth: true}
     },
 ];

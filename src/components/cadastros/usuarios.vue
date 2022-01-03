@@ -4,7 +4,7 @@
     <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:600px">
         <div class="md:flex w-full">
             
-            <div class="w-full md:w-1/1 py-10 px-5 md:px-10" >
+            <div class="w-full md:w-1/1 py-10 px-5 md:px-10">
                 <div class="text-center mb-100">
                     <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR USUÁRIO</h1>
                     <br><br>
