@@ -144,4 +144,4 @@ export default {
 
 <style scoped>
 .mx-auto{
-    tex
+  

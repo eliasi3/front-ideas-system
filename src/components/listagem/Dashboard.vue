@@ -1,7 +1,7 @@
 <template>
 <div>
     <br>
-    <v-row><span class='px-3 text-gray-500 ' style="font-size:30px;">DEPARTAMENTOS: </span>
+    <v-row><div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">DEPARTAMENTOS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adddep()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span></div>
         <table class="divide-y divide-gray-300 "  width='100%' style=''>
                     <thead class="bg-blue-200">
                         <tr>
@@ -41,7 +41,9 @@
                                 {{depts.created_at}}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full">Edit</a>
+                               <router-link v-bind:to="{ name: 'editdep', params: {id: depts.id} }">
+                                    <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
+                                </router-link>
                             </td>
                             <td class="px-6 py-4">
                                 <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deletedepto(depts.id, depts.dep_name)'>Delete</a>
@@ -117,11 +119,15 @@ export default {
               const req = fetch(`http://localhost:3000/depts/${id}`,{
                 method: "DELETE"
               });
-                alert('Departamento excluido com sucesso!')
+              };
+                
                 // store.dispatch('load-depts');
                 location.reload(true);
-             }
-        },
+                alert('Departamento excluido com sucesso!')
+             },
+        adddep(){
+                this.$router.push({name: 'cadastrodepartamentos'});
+            }
     },
     
   

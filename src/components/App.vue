@@ -191,6 +191,7 @@ export default {
             }
     },
     methods: {
+        
         abrir() {
             this.menuPerfil = this.menuPerfil == false ? true : false;
         },

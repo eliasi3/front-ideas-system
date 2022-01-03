@@ -15,6 +15,7 @@ const state = {
     depts: [],
     users: [],
     categories: [],
+    users: [],
     auth: {
         check: JwtToken.token != null,
         user: SessionStorage.getObject('user')
@@ -121,6 +122,8 @@ const actions = {
             });
         // }
     },
+
+
     login(context, {email, password_digest}){
         // console.log(email, password_digest)
         
@@ -134,12 +137,14 @@ const actions = {
         })
     },
 
+
     getUser(context){
         User.query().then(response => {
             
             context.commit('setUser', response.data[1]);
         })
     },
+
 
     saveuser(context, user){
         User.save({user: user}).then(response => {
@@ -150,8 +155,21 @@ const actions = {
             alert('erro no cadastro');
         });
     },
+
+    
     savecat(context, category){
         Categories.save({category: category}).then(response => {
+            console.log('Cadastro feito com sucesso!')
+            // success callback
+            console.log(response.data)
+        }, response => {    
+            // error callback
+            console.log('erro no cadastro')
+        });
+    },
+
+    savedep(context, dept){
+        Deptos.save({dept: dept}).then(response => {
             console.log('Cadastro feito com sucesso!')
             // success callback
             console.log(response.data)

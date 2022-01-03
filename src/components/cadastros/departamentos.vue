@@ -8,13 +8,13 @@
                 <div class="text-center mb-100">
                     <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR DEPARTAMENTO</h1></br>
                 </div>
-                <form  @submit.prevent="login()" method="POST">
+                <form  @submit.prevent="cadastrar()" method="POST">
                 <div>
                     <div class="text-center">
                         <div class="w-full px-3 mb-5 text-left">
                             <label for="" class="text-xs font-semibold px-3">NOME</label>
                             <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <input type="text"  class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome do departamento" >
+                                <input  v-model="dep.dep_name" type="text"  class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome do departamento" >
                             </div>
                         </div>
                     </div>
@@ -38,38 +38,44 @@
 
 <script type="text/javascript">
     import store from '../../store';
-
+    // import Deptos from '../../services/resources.js';
     export default {
         data(){
             return {
-                user: {
-                    email: '',
-                    password_digest: ''
+                dep: {
+                    dep_name: null,
                 },
-                error: {
-                    error: false,
-                    message: 'Digite o nome do departamento!'
-                }
+                options: [],
+                id_depto: null,
             }
         },
+        created(){
+            store.dispatch('load-depts');
+        },
+        computed: {
+            isDept(){
+            return  store.state.depts;
+            },
+        },
         methods: {
-            login(){
+            cadastrar(){
               
                 //alert('Comunicando com o Servidor API....');
-                
-                store.dispatch('login', this.user)
+                // console.log( this.user)
+                store.dispatch('savedep', this.dep)
                     .then((response) => {
-                        this.$router.push({name: 'dashboard'});
+                        this.$router.push({name: 'listdep'});
+                        location.reload(true);
+                        alert('Departamento cadastrado com sucesso!')
+                        
                     })
                     .catch((responseError) => {
-                        this.error.error = true;
-                        if (responseError.status === 400) {
-                            this.error.message = responseError.data.error;
-                        } else {
-                            this.error.message = 'Login inválido!'
-                        }
+                        console.log('erro no cadastro de departamento: /departamento.vue')
                     })
             }
         }
     }
 </script>
+
+<style>
+</style>
