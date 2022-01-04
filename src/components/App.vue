@@ -50,7 +50,7 @@
 
                                 <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'cadastromissoes'}">Missões</router-link></span>
 
-                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: ''}">Ideias</router-link></span>
+                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name:'listideas'}">Ideias</router-link></span>
 
                                 <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: ''}">Comentario</router-link></span>
                             
