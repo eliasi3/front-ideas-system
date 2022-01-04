@@ -78,6 +78,7 @@
                         if (responseError.status === 400) {
                             this.error.message = responseError.data.error;
                         } else {
+                            alert('Email ou senha inválido!');
                             this.error.message = 'Login inválido!'
                         }
                     })

@@ -130,6 +130,7 @@ const actions = {
         // }
     },
 
+    
 
     login(context, {email, password_digest}){
         // console.log(email, password_digest)
@@ -162,7 +163,17 @@ const actions = {
         });
     },
 
-    
+    savemission(context, miss){
+        Missions.save({mission: miss}).then(response => {
+            console.log('Cadastro feito com sucesso!')
+            
+            // success callback
+        }, response => {    
+            // error callback
+            alert('erro no cadastro');
+        });
+    },
+
     savecat(context, category){
         Categories.save({category: category}).then(response => {
             console.log('Cadastro feito com sucesso!')
