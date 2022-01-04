@@ -1,12 +1,13 @@
 <template>
  
-<div class="min-w-screen min-h-screen flex items-center justify-center px-5 py-5" style="margin-bottom:-90px"> 
-    <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden position-fixed" style="max-width:500px">
+<div class="min-w-screen min-h-screen flex items-center justify-center px-5 py-5" style="margin-top:-140px; margin-bottom:-90px"> 
+    <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:600px">
         <div class="md:flex w-full">
             
             <div class="w-full md:w-1/1 py-10 px-5 md:px-10">
                 <div class="text-center mb-100">
                     <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR DEPARTAMENTO</h1>
+                    <br>
                 </div>
                 <form  @submit.prevent="cadastrar()" method="POST">
                 <div>
@@ -17,7 +18,7 @@
                                 <input  v-model="dep.dep_name" type="text"  class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome do departamento" >
                             </div>
                         </div>
-                    </div>
+                    </div><br>
  
                     <div class="flex -mx-3">
                         <div class="w-full px-3 mb-5">

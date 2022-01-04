@@ -7,7 +7,7 @@
             <div class="w-full md:w-1/1 py-10 px-5 md:px-10" >
                 <div class="text-center mb-100">
                     <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR CATEGORIA</h1>
-                    <br><br>
+                    <br>
                 </div>
                 <form  @submit.prevent="cadastrar()" method="POST">
                 <div>
