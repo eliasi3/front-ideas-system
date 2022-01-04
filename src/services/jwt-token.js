@@ -7,8 +7,8 @@
 import SessionStorage from './session-storage';
 
 //importar a class que faz o controle da biblioteca JWT
-import {Jwt, Criarlivro} from './resources';
-
+import {Jwt} from './resources';
+import store from '../store';
 export default {
 
     //getter token retorna session storage
@@ -25,9 +25,10 @@ export default {
     accessToken(email, password_digest){
         // console.log(email, password_digest)
         return Jwt.accessToken(email, password_digest).then((response) => {
-            // console.log(response.data)
+            console.log(response.data)
             this.token = response.data.token;
-            // user_id = response.data.id;
+            // console.log(response.data.id)
+            store.dispatch('getUser', response.data.id);
         });
     },
 
@@ -44,9 +45,4 @@ export default {
         
         return `Bearer ${this.token}`;
     },
-    criarlivro(){
-        return Criarlivro.criarlivro(name, author, description).then((response) => {
-            this.livro = response.data.livro;
-        });  
-    }
 }

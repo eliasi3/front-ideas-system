@@ -4,7 +4,7 @@ import {DeptosModel} from './deptos-model';
 import {UsersModel} from './users-model';
 import {CategoriesModel} from './categories-model';
 import JwtToken from './services/jwt-token';
-import {Deptos, User, Categories} from './services/resources';
+import {Deptos, User, Categories, Userid} from './services/resources';
 import SessionStorage from './services/session-storage';
 
 
@@ -13,7 +13,6 @@ Vue.use(Vuex);
 
 const state = {
     depts: [],
-    users: [],
     categories: [],
     users: [],
     auth: {
@@ -129,19 +128,18 @@ const actions = {
         
         return JwtToken.accessToken(email, password_digest)
             .then(response => {
-                // console.log(response.data.token)
                 context.commit('authenticated');
-                context.dispatch('getUser');
-                
-            return response;
+                // context.dispatch('getUser', response.data.id);
+
+                return response;
         })
     },
 
 
-    getUser(context){
-        User.query().then(response => {
-            
-            context.commit('setUser', response.data[1]);
+    getUser(context, user_id){
+        console.log('getUser', Userid);
+        Userid.query({id: user_id}).then(response => {
+            context.commit('setUser', response.data);
         })
     },
 
