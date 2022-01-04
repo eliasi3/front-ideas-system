@@ -21,7 +21,7 @@
 
                                 <label for="" class="text-xs font-semibold px-3">SENHA</label>
                                 <div class="text-center items-center border-b border-gray-500 py-2">
-                                <input v-model="user.password_digest" type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Digite a Senha" >
+                                <input v-model="user.password_digest" required='' type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Digite a Senha" >
                                 </div><br>
 
                                 <label for="" class="text-xs font-semibold px-3">NOME</label>
@@ -41,7 +41,7 @@
 
                                 <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
                                 <div class="text-center flex items-center border border-gray-500 py-2" >
-                                <select v-model="user.dept_id" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+                                <select v-model="user.dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
                                 <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
                                 </select>    
                                 </div><br>
@@ -73,12 +73,12 @@
         data(){
             return {
                 user: {
-                    username: null,
-                    user_name: null,
-                    email: null,
-                    password_digest: null,
-                    user_phone: null,
-                    dept_id: null,
+                    username: '',
+                    user_name: '',
+                    email: '',
+                    password_digest: '',
+                    user_phone: '',
+                    dept_id: '',
                 },
                 options: [],
                 id_depto: null,
@@ -98,14 +98,32 @@
               
                 //alert('Comunicando com o Servidor API....');
                 // console.log( this.user)
+                if(this.user.username.length <= 4){
+                    alert('Preencha no mínimo 5 caracteres no username!');
+                }else{
+                  if(this.user.email.length <= 7){
+                    alert('Preencha no mínimo 8 caracteres no campo de email!');
+                    }else{
+                        if(this.user.password_digest.length <= 5){
+                            alert('Preencha no mínimo 6 caracteres no campo de senha!');
+                        }else{
+                           if(this.user.user_name.length <= 3){
+                            alert('Preencha no mínimo 4 caracteres no campo de nome de usuário!');
+                            }else{
+                                store.dispatch('saveuser', this.user)
+                                .then((response) => {
+                                    this.$router.push({name: 'listuser'});
+                                })
+                                .catch((responseError) => {
+                                    console.log('erro no cadastro de user: /usuarios.vue')
+                                })
+                            }
+                        }
+                    }
+                 }        
                 
-                store.dispatch('saveuser', this.user)
-                    .then((response) => {
-                        this.$router.push({name: 'listuser'});
-                    })
-                    .catch((responseError) => {
-                        console.log('erro no cadastro de user: /usuarios.vue')
-                    })
+                
+                
             }
         }
     }

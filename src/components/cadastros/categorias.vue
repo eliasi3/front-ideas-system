@@ -68,7 +68,10 @@
               
                 //alert('Comunicando com o Servidor API....');
                 // console.log( this.user)
-                store.dispatch('savecat', this.cat)
+                if(this.cat.cat_name.length <= 4){
+                    alert('Preencha no mínimo 5 caracteres no nome da categoria!');
+                }else{
+                    store.dispatch('savecat', this.cat)
                     .then((response) => {
                         this.$router.push({name: 'listcat'});
                         location.reload(true);
@@ -77,6 +80,8 @@
                     .catch((responseError) => {
                         console.log('erro no cadastro de categoria: /categorias.vue')
                     })
+                }
+                
             }
         }
     }
