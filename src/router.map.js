@@ -20,6 +20,8 @@ import Listamissions from './components/listagem/listamissions.vue';
 import Listacategories from './components/listagem/listcategories.vue';
 import Listausers from './components/listagem/listusers.vue';
 import ListaDeptos from './components/listagem/Dashboard.vue';
+import Listaideas from './components/listagem/listideas.vue';
+
 import UsuariosEditar from './components/edit/Editaruser.vue';
 import Editardep from './components/edit/Editardep.vue';
 import Editarcat from './components/edit/Editarcat.vue';
@@ -55,6 +57,12 @@ export default [
         name: 'listdep',
         path: '/listdeptos',
         component : ListaDeptos,
+        meta: {auth: true}
+    },
+    {
+        name: 'listideas',
+        path: '/listideas',
+        component : Listaideas,
         meta: {auth: true}
     },
     {
