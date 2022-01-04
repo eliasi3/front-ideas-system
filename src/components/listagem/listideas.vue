@@ -1,105 +1,66 @@
 <template>
-<div>
-    <br>
-    <v-row><div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">IDEIAS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='addidea()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span></div>
-        <table class="divide-y divide-gray-300 "  width='100%' style=''>
-                    <thead class="bg-blue-200">
-                        <tr>
-                            <th class="px-6 py-2 text-xs text-gray-500 text-left">
-                                ID
-                            </th>
-                            <th class="px-6 py-2 text-xs text-gray-500 text-left">
-                                NOME
-                            </th>
-                            <th class="px-6 py-2 text-xs text-gray-500 text-left">
-                                DESCRIÇÃO
-                            </th>
-                            <th class="px-6 py-2 text-xs text-gray-500 text-left">
-                                USUÁRIO
-                            </th>
-                            <th class="px-6 py-2 text-xs text-gray-500 text-left">
-                                CETEGORIA
-                            </th>
-                            <th class="px-6 py-2 text-xs text-gray-500 text-left">
-                                MISSÃO
-                            </th>
+    <center>
+        
+        <div style='background-color:white; border-radius:10px; width:90%;padding:10px;margin-bottom:10px;'
+       v-for="(ideas, i) in isIdea" :key="i">
+            <table class="border-collapse table-auto w-full text-sm">
+            <tbody class="bg-white bg-gray-800">
+                
+                    <tr>
+                        <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400" colspan='3'>
+                            <span style='font-size:25px;'>#Título da ideia: {{ideas.idea_name.toUpperCase()}}</span><br>
+                            <b>CRIADOR:</b>{{ideas.user.user_name}},
+                            <b>CATEGORIA:</b> {{ideas.category.cat_name}},
+                            <b>MISSÃO:</b>  {{ideas.mission.mis_name}}
+                        </td>
+                    </tr>
+                    <tr>
                         
-                            <th class="px-6 py-2 text-xs text-gray-500 text-left">
-                                
-                            </th>
-                              <th class="px-6 py-2 text-xs text-gray-500 text-left">
-                                
-                            </th>
+                        <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400" colspan='3'>
                             
-                            
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-300">
-                        <tr class="whitespace-nowrap"
-                        v-for="(ideas, i) in isIdea"
-                        :key="i"
-                        cols="12"
-                        md="4"
-                        lg="2">
-                            <td class="px-6 py-4 text-sm text-gray-500">
-                                {{ideas.id}}
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="text-sm text-gray-900">
-                                    {{ideas.idea_name}}
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-500">
-                                {{ideas.idea_description}}
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-500">
-                                {{ideas.user.user_name}}
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-500">
-                                {{ideas.category.cat_name}}
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-500">
-                                {{ideas.mission.mis_name}}
-                            </td>
-                            <td class="px-6 py-4 text-right">
-                                <router-link v-bind:to="{ name: 'editarideia', params: {id: ideas.id} }">
-                                    <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
-                                </router-link>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deletecat(ideas.id,ideas.idea_name)'>Excluir</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>    
-    </v-row>   
-    </div>
+                        
+                        <div style='float:left;margin-right:10px;width:230px;'>
+
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" style='position: relative;' alt="">
+
+                        </div>
+                        <div style='margin:10px;'>
+                            <span>{{ideas.idea_description}} </span>
+                        
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400" colspan='2' style='text-align:right;width:85%;'>
+                            <router-link v-bind:to="{ name: 'editarideia', params: {id: ideas.id} }">
+                                <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
+                            </router-link>
+                        </td>
+                    </tr>
+                
+            </tbody>
+            </table>
+        </div>
+        
+        
+
+    </center>
 </template>
 
 <script>
-
-import store from '../../store.js';
-// import { Autor, Livro } from '../services/resources';
-
-
-
+import store from '../../store';
 export default {
-    
+    name: 'Listaideas',
     data () {
         return {
-            menuPerfil: false,
-            selected: '0',
-            options: [],
-            // index: this.selected
+
             }
-            
     },
     created(){
-            if(this.isAuth) {
-                
+        
+            if(this.isAuth) {     
                 store.dispatch('load-ideas');
             }
-       
     },
     computed: {
         isEmail() {
@@ -113,23 +74,8 @@ export default {
         },
     },
     methods: {
-        // filtro(){
-            
-        //     console.log(this.selected)
-        //     store.dispatch('load-livros', this.selected);
-        //     return false;
-        //     // console.log(this.selected)
-        // },
-        abrir() {
-            this.menuPerfil = this.menuPerfil == false ? true : false;
-            },
-        // User() {
-        //     return User.get(id)
-        // },
-        // MethoddeTextoTeste() {
-        //     return 'TESTE'
-        // }
-         deletecat(id, idea_name){
+
+        deletecat(id, idea_name){
              if (confirm('Deseja excluir a ideia ' +idea_name+ ' permanentemente?')){
               const req = fetch(`http://localhost:3000/ideas/${id}`,{
                 method: "DELETE"
@@ -143,14 +89,11 @@ export default {
         addidea(){
                 this.$router.push({name: 'cadastroidea'});
             }
-    },
-    
-  
+        
+        }
 }
 </script>
 
-<style scoped>
-.mx-auto{
-    text-align: justify;
-}
+<style>
+
 </style>
