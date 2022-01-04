@@ -15,6 +15,7 @@ import DepartamentosCadastro from './components/cadastros/departamentos.vue';
 import CategoriasCadastro from './components/cadastros/categorias.vue';
 import UsuariosCadastro from './components/cadastros/usuarios.vue';
 import MissoesCadastro from './components/cadastros/missoes.vue';
+import CadastroIdea from './components/cadastros/ideas.vue';
 
 import Listamissions from './components/listagem/listamissions.vue';
 import Listacategories from './components/listagem/listcategories.vue';
@@ -25,6 +26,7 @@ import Listaideas from './components/listagem/listideas.vue';
 import UsuariosEditar from './components/edit/Editaruser.vue';
 import Editardep from './components/edit/Editardep.vue';
 import Editarcat from './components/edit/Editarcat.vue';
+import Editarideia from './components/edit/Editarideia.vue';
 
 
 
@@ -95,6 +97,14 @@ export default [
         component: MissoesCadastro,
         meta: {auth: true}
     },
+
+    {
+        name: 'cadastroidea',
+        path: '/ideas',
+        component: CadastroIdea,
+        meta: {auth: true}
+    },
+
     {
         name: 'editusuarios',
         path: '/editusuarios',
@@ -111,6 +121,12 @@ export default [
         name: 'editcat',
         path: '/editcat',
         component: Editarcat,
+        meta: {auth: true}
+    },
+    {
+        name: 'editarideia',
+        path: '/editarideia',
+        component: Editarideia,
         meta: {auth: true}
     },
 ];

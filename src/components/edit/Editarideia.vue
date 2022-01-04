@@ -5,39 +5,42 @@
             
             <div class="w-full md:w-1/1 py-10 px-5 md:px-10">
                 <div class="text-center mb-100">
-                    <h2 class="font-bold text-3xl text-gray-900 text-sky-600">EDIÇÃO DO USUÁRIO: <br>{{ user.user_name.toUpperCase() }}</h2>
+                    <h2 class="font-bold text-3xl text-gray-900 text-sky-600">EDIÇÃO DE IDEIA: <br>{{ idea.idea_name.toUpperCase() }}</h2>
                     <br><br>
                 </div>
-                <form  @submit.prevent="updateuser()" method="POST">
+                <form  @submit.prevent="updateidea()" method="POST">
                 <div>
                     <div class="text-center">
                         <div class="w-full px-3 mb-5 text-left">
                             
-                            <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
+                            <label for="" class="text-xs font-semibold px-3"> NOME</label>
                             <div class="text-center flex items-center border-b border-gray-500 py-2" style=''>
-                                <input v-model="user.username" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Username do Usuário" >
+                                <input v-model="idea.idea_name" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" >
                             </div><br>
-                            <label for="" class="text-xs font-semibold px-3">SENHA</label>
+                            <label for="" class="text-xs font-semibold px-3">DESCRIÇÃO</label>
                             <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <input v-model="user.password_digest" type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome e Sobrenome do Usuário" >
+                                <textarea v-model="idea.idea_description" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" ></textarea>
                             </div><br>
-                            <label for="" class="text-xs font-semibold px-3">NOME</label>
-                            <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <input v-model="user.user_name" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome e Sobrenome do Usuário" >
+
+                            <label for="" class="text-xs font-semibold px-3">USUARIO</label>
+                                <div class="text-center flex items-center border-b border-gray-500 py-2">
+                                <select v-model="idea.user_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+                                <option v-for="users in isUser" :key='users.id' :value='users.id'>{{users.user_name}}</option>
+                                </select>
                             </div><br>
-                            <label for="" class="text-xs font-semibold px-3">E-MAIL</label>
-                            <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <input v-model="user.email" type="email" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="E-mail do usuário" >
+                            
+                            <label for="" class="text-xs font-semibold px-3">CATEGORIA</label>
+                                <div class="text-center flex items-center border-b border-gray-500 py-2">
+                                <select v-model="idea.category_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+                                <option v-for="cat in isCats" :key='cat.id' :value='cat.id'>{{cat.cat_name}}</option> 
+                                </select>   
                             </div><br>
-                            <label for="" class="text-xs font-semibold px-3">TELEFONE</label>
-                            <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <input v-model="user.user_phone" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="E-mail do usuário" >
-                            </div><br>
-                            <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
-                            <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <select v-model="user.dept_id" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
-                                    <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
-                                </select>    
+
+                            <label for="" class="text-xs font-semibold px-3">MISSÃO</label>
+                                <div class="text-center flex items-center border-b border-gray-500 py-2">
+                                <select v-model="idea.mission_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+                                <option v-for="mis in isMiss" :key='mis.id' :value='mis.id'>{{mis.mis_name}}</option> 
+                                </select>   
                             </div><br>
                             
                         </div>
@@ -45,7 +48,7 @@
  
                     <div class="flex -mx-3">
                         <div class="w-full px-3 mb-5">
-                            <router-link v-bind:to="{ name: 'listuser'}">
+                            <router-link v-bind:to="{ name: 'listideas'}">
                                     <a href="#" class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-center text-white rounded-lg px-3 py-3 font-semibold" >CANCELAR</a>
                             </router-link>
                         </div>
@@ -63,52 +66,59 @@
 
 <script>
 import store from '../../store';
-import { Userid } from '../../services/resources';
+import { Ideid } from '../../services/resources';
    export default {
-    name: 'Editaruser',
+    name: 'Editarideia',
     data(){
         return {
-          user: {
-            username: null,
-            user_name: null,
-            password_digest: null,
-            email: null,
-            user_phone: null,
-            dept_id: null,
+         idea: {
+                idea_name: null,
+                idea_description:null,
+                user_id: null,
+                category_id: null,
+                mission_id:null,
           },
           options: [],
-          user_id: this.$route.params.id,
+          idea_id: this.$route.params.id,
           msg: null,    
         }
     },
      created() {
-      store.dispatch('load-depts');
+        store.dispatch('load-users');
+        store.dispatch('load-categories');
+        store.dispatch('load-missions');
       // this.getLivros(this.$route.params.id);
-      Userid.query({id: this.user_id}).then(response => {
-            this.user.username = response.data.username,
-            this.user.user_name = response.data.user_name,
-            this.user.password_digest = response.data.password_digest
-            this.user.email = response.data.email
-            this.user.user_phone = response.data.user_phone
-            this.user.dept_id = response.data.dept_id
+      Ideid.query({id: this.idea_id}).then(response => {
+            this.idea.idea_name = response.data.idea_name,
+            this.idea.idea_description = response.data.idea_description,
+            this.idea.user_id = response.data.user_id,
+            this.idea.category_id = response.data.category_id,
+            this.idea.mission_id = response.data.mission_id
             // console.log(reponse.data)
 
             // this.id_livro = response.data.id 
         })
     },
      computed: {
-            isDept(){
-            return  store.state.depts;
+            isUser(){
+                return  store.state.users;
             },
+            isCats(){
+                return  store.state.categories;
+            },
+            isMiss(){
+               return  store.state.missions; 
+            }
      },
      methods: {  
-      updateuser() { 
-            if(confirm("Deseja realmente editar esse usuário?")){
-            Userid.update({id: this.user_id}, {user: this.user}).then(response => {
+      updateidea() { 
+            if(confirm("Deseja realmente editar essa ideia?")){
+            Ideid.update({id: this.idea_id}, {idea: this.idea}).then(response => {
               // success callback
-            console.log(this.user_id)
+            console.log(this.idea_id)
             // return response.data.msg
-            alert('Usuário atualizado com sucesso!')
+            location.reload(true);
+            alert('Ideia atualizado com sucesso!')
             }, response => {    
               // error callback
             console.log('DEU ERRADO!')
@@ -117,7 +127,7 @@ import { Userid } from '../../services/resources';
 
           // store.dispatch('savelivro', this.livro)
              
-          this.$router.push({name: 'listuser'});
+          this.$router.push({name: 'listideas'});
           }else{
 
           }

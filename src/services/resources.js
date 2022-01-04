@@ -57,12 +57,15 @@ const User = Vue.resource('http://localhost:3000/users');
 const Deptos = Vue.resource(`http://localhost:3000/depts`);
 const Categories = Vue.resource(`http://localhost:3000/categories`);
 const Ideas = Vue.resource(`http://localhost:3000/ideas`);
+const Missions = Vue.resource(`http://localhost:3000/missions`);
 
 const Userid = Vue.resource(`http://localhost:3000/users{/id}`);
 const Deptosid = Vue.resource(`http://localhost:3000/depts{/id}`);
 const Catid = Vue.resource(`http://localhost:3000/categories{/id}`);
+const Ideid = Vue.resource(`http://localhost:3000/ideas{/id}`);
 
 
 
 
-export {User, Deptos, Userid, Categories, Deptosid, Catid, Ideas };
+
+export {User, Deptos, Userid, Categories, Deptosid, Ideas, Catid, Missions, Ideid };

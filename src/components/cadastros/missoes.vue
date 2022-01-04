@@ -1,7 +1,7 @@
 <template>
  
 <div class="min-w-screen min-h-screen flex items-center justify-center px-5 py-5" style="margin-top:15px; margin-bottom:-90px"> 
-    <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:600px">
+    <div class="bg-white text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:600px">
         <div class="md:flex w-full">
             
             <div class="w-full md:w-1/1 py-10 px-5 md:px-10">

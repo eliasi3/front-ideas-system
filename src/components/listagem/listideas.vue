@@ -1,7 +1,7 @@
 <template>
 <div>
     <br>
-    <v-row><div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">IDEIAS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='addcat()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span></div>
+    <v-row><div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">IDEIAS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='addidea()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span></div>
         <table class="divide-y divide-gray-300 "  width='100%' style=''>
                     <thead class="bg-blue-200">
                         <tr>
@@ -62,7 +62,7 @@
                                 {{ideas.mission.mis_name}}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <router-link v-bind:to="{ name: '', params: {id: ideas.id} }">
+                                <router-link v-bind:to="{ name: 'editarideia', params: {id: ideas.id} }">
                                     <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
                                 </router-link>
                             </td>
@@ -129,19 +129,19 @@ export default {
         // MethoddeTextoTeste() {
         //     return 'TESTE'
         // }
-         deletecat(id, cat_name){
-             if (confirm('Deseja excluir a categoria ' +cat_name+ ' permanentemente?')){
-              const req = fetch(`http://localhost:3000/categories/${id}`,{
+         deletecat(id, idea_name){
+             if (confirm('Deseja excluir a ideia ' +idea_name+ ' permanentemente?')){
+              const req = fetch(`http://localhost:3000/ideas/${id}`,{
                 method: "DELETE"
               });
                 
                 // store.dispatch('load-depts');
              };
              location.reload(true);
-             alert('Categoria excluida com sucesso!')
+             alert('Ideia excluida com sucesso!')
         },
-        addcat(){
-                this.$router.push({name: 'cadastrocategorias'});
+        addidea(){
+                this.$router.push({name: 'cadastroidea'});
             }
     },
     
