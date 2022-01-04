@@ -3,8 +3,9 @@ import Vuex from 'vuex';
 import {DeptosModel} from './deptos-model';
 import {UsersModel} from './users-model';
 import {CategoriesModel} from './categories-model';
+import {MissionModel} from './mission-model';
 import JwtToken from './services/jwt-token';
-import {Deptos, User, Categories, Userid} from './services/resources';
+import {Deptos, User, Categories, Userid, Missions} from './services/resources';
 import SessionStorage from './services/session-storage';
 
 
@@ -15,6 +16,7 @@ const state = {
     depts: [],
     categories: [],
     users: [],
+    missions: [],
     auth: {
         check: JwtToken.token != null,
         user: SessionStorage.getObject('user')
@@ -29,6 +31,10 @@ const mutations = {
     },
     'set-deptos'(state, depts){
         state.depts = depts;
+        // console.log(state.depts);
+    },
+    'set-mission'(state, missions){
+        state.missions = missions;
         // console.log(state.depts);
     },
     'set-users'(state, user){
@@ -97,18 +103,6 @@ const actions = {
         // }
     },
     'load-users'(context){
-        // if(filtro != 0){
-            // Deptos.query({author: filtro}).then(response => {
-            
-            // var an_obj = response.data.data;
-            //     // console.log(an_obj)
-            // var responseobj = Object.values(an_obj);
-            //     // console.log(responseobj)
-            // let livros = responseobj.map(element => new LivrosModel(element.id, element.name, element.author, element.description));  
-            // context.commit('set-livros', livros);
-            
-            // });
-        // }else {
             User.query().then(response => {
                 var response = response.data;
                 // console.log(response)
@@ -117,6 +111,20 @@ const actions = {
                 let user = responseinobj.map(element => new UsersModel(element.id, element.dept, element.username, element.email, element.user_name, element.user_phone, element.dept_id));  
                 // console.log('load', user)
                 context.commit('set-users', user);
+            
+            });
+        // }
+    },
+    'load-missions'(context){
+            Missions.query().then(response => {
+                var response = response.data;
+                
+                // console.log('resposta em json:', response)
+                var responseinobj = Object.values(response);
+                // console.log('transformado em OBJECT: ', responseinobj);
+                let missions = responseinobj.map(element => new MissionModel(element.id, element.mis_name, element.mis_description, element.mis_image, element.dept, element.user));  
+                // console.log('load', user)
+                context.commit('set-mission', missions);
             
             });
         // }
@@ -137,7 +145,7 @@ const actions = {
 
 
     getUser(context, user_id){
-        console.log('getUser', Userid);
+        // console.log('getUser', Userid);
         Userid.query({id: user_id}).then(response => {
             context.commit('setUser', response.data);
         })
@@ -176,6 +184,7 @@ const actions = {
             console.log('erro no cadastro')
         });
     },
+
     
     
 };
