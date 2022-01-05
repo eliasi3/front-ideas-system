@@ -115,10 +115,11 @@
                         formData.append('file', this.miss.mis_image);
                         const headers = { 'Content-Type': 'multipart/form-data' };
 
-                        axios.post('http://localhost:3000/missions', formData, { headers }).then((res) => {
-                                res.data; // binary representation of the file
-                                res.status; // HTTP status
-                        });
+                        console.log('cadastrado com sucesso!', formData)
+                        // axios.post('http://localhost:3000/missions', formData, { headers }).then((res) => {
+                        //         res.data; // binary representation of the file
+                        //         res.status; // HTTP status
+                        // });
                     
                         
                     }
