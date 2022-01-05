@@ -24,11 +24,14 @@
                                 <textarea v-model="idea.idea_description" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Descrição da ideia" ></textarea>
                                 </div><br>
 
-                                <label for="" class="text-xs font-semibold px-3">USUARIO</label>
-                                <div class="text-center flex items-center border border-gray-500 py-2" >
-                                <select v-model="idea.user_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
-                                <option v-for="users in isUser" :key='users.id' :value='users.id'>{{users.user_name}}</option>
-                                </select>
+                                <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
+                                <div class="text-center flex items-center border-gray-500 py-2" >
+                                     <b>{{userId.user_name}}</b>, você será o criador desta ideia
+                                </div><br>
+
+                                <label for="" class="text-xs font-semibold px-3">MISSÃO</label>
+                                <div class="text-center flex items-center border-gray-500 py-2" >
+                                     Sua missão é: <b> {{idea.mission_name}}</b>
                                 </div><br>  
                             
                                 <label for="" class="text-xs font-semibold px-3">CATEGORIA</label>
@@ -38,12 +41,7 @@
                                 </select>   
                                 </div><br>
 
-                                <label for="" class="text-xs font-semibold px-3">MISSÃO</label>
-                                <div class="text-center flex items-center border border-gray-500 py-2" >
-                                <select v-model="idea.mission_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
-                                <option v-for="mis in isMiss" :key='mis.id' :value='mis.id'>{{mis.mis_name}}</option> 
-                                </select>   
-                                </div><br>
+                                
                         </div>
                     </div>
  
@@ -66,6 +64,7 @@
 
 <script type="text/javascript">
     import store from '../../store';
+    import { Missionid } from '../../services/resources';
     // import Deptos from '../../services/resources.js';
 
     export default {
@@ -74,15 +73,14 @@
                 idea: {
                     idea_name: '',
                     idea_description: '',
-                    user_id: '',
+                    user_id: store.state.auth.user.id,
                     category_id: '',
-                    mission_id: '',
+                    mission_id: this.$route.params.idmis,
+                    mission_name: null
                 },
                 options: [],
                 id_user: null,
                 category_id: null,
-                mission_id: null,
-
 
             }
         },
@@ -90,24 +88,32 @@
             store.dispatch('load-users');
             store.dispatch('load-categories');
             store.dispatch('load-missions');
+            Missionid.query({id: this.idea.mission_id}).then(response => {
+               this.idea.mission_name = response.data.mis_name
+            // console.log(reponse.data)
+
+            // this.id_livro = response.data.id 
+        })
         },
         computed: {
             isUser(){
                 return  store.state.users;
             },
+            userId() {
+            return store.state.auth.user ? store.state.auth.user : {'user_name': ''}; 
+            },
             isCats(){
                 return  store.state.categories;
             },
-            isMiss(){
-               return  store.state.missions; 
-            }
+          
+
         },
         methods: {
             cadastrar(){
+                console.log(this.idea)
                 if(this.idea.idea_name.length <= 4){
                     alert('Preencha no mínimo 5 caracteres na ideia!');
                 }else{
-                    //console.log(this.idea)
                     store.dispatch('saveidea', this.idea)
                     .then((response) => {
                         this.$router.push({name: 'listideas'});

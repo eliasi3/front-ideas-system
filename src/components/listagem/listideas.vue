@@ -1,14 +1,15 @@
 <template>
     <center>
-        
-        <div style='background-color:white; border-radius:10px; width:90%;padding:10px;margin-bottom:10px;'
+        <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom: 10px;">
+            <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">IDEIAS</span> <span style='float:right;margin-right:10px;font-size:40px; ' id='pointmouser' @click='addidea()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span></div>
+        <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;'
        v-for="(ideas, i) in isIdea" :key="i">
             <table class="border-collapse table-auto w-full text-sm">
             <tbody class="bg-white bg-gray-800">
                 
                     <tr>
                         <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400" colspan='3'>
-                            <span style='font-size:25px;'>#Título da ideia: {{ideas.idea_name.toUpperCase()}}</span><br>
+                            <span style='font-size:25px;'>#Título da ideia: {{ideas.idea_name.toUpperCase()}}<br></span><br>
                             <b>CRIADOR:</b>{{ideas.user.user_name}},
                             <b>CATEGORIA:</b> {{ideas.category.cat_name}},
                             <b>MISSÃO:</b>  {{ideas.mission.mis_name}}
@@ -24,7 +25,7 @@
                             <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" style='position: relative;' alt="">
 
                         </div>
-                        <div style='margin:10px;'>
+                        <div style='margin:10px;text-align: justify'>
                             <span>{{ideas.idea_description}} </span>
                         
                         </div>
@@ -35,13 +36,14 @@
                             <router-link v-bind:to="{ name: 'editarideia', params: {id: ideas.id} }">
                                 <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
                             </router-link>
+                            <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deleteidea(ideas.id,ideas.idea_name)'>Excluir</a>
                         </td>
                     </tr>
                 
             </tbody>
             </table>
         </div>
-        
+    
         
 
     </center>
@@ -75,7 +77,7 @@ export default {
     },
     methods: {
 
-        deletecat(id, idea_name){
+        deleteidea(id, idea_name){
              if (confirm('Deseja excluir a ideia ' +idea_name+ ' permanentemente?')){
               const req = fetch(`http://localhost:3000/ideas/${id}`,{
                 method: "DELETE"
