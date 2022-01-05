@@ -64,7 +64,7 @@
                                 </router-link>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="#" @click='deleteuser(users.id, users.user_name)' class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full">Deletar</a>
+                                <a href="#" @click='deleteuser(users.id, users.user_name)' class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full">Excluir</a>
                             </td>
                             
                         </tr>
