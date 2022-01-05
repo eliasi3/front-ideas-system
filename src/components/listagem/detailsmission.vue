@@ -4,7 +4,7 @@
             <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">MISSÃO: {{miss.mis_name}}</span>
 
         <span style='float:right;'>
-                <a href="#" style='font-size:15px;' class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" > Excluir</a>
+                <a href="#" v-if='excluir' @click='excluirmissao()' style='font-size:15px;' class="px-4 py-1 text-sm text-white bg-red-700 rounded-full" > Excluir </a>
 
             <router-link v-bind:to="{ name: 'listmiss'}">
                 <a href="#" style='font-size:15px;' class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" > Voltar</a>
@@ -125,7 +125,12 @@ export default {
             
     },
     methods: {
-        
+        excluirmissao(){
+            if(confirm('Deseja realmente excluir essa missão?')){
+                alert('ainda não está feito o method!')
+            }
+            
+        }
         }
 }
 </script>

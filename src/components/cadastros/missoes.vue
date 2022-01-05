@@ -62,7 +62,7 @@
 
 <script type="text/javascript">
     import store from '../../store';
-
+    import axios from 'axios'; 
     export default {
         data(){
             return {
@@ -109,15 +109,16 @@
                     alert('Preencha no mínimo 11 caracteres no campo de descrição da missão!');
                     }else{ 
 
-                //         // alert('continua');
-                        
-                        store.dispatch('savemission', this.miss)
-                        .then((response) => {
-                            this.$router.push({name: 'listmiss'});
-                        })
-                        .catch((responseError) => {
-                            console.log('erro no cadastro de user: /usuarios.vue')
-                        })
+                       // alert('continua');
+                        const formData = new FormData();
+
+                        formData.append('file', this.miss.mis_image);
+                        const headers = { 'Content-Type': 'multipart/form-data' };
+
+                        axios.post('http://localhost:3000/missions', formData, { headers }).then((res) => {
+                                res.data; // binary representation of the file
+                                res.status; // HTTP status
+                        });
                     
                         
                     }
