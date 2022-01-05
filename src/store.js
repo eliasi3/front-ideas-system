@@ -6,7 +6,7 @@ import {CategoriesModel} from './categories-model';
 import {IdeasModel} from './ideas-model';
 import JwtToken from './services/jwt-token';
 import {MissionModel} from './mission-model';
-import {Deptos, User, Categories, Userid, Ideas, Missions} from './services/resources';
+import {Deptos, User, Categories, Userid, Ideas, Missions, Idemis} from './services/resources';
 import SessionStorage from './services/session-storage';
 
 
@@ -109,8 +109,11 @@ const actions = {
         // }
     },
 
-    'load-ideas'(context){
-        Ideas.query().then(response => {
+    'load-ideas'(context, idea){
+        console.log(idea)
+        if(!idea){
+            console.log('não existe uma ideia');
+            Ideas.query().then(response => {
                 var an_obj = response.data;
                 // console.log(an_obj)
                     // console.log(an_obj)
@@ -120,8 +123,36 @@ const actions = {
                 context.commit('set-ideas', ideas);
             
             });
-        // }
-    },
+            
+        }else{
+            console.log('Existe uma ideia');
+            Idemis.query({mission_id: idea}).then(response => {
+                
+                var an_obj = response.data;
+                //console.log(an_obj)
+                var responseobj = Object.values(an_obj);
+                // console.log(responseobj)
+                let ideas = responseobj.map(element => new IdeasModel(element.id, element.idea_name, element.idea_description, element.user, element.category, element.mission));  
+                context.commit('set-ideas', ideas);
+                
+            });    
+
+            
+        }
+    },   
+
+    //     Ideas.query().then(response => {
+    //             var an_obj = response.data;
+    //             // console.log(an_obj)
+    //                 // console.log(an_obj)
+    //             var responseobj = Object.values(an_obj);
+    //                 // console.log(responseobj)
+    //             let ideas = responseobj.map(element => new IdeasModel(element.id, element.idea_name, element.idea_description, element.user, element.category, element.mission));  
+    //             context.commit('set-ideas', ideas);
+            
+    //         });
+    //     // }
+    // },
     'load-users'(context){
             User.query().then(response => {
                 var response = response.data;

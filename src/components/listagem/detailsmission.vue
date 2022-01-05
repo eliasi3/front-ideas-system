@@ -144,14 +144,11 @@ export default {
             }
     },
     created(){
-<<<<<<< HEAD
-=======
-                
+        store.dispatch('load-ideas', this.mission_id);       
                 if(!this.mission_id){
                    this.$router.push({name: 'listmiss'});     
                 }   
                          
->>>>>>> 243e083764eab702c0ef0a269f943911b0cb558d
                 store.dispatch('load-missions');
 
                 Missionid.query({id: this.mission_id}).then(response => {
@@ -166,9 +163,6 @@ export default {
                     this.excluir = true
                 }
         });
-        if(this.isAuth) {     
-                store.dispatch('load-ideas');
-            }
             
     },
     computed: {
