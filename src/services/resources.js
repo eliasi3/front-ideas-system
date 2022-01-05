@@ -63,9 +63,11 @@ const Userid = Vue.resource(`http://localhost:3000/users{/id}`);
 const Deptosid = Vue.resource(`http://localhost:3000/depts{/id}`);
 const Catid = Vue.resource(`http://localhost:3000/categories{/id}`);
 const Ideid = Vue.resource(`http://localhost:3000/ideas{/id}`);
+const Missionid = Vue.resource(`http://localhost:3000/missions{/id}`);
 
 
 
 
 
-export {User, Deptos, Userid, Categories, Deptosid, Ideas, Catid, Missions, Ideid };
+
+export {User, Deptos, Userid, Categories, Deptosid, Ideas, Catid, Missions, Ideid, Missionid};

@@ -22,6 +22,7 @@ import Listacategories from './components/listagem/listcategories.vue';
 import Listausers from './components/listagem/listusers.vue';
 import ListaDeptos from './components/listagem/Dashboard.vue';
 import Listaideas from './components/listagem/listideas.vue';
+import Detalhesmiss from './components/listagem/detailsmission.vue';
 
 import UsuariosEditar from './components/edit/Editaruser.vue';
 import Editardep from './components/edit/Editardep.vue';
@@ -129,4 +130,10 @@ export default [
         component: Editarideia,
         meta: {auth: true}
     },
+    {
+        name: 'detalhesmiss',
+        path: '/detalhesmissao',
+        component: Detalhesmiss,
+        meta: {auth: true}
+    },    
 ];

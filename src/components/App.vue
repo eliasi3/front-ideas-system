@@ -24,6 +24,9 @@
                          <div v-if="menuCadastro" id="menucadastro" class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="cadastro-menu-button" tabindex="-1">
                          <!-- Active: "bg-gray-100", Not Active: "" -->
                             
+                                
+                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'cadastromissoes'}">Missões</router-link></span>
+
                                 <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'cadastrousuarios'}">Usuários</router-link></span>
                                 
                                 <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'cadastrodepartamentos'}">Departamentos</router-link></span>
@@ -47,8 +50,7 @@
 
                          <div v-if="menuMovimento" class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="cadastro-menu-button" tabindex="-1">
                          <!-- Active: "bg-gray-100", Not Active: "" -->
-
-                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'cadastromissoes'}">Missões</router-link></span>
+                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'listmiss'}">Missões</router-link></span>
 
                                 <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name:'listideas'}">Ideias</router-link></span>
 
@@ -68,8 +70,6 @@
 
                          <div v-if="menuList" class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="cadastro-menu-button" tabindex="-1">
                          <!-- Active: "bg-gray-100", Not Active: "" -->
-                            
-                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'listmiss'}">Missões</router-link></span>
 
                                 <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'listdep'}">Departamentos</router-link></span>
 
