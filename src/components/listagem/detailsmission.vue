@@ -31,7 +31,7 @@
                         <td width='50%' class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400">
                             <div style='padding:10px;border-radius:10px;width:100%;text-align:right;'> 
  
-                                <router-link v-bind:to="{ name: '', params: {} }">
+                                <router-link v-bind:to="{ name: 'cadastroidea', params: {id: user_id, idmis: mission_id}}">
                                     <a href="#" class="px-4 py-1 text-sm text-white bg-orange-400 rounded-full" >+ Adicionar Ideia</a>
                                 </router-link>
 
@@ -74,12 +74,53 @@
             </tbody>
             </table>
         </div>
+        <br>
         
-        <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:0px 0px 10px 10px ;font-size:30px;margin-top:10px;">
-            <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">IDEIAS DA MISSÃO:</span>
+        <!-- LISTAGEM DAS IDEIAS  -->
 
-        </div>
+        <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;">
+            <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">IDEIAS DA MISSÃO:</span></div>
+            <div style='background-color:white; border-radius:10px; width:100%;padding:10px;'
+       v-for="(ideas, i) in isIdea" :key="i">
+            
+            <table class="border-collapse table-auto w-full text-sm">
+                <tbody class="bg-white bg-gray-800">
+                
+                    <tr>
+                        <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400" colspan='3'>
+                            <span style='font-size:25px;'>#Título da ideia: {{ideas.idea_name.toUpperCase()}}<br></span><br>
+                            <b>CRIADOR:</b>{{ideas.user.user_name}},
+                            <b>CATEGORIA:</b> {{ideas.category.cat_name}},
+                            <b>MISSÃO:</b>  {{ideas.mission.mis_name}}
+                        </td>
+                    </tr>
 
+                    <tr>
+                        <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400" colspan='3'>
+                            
+                        
+                            <div style='float:left;margin-right:10px;width:230px;'>
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" style='position: relative;' alt="">
+
+                            </div>
+                            <div style='margin:10px;text-align: justify'>
+                                <span>{{ideas.idea_description}} </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400" colspan='2' style='text-align:right;width:85%;'>
+                            <router-link v-bind:to="{ name: 'editarideia', params: {id: ideas.id} }">
+                                <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
+                            </router-link>
+                            <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deleteidea(ideas.id,ideas.idea_name)'>Excluir</a>
+                        </td>
+                    </tr>
+                
+                </tbody>
+            </table>
+
+          </div>
     </center>
 </template>
 
@@ -105,25 +146,52 @@ export default {
             }
     },
     created(){
-                
-                
                 store.dispatch('load-missions');
 
                 Missionid.query({id: this.mission_id}).then(response => {
-                this.miss.mis_description = response.data.mis_description,
-                this.miss.user_name = response.data.user.user_name,
-                this.miss.criado = response.data.created_at,
-                this.miss.mis_name = response.data.mis_name,
-                this.criador = response.data.user.id
+                    this.miss.mis_description = response.data.mis_description,
+                    this.miss.user_name = response.data.user.user_name,
+                    this.miss.criado = response.data.created_at,
+                    this.miss.mis_name = response.data.mis_name,
+                    this.criador = response.data.user.id
                 
 
                 if(this.user_id == this.criador){
                     this.excluir = true
                 }
-        })
+        });
+        if(this.isAuth) {     
+                store.dispatch('load-ideas');
+            }
             
     },
+    computed: {
+        isEmail() {
+            return store.state.auth.user.email
+        },
+        isIdea(){
+            return store.state.ideas;
+        },
+        isAuth() {
+            return store.state.auth.check;
+        },
+    },
     methods: {
+
+        deleteidea(id, idea_name){
+             if (confirm('Deseja excluir a ideia ' +idea_name+ ' permanentemente?')){
+              const req = fetch(`http://localhost:3000/ideas/${id}`,{
+                method: "DELETE"
+              });
+                
+                // store.dispatch('load-depts');
+             };
+             location.reload(true);
+             alert('Ideia excluida com sucesso!')
+        },
+        addidea(){
+                this.$router.push({name: 'cadastroidea'});
+            }
         
         }
 }
