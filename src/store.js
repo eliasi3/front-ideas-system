@@ -184,6 +184,7 @@ const actions = {
     },
 
     savemission(context, miss){
+        // console.log('oque vai salvar? ', miss)
         Missions.save({mission: miss}).then(response => {
             console.log('Cadastro feito com sucesso!')
                // success callback

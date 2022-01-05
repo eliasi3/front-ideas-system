@@ -54,17 +54,21 @@ import { Deptosid } from '../../services/resources';
         }
     },
      created() {
-      store.dispatch('load-depts');
+            if(!this.dep_id){
+                this.$router.push({name: 'listdep'});     
+                } 
+
+            store.dispatch('load-depts');
 
 
-      // this.getLivros(this.$route.params.id);
-       Deptosid.query({id: this.dep_id}).then(response => {
-            this.depts.dep_name = response.data.dep_name
-            // console.log(reponse.data)
+            // this.getLivros(this.$route.params.id);
+            Deptosid.query({id: this.dep_id}).then(response => {
+                    this.depts.dep_name = response.data.dep_name
+                    // console.log(reponse.data)
 
-            // this.id_livro = response.data.id 
-        })
-    },
+                    // this.id_livro = response.data.id 
+                })
+        },
 
      computed: {
             isDept(){

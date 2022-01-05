@@ -84,11 +84,16 @@ import { Ideid } from '../../services/resources';
         }
     },
      created() {
+       if(!this.idea_id){
+                this.$router.push({name: 'listmiss'});     
+                }
+
+
         store.dispatch('load-users');
         store.dispatch('load-categories');
         store.dispatch('load-missions');
       // this.getLivros(this.$route.params.id);
-      Ideid.query({id: this.idea_id}).then(response => {
+        Ideid.query({id: this.idea_id}).then(response => {
             this.idea.idea_name = response.data.idea_name,
             this.idea.idea_description = response.data.idea_description,
             this.idea.user_id = response.data.user_id,

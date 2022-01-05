@@ -37,7 +37,7 @@
 
                                 <label for="avatar" class="text-xs font-semibold px-3">ADICIONAR CAPA</label>
                                 <div class="flex items-center justify-center pt-5" >
-                                <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg">
+                                    <input type="file" id="avatar" name="avatar" @change='onFilesSelected'>
                                 </div><br>
                         
                         </div>
@@ -71,7 +71,10 @@
                     mis_description: '',
                     dept_id: store.state.auth.user.dept.id,
                     user_id: store.state.auth.user.id,
+                    mis_image: null
+                    
                 },
+               
                     
             }
         }, 
@@ -91,10 +94,13 @@
             },
         },
         methods: {
+            
+            onFilesSelected(event){
+                this.miss.mis_image = event.target.files[0]
+            },
+
             cadastrar(){
               
-                //alert('Comunicando com o Servidor API....');
-                // console.log( this.miss)
                 
                 if(this.miss.mis_name.length <= 4){
                     alert('Preencha no mínimo 5 caracteres no nome da missão!');
@@ -102,8 +108,9 @@
                   if(this.miss.mis_description.length <= 10){
                     alert('Preencha no mínimo 11 caracteres no campo de descrição da missão!');
                     }else{ 
-                        // alert('continua');
 
+                //         // alert('continua');
+                        
                         store.dispatch('savemission', this.miss)
                         .then((response) => {
                             this.$router.push({name: 'listmiss'});

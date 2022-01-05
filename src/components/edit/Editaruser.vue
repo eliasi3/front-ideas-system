@@ -82,6 +82,11 @@ import { Userid } from '../../services/resources';
         }
     },
      created() {
+        if(!this.user_id){
+                this.$router.push({name: 'listuser'});     
+                }
+
+
       store.dispatch('load-depts');
       // this.getLivros(this.$route.params.id);
       Userid.query({id: this.user_id}).then(response => {
