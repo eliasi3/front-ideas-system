@@ -3,7 +3,7 @@
         <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom: 10px;">
             <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">IDEIAS</span> <span style='float:right;margin-right:10px;font-size:40px; ' id='pointmouser' @click='addidea()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span></div>
         <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;'
-       v-for="(ideas, i) in isIdea" :key="i">
+       v-for="(ideas, i) in isIde" :key="i">
             <table class="border-collapse table-auto w-full text-sm">
             <tbody class="bg-white bg-gray-800">
                 
@@ -36,7 +36,7 @@
                             <router-link v-bind:to="{ name: 'editarideia', params: {id: ideas.id} }">
                                 <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
                             </router-link>
-                            <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deleteidea(ideas.id,ideas.idea_name)'>Excluir</a>
+                            <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deleteidea(ideas.id, ideas.idea_name)'>Excluir</a>
                         </td>
                     </tr>
                 
@@ -56,19 +56,19 @@ export default {
     data () {
         return {
 
+            mission_id: null
             }
     },
     created(){
-        
             if(this.isAuth) {     
-                store.dispatch('load-ideas');
+                store.dispatch('load-ideas', this.mission_id);
             }
     },
     computed: {
         isEmail() {
             return store.state.auth.user.email
         },
-        isIdea(){
+        isIde(){
             return store.state.ideas;
         },
         isAuth() {
