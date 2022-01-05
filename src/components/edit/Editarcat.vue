@@ -54,16 +54,18 @@ import { Catid } from '../../services/resources';
         }
     },
      created() {
-      store.dispatch('load-categories');
 
+            if(!this.cat_id){
+                    this.$router.push({name: 'listcat'});     
+                } 
 
-      // this.getLivros(this.$route.params.id);
-       Catid.query({id: this.cat_id}).then(response => {
-            this.cats.cat_name = response.data.cat_name
-             //console.log(reponse.data.cat_name)
+            store.dispatch('load-categories');
 
-            // this.id_livro = response.data.id 
-        })
+            Catid.query({id: this.cat_id}).then(response => {
+                this.cats.cat_name = response.data.cat_name
+                //console.log(reponse.data.cat_name)
+                // this.id_livro = response.data.id 
+            })
     },
 
      computed: {
