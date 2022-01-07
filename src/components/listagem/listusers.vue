@@ -1,8 +1,25 @@
 <template>
 <div>
     <br>
-    <v-row><div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;margin-left:10px;' class="font-bold text-3xl text-gray-900 text-sky-600">USUÁRIOS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adduser()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span></div>
-        <table class="divide-y divide-gray-300 "  width='100%' style=''>
+    <v-row>
+        <div class="mb-3 xl:w-35">
+        <select class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal 
+        text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded transition ease-in-out m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none shadow-xl" 
+        v-model="selected" @change="filtrardepts()">
+                <option value="" placeholder="valor" >Departamentos</option>
+                <option :value="depts.id" v-for="(depts, i) in isDepts" :key="i">{{depts.dep_name}}</option>
+        </select>
+        </div>&nbsp&nbsp
+        
+    <div class="mb-3 xl:w-60">    
+    <input class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none shadow-xl " type="text" id="search-bar" placeholder="Busca">
+      </div>
+    <br><br>  
+
+    <div class='px-3 text-gray-500 shadow-xl ' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;margin-left:10px;' class="font-bold text-3xl text-gray-900 text-sky-600" >USUÁRIOS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adduser()' class="font-bold text-3xl text-gray-900 text-sky-600 ">+</span><br>
+
+        <table class="divide-y divide-gray-300"  width='100%' style=''>
                     <thead class="bg-blue-200">
                         <tr>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
@@ -70,6 +87,7 @@
                         </tr>
                     </tbody>
                 </table>    
+    </div>
     </v-row>   
     </div>
 </template>
@@ -84,8 +102,7 @@ export default {
     data () {
         return {
             menuPerfil: false,
-            selected: '0',
-            options: [],
+            selected: ""
             // index: this.selected
             }
     },
@@ -93,6 +110,7 @@ export default {
             if(this.isAuth) {
                 
                 store.dispatch('load-users');
+                store.dispatch('load-depts');
                 //console.log('entrou')
                 
                 // const res = axios.get('http://localhost:3000/users');
@@ -112,6 +130,9 @@ export default {
         },
         isAuth() {
             return store.state.auth.check;
+        },
+         isDepts() {
+            return store.state.depts;
         },
     },
     methods: {
@@ -142,8 +163,10 @@ export default {
         },
         adduser(){
                 this.$router.push({name: 'cadastrousuarios'});
-            }
-        
+            },
+        filtrardepts(){
+            store.dispatch('load-users', this.selected);
+        }
         }
     }
     
