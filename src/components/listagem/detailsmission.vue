@@ -142,7 +142,7 @@
                     </Modal>
 
                     <Modal v-model="showSecondModal" title="Second modal">
-                        second modal
+                        asdokdakso
                     </Modal>
             
                 </tbody>
@@ -153,11 +153,12 @@
 </template>
 <script>
 
+
 import VueModal from '@kouts/vue-modal'
 import '@kouts/vue-modal/dist/vue-modal.css'
 import Vue from 'vue'
-Vue.component('Modal', VueModal)
-Vue.component('Comments', VueModal)
+Vue.component('Modal', VueModal);
+
 
 import store from '../../store';
 
