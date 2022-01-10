@@ -68,7 +68,6 @@ export default {
     name: 'Listamissoes',
     data () {
         return {
-
             }
     },
     created(){
@@ -84,6 +83,7 @@ export default {
         isAuth() {
             return store.state.auth.check;
         },
+
     },
     methods: {
         getImgUrl(pet) {
