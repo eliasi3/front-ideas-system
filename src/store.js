@@ -8,7 +8,7 @@ import JwtToken from './services/jwt-token';
 import {MissionModel} from './mission-model';
 import {Deptos, User, Categories, Userid, Ideas, Missions, Idemis} from './services/resources';
 import SessionStorage from './services/session-storage';
-
+import axios from 'axios';
 
 Vue.use(Vuex);
 
@@ -181,7 +181,6 @@ const actions = {
         // }
     },
 
-    
 
     login(context, {email, password_digest}){
         // console.log(email, password_digest)
@@ -215,10 +214,11 @@ const actions = {
     },
 
     savemission(context, miss){
-        // console.log('oque vai salvar? ', miss)
-        Missions.save({mission: miss}).then(response => {
+        Missions.save({missions: miss}, { headers: {
+            'Content-Type': 'multipart/form-data'
+        }}).then(response => {
             console.log('Cadastro feito com sucesso!')
-               // success callback
+            // success callback
         }, response => {    
             // error callback
             alert('erro no cadastro');
