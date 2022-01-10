@@ -128,8 +128,8 @@ export default {
         })
                 store.dispatch('load-categories');
                 store.dispatch('load-missions');
-            }
-    }
+            },
+    
     computed: {
         isEmail(){
             return store.state.auth.user.email

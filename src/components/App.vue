@@ -33,8 +33,7 @@
 
                                 <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'cadastrocategorias'}">Categorias</router-link></span>
 
-                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'uploadimagem'}">Upload de Imagem</router-link></span>
-
+                                
                                 
                             
                         </div>

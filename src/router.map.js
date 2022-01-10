@@ -37,12 +37,7 @@ import Editarideia from './components/edit/Editarideia.vue';
 
 export default [
     
-    {
-        name: 'uploadimagem',
-        path: '/uploadimagem',
-        component: Uploadimagem,
-        meta: {auth: true}
-    },
+    
     {
         name: 'listmiss',
         path: '/listamissions',

@@ -30,10 +30,12 @@
                                      <b>{{userId.user_name}}</b>, você será o criador desta missão
                                 </div><br>
 
-                                <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
-                                <div class="text-center flex items-center border-gray-500 py-2" >
-                                     Esta missão ficará ligada ao departamento: <b> {{userId.dept.dep_name}}</b>
-                                </div><br>
+                               <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
+                                <div class="text-center flex items-center border border-gray-500 py-2" >
+                                <select v-model="dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+                                    <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
+                                </select>    
+                                </div><br>     
 
                                 <label for="avatar" class="text-xs font-semibold px-3">ADICIONAR CAPA</label>
                                 <div class="flex items-center justify-center pt-5" >
@@ -62,13 +64,13 @@
 
 <script type="text/javascript">
     import store from '../../store';
-    import axios from 'axios'; 
+    // import axios from 'axios'; 
     export default {
         data(){
             return {
                 
                     mis_description: '',
-                    dept_id: store.state.auth.user.dept.id,
+                    dept_id: null,
                     user_id: store.state.auth.user.id,
                     mis_name: '',
                 
@@ -96,21 +98,21 @@
         methods: {
             
             handleFileUpload( event ){
-                    console.log(event);
                     this.mis_image = event.target.files[0];
                 },
 
             cadastrar(){
               
                 
-                // if(this.miss.mis_name.length <= 4){
-                //     alert('Preencha no mínimo 5 caracteres no nome da missão!');
-                // }else{
-                //   if(this.miss.mis_description.length <= 10){
-                //     alert('Preencha no mínimo 11 caracteres no campo de descrição da missão!');
-                //     }else{ 
-
+                if(this.mis_name.length <= 4){
+                    alert('Preencha no mínimo 5 caracteres no nome da missão!');
+                }else{
+                  if(this.mis_description.length <= 10){
+                    alert('Preencha no mínimo 11 caracteres no campo de descrição da missão!');
+                    }else{ 
+                        
                         let formData = new FormData();
+
                         // console.log(this.miss)
                         formData.append('file', this.mis_image);
                         formData.append('mis_name', this.mis_name);
@@ -119,11 +121,16 @@
                         formData.append('user_id', this.user_id);
                     
 
-                        store.dispatch('savemission', formData)    
+                        store.dispatch('savemission', formData)
+                        .then(response => {
+                            alert('Adicionado com sucesso!')
+                            this.$router.push({name: 'listmiss'});
+
+                        })    
                         
                     
-                //     }
-                //  }     
+                    }
+                 }     
                 
             }
         }
