@@ -168,9 +168,9 @@ export default {
     },
     methods: {
         getImgUrl(pet) {
-            
-            return 'http://localhost:3000/missions?img=' + pet;
-            
+          
+             return 'http://localhost:3000/missions?img=' + pet;
+              
         },
         
         excluirmissao(mission_id, mis_name){
