@@ -41,6 +41,7 @@
             }
         },
         created(){
+            console.log(this.idea_id);
             store.dispatch('load-users');
             store.dispatch('load-comments');
             store.dispatch('load-ideas');
