@@ -4,9 +4,10 @@ import {DeptosModel} from './deptos-model';
 import {UsersModel} from './users-model';
 import {CategoriesModel} from './categories-model';
 import {IdeasModel} from './ideas-model';
+import {CommentModel} from './comment-model';
 import JwtToken from './services/jwt-token';
 import {MissionModel} from './mission-model';
-import {Deptos, User, Categories, Userid, Ideas, Missions, Idemis} from './services/resources';
+import {Deptos, User, Categories, Userid, Ideas, Missions, Comments, Idemis, Idcom} from './services/resources';
 import SessionStorage from './services/session-storage';
 
 
@@ -19,6 +20,7 @@ const state = {
     users: [],
     ideas: [],
     missions: [],
+    comments: [],
     auth: {
         check: JwtToken.token != null,
         user: SessionStorage.getObject('user')
@@ -45,6 +47,10 @@ const mutations = {
     },
     'set-ideas'(state, ideas){
         state.ideas = ideas;
+        // console.log(state.users);
+    },
+    'set-comments'(state, comments){
+        state.comments = comments;
         // console.log(state.users);
     },
     update(state, time){
@@ -110,9 +116,9 @@ const actions = {
     },
 
     'load-ideas'(context, idea){
-        console.log(idea)
+        //console.log(idea)
         if(!idea){
-            console.log('não existe uma ideia');
+            //console.log('não existe uma ideia');
             Ideas.query().then(response => {
                 var an_obj = response.data;
                 // console.log(an_obj)
@@ -125,7 +131,7 @@ const actions = {
             });
             
         }else{
-            console.log('Existe uma ideia');
+            //console.log('Existe uma ideia');
             Idemis.query({mission_id: idea}).then(response => {
                 
                 var an_obj = response.data;
@@ -180,6 +186,36 @@ const actions = {
             });
         // }
     },
+    'load-comments'(context, comm){
+        console.log(comm)
+        if(!comm){
+       // console.log('não existe um comentario');
+        Comments.query().then(response => {
+            var response = response.data;
+            
+            //console.log('resposta em json:', response )
+            var responseinobj = Object.values(response);
+            // console.log('transformado em OBJECT: ', responseinobj);
+            let comments = responseinobj.map(element => new CommentModel(element.id, element.com_description, element.com_image, element.idea, element.user));  
+            // console.log('load', user)
+            context.commit('set-comments', comments);
+        
+        });
+    }else{
+        //console.log('Existe um commentario');
+        Idcom.query({idea_id: comm }).then(response => {
+            var response = response.data;
+            
+            //console.log('resposta em json:', response )
+            var responseinobj = Object.values(response);
+            // console.log('transformado em OBJECT: ', responseinobj);
+            let comments = responseinobj.map(element => new CommentModel(element.id, element.com_description, element.com_image, element.idea, element.user));  
+            // console.log('load', user)
+            context.commit('set-comments', comments);
+        });
+    }
+    // }
+},
 
     
 
@@ -229,6 +265,19 @@ const actions = {
         console.log(idea)
         Ideas.save({idea: idea}).then(response => {
             console.log('Cadastro feito com sucesso!')
+            // success callback
+        }, response => {    
+            // error callback
+            alert('erro no cadastro');
+        });
+    },
+
+    savecomment(context, comment){
+        console.log('chegou no save comment', comment)
+        
+        Comments.save({comment: comment}).then(response => {
+            // console.log('Cadastro feito com sucesso!')
+            console.log(response.data)
             // success callback
         }, response => {    
             // error callback
