@@ -14,10 +14,10 @@
                 
                     <tr>
                         <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400" colspan='3'>
-                            <span style='font-size:25px;'>#Título do comentario: <br></span><br>
+                            <span style='font-size:25px;'> {{com.user.user_name}}, fez o seguinte comentario<br></span><br>
                             <b>Comentario:</b>{{com.com_description}}, 
                             <b> imagem: </b> {{com.com_image}},
-                            <b> User: </b> {{com.user.user_name}},
+                         
                             <b> Ideia: </b> {{com.idea.idea_name}}
                             
                         </td>
