@@ -7,9 +7,9 @@ import {IdeasModel} from './ideas-model';
 import {CommentModel} from './comment-model';
 import JwtToken from './services/jwt-token';
 import {MissionModel} from './mission-model';
-import {Deptos, User, Categories, Userid, Ideas, Missions, Comments, Idemis, Idcom} from './services/resources';
+import {Deptos, User, Categories, Userid, Ideas, Missions, Comments, Idemis, Idcom, Userdept, Idecat} from './services/resources';
 import SessionStorage from './services/session-storage';
-
+import axios from 'axios';
 
 Vue.use(Vuex);
 
@@ -145,7 +145,103 @@ const actions = {
 
             
         }
-    },   
+    },
+
+    'load-ideasfiltrocategorie'(context, categorie){
+        if(!categorie){
+            //console.log('não existe uma categoria');
+            Ideas.query().then(response => {
+                var an_obj = response.data;
+                // console.log(an_obj)
+                    // console.log(an_obj)
+                var responseobj = Object.values(an_obj);
+                    // console.log(responseobj)
+                let ideas = responseobj.map(element => new IdeasModel(element.id, element.idea_name, element.idea_description, element.user, element.category, element.mission));  
+                context.commit('set-ideas', ideas);
+            
+            });
+            
+        }else{
+            //console.log('Existe uma categoria');
+            Idecat.query({id: categorie}).then(response => {
+                
+                var an_obj = response.data;
+                //console.log(an_obj)
+                var responseobj = Object.values(an_obj);
+                // console.log(responseobj)
+                let ideas = responseobj.map(element => new IdeasModel(element.id, element.idea_name, element.idea_description, element.user, element.category, element.mission));  
+                context.commit('set-ideas', ideas);
+                
+            });    
+
+            
+        }
+    },
+    
+    'load-ideasfiltromission'(context, mission){
+        console.log(mission)
+        if(!mission){
+            console.log('não existe uma ideia');
+            Ideas.query().then(response => {
+                var an_obj = response.data;
+                // console.log(an_obj)
+                    // console.log(an_obj)
+                var responseobj = Object.values(an_obj);
+                    // console.log(responseobj)
+                let ideas = responseobj.map(element => new IdeasModel(element.id, element.idea_name, element.idea_description, element.user, element.category, element.mission));  
+                context.commit('set-ideas', ideas);
+            
+            });
+            
+        }else{
+            console.log('Existe uma ideia');
+            Idemis.query({id: mission}).then(response => {
+                
+                var an_obj = response.data;
+                //console.log(an_obj)
+                var responseobj = Object.values(an_obj);
+                // console.log(responseobj)
+                let ideas = responseobj.map(element => new IdeasModel(element.id, element.idea_name, element.idea_description, element.user, element.category, element.mission));  
+                context.commit('set-ideas', ideas);
+                
+            });    
+
+            
+        }
+    },
+
+
+    'load-users'(context, depts){
+        console.log(depts)
+        if(!depts){
+            User.query().then(response => {
+                var response = response.data;
+                // console.log(response)
+                var responseinobj = Object.values(response);
+                    
+                let user = responseinobj.map(element => new UsersModel(element.id, element.dept, element.username, element.email, element.user_name, element.user_phone, element.dept_id));  
+                // console.log('load', user)
+                context.commit('set-users', user);
+            
+            });
+            
+        }else{
+            console.log('Existe uma ideia');
+            Userdept.query({id: depts}).then(response => {
+                
+                var response = response.data;
+                // console.log(response)
+                var responseinobj = Object.values(response);
+                    
+                let user = responseinobj.map(element => new UsersModel(element.id, element.dept, element.username, element.email, element.user_name, element.user_phone, element.dept_id));  
+                // console.log('load', user)
+                context.commit('set-users', user);
+                
+            });    
+
+            
+        }
+    },     
 
     //     Ideas.query().then(response => {
     //             var an_obj = response.data;
@@ -159,19 +255,20 @@ const actions = {
     //         });
     //     // }
     // },
-    'load-users'(context){
-            User.query().then(response => {
-                var response = response.data;
-                // console.log(response)
-                var responseinobj = Object.values(response);
+    // 'load-users'(context){
+    //         User.query().then(response => {
+    //             var response = response.data;
+    //             // console.log(response)
+    //             var responseinobj = Object.values(response);
                     
-                let user = responseinobj.map(element => new UsersModel(element.id, element.dept, element.username, element.email, element.user_name, element.user_phone, element.dept_id));  
-                // console.log('load', user)
-                context.commit('set-users', user);
+    //             let user = responseinobj.map(element => new UsersModel(element.id, element.dept, element.username, element.email, element.user_name, element.user_phone, element.dept_id));  
+    //             // console.log('load', user)
+    //             context.commit('set-users', user);
             
-            });
-        // }
-    },
+    //         });
+    //     // }
+    // },
+    
     'load-missions'(context){
             Missions.query().then(response => {
                 var response = response.data;
@@ -217,7 +314,6 @@ const actions = {
     // }
 },
 
-    
 
     login(context, {email, password_digest}){
         // console.log(email, password_digest)
@@ -251,10 +347,11 @@ const actions = {
     },
 
     savemission(context, miss){
-        // console.log('oque vai salvar? ', miss)
-        Missions.save({mission: miss}).then(response => {
+        Missions.save({missions: miss}, { headers: {
+            'Content-Type': 'multipart/form-data'
+        }}).then(response => {
             console.log('Cadastro feito com sucesso!')
-               // success callback
+            // success callback
         }, response => {    
             // error callback
             alert('erro no cadastro');

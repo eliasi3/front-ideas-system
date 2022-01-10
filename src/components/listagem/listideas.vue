@@ -1,5 +1,26 @@
 <template>
-    <center>
+<div>
+    <v-row>
+        <div class="mb-3 xl:w-35">
+        <select class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal 
+        text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded transition ease-in-out m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none shadow-xl" 
+        v-model="selectedcategorie" @change="filtrarcategory()">
+                <option value="">Selecionar categoria</option>
+                <option :value="categories.id" v-for="(categories, i) in isCategories" :key="i">{{categories.cat_name}}</option>
+        </select>
+        </div>&nbsp&nbsp
+        
+        <div class="mb-3 xl:w-35">
+        <select class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal 
+        text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded transition ease-in-out m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none shadow-xl" 
+        v-model="selectedmission" @change="filtrarmis()">
+                <option value="">Selecionar Missão</option>
+                <option :value="missions.id" v-for="(missions, i) in isMissions" :key="i">{{missions.mis_name}}</option>
+        </select>
+        </div>
+        
         <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom: 10px;">
             <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">IDEIAS</span> <span style='float:right;margin-right:10px;font-size:40px; ' id='pointmouser' class="font-bold text-3xl text-gray-900 text-sky-600"></span></div>
         <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;'
@@ -66,8 +87,8 @@
                     
     
         
-
-    </center>
+        </v-row> 
+        </div>
 </template>
 
 <script>
@@ -84,7 +105,10 @@ export default {
                 idea_id: ''
             },
                 //idea_id: this.$route.params.id,
-                mission_id: null
+            mission_id: null,
+            selectedcategorie: "",
+            selectedmission: "",
+            mission_id: null,
             }
     },
     created(){
@@ -102,9 +126,12 @@ export default {
 
             // this.id_livro = response.data.id 
         })
-    },
+                store.dispatch('load-categories');
+                store.dispatch('load-missions');
+            }
+    }
     computed: {
-        isEmail() {
+        isEmail(){
             return store.state.auth.user.email
         },
         isIde(){
@@ -117,6 +144,12 @@ export default {
             return store.state.comments;
         },
 
+        isCategories() {
+            return store.state.categories;
+        },
+        isMissions() {
+            return store.state.missions;
+        },
     },
     methods: {
 
@@ -133,8 +166,16 @@ export default {
         },
         addidea(){
                 this.$router.push({name: 'cadastroidea'});
-            }
-        
+            },
+        filtrarcategory(){
+            this.selectedmission = ""
+            store.dispatch('load-ideasfiltrocategorie', this.selectedcategorie);
+            // alert(this.selectedcategorie);
+        },
+        filtrarmis(){
+            this.selectedcategorie = ""
+            store.dispatch('load-ideasfiltromission', this.selectedmission);
+        }
         }
 }
 </script>

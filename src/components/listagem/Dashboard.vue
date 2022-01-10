@@ -1,7 +1,7 @@
 <template>
 <div>
     <br>
-    <v-row><div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">DEPARTAMENTOS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adddep()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span></div>
+    <v-row><div class='px-3 text-gray-500 shadow-xl' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">DEPARTAMENTOS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adddep()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span><br>
         <table class="divide-y divide-gray-300 "  width='100%' style=''>
                     <thead class="bg-blue-200">
                         <tr>
@@ -51,6 +51,7 @@
                         </tr>
                     </tbody>
                 </table>    
+    </div>
     </v-row>   
     </div>
 </template>
@@ -77,6 +78,7 @@ export default {
             if(this.isAuth) {
                 
                 store.dispatch('load-depts');
+                
                 //console.log('entrou')
                 
                 // const res = axios.get('http://localhost:3000/depts');

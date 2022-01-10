@@ -32,8 +32,8 @@
                         
                         <div style='float:left;margin-right:10px;width:230px;'>
 
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" style='position: relative;' alt="">
-
+                            <img :src="getImgUrl(missions.mis_image)" style='' alt="">
+                                
                         </div>
                         <div style='margin:10px;'>
                             <span>{{missions.mis_description | truncate(280, '...')}} </span>
@@ -68,7 +68,6 @@ export default {
     name: 'Listamissoes',
     data () {
         return {
-
             }
     },
     created(){
@@ -84,8 +83,14 @@ export default {
         isAuth() {
             return store.state.auth.check;
         },
+
     },
     methods: {
+        getImgUrl(pet) {
+            
+            return 'http://localhost:3000/missions?img=' + pet;
+            
+        },
 
         deleteMission(id, mission_name){
             if (confirm('Deseja excluir a missão ' +mission_name+ ' permanentemente?')){

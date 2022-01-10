@@ -15,12 +15,12 @@
 
                                 <label for="" class="text-xs font-semibold px-3">NOME</label>
                                 <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <input type="text" v-model="miss.mis_name" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome da Missão" >
+                                <input type="text" v-model="mis_name" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome da Missão" >
                                 </div><br>
 
                                 <label for="" class="text-xs font-semibold px-3">DESCRIÇÃO</label>
                                 <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <textarea type="text" v-model="miss.mis_description" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Adicione uma descrição" ></textarea>
+                                <textarea type="text" v-model="mis_description" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Adicione uma descrição" ></textarea>
                                 </div><br>
 
                                 
@@ -37,7 +37,7 @@
 
                                 <label for="avatar" class="text-xs font-semibold px-3">ADICIONAR CAPA</label>
                                 <div class="flex items-center justify-center pt-5" >
-                                    <input type="file" id="avatar" name="avatar" @change='onFilesSelected'>
+                                    <input type="file" id="avatar" name="avatar" @change="handleFileUpload( $event )">
                                 </div><br>
                         
                         </div>
@@ -66,14 +66,14 @@
     export default {
         data(){
             return {
-                miss: {
-                    mis_name: '',
+                
                     mis_description: '',
                     dept_id: store.state.auth.user.dept.id,
                     user_id: store.state.auth.user.id,
+                    mis_name: '',
+                
                     mis_image: null
                     
-                },
                
                     
             }
@@ -95,35 +95,35 @@
         },
         methods: {
             
-            onFilesSelected(event){
-                this.miss.mis_image = event.target.files[0]
-            },
+            handleFileUpload( event ){
+                    console.log(event);
+                    this.mis_image = event.target.files[0];
+                },
 
             cadastrar(){
               
                 
-                if(this.miss.mis_name.length <= 4){
-                    alert('Preencha no mínimo 5 caracteres no nome da missão!');
-                }else{
-                  if(this.miss.mis_description.length <= 10){
-                    alert('Preencha no mínimo 11 caracteres no campo de descrição da missão!');
-                    }else{ 
+                // if(this.miss.mis_name.length <= 4){
+                //     alert('Preencha no mínimo 5 caracteres no nome da missão!');
+                // }else{
+                //   if(this.miss.mis_description.length <= 10){
+                //     alert('Preencha no mínimo 11 caracteres no campo de descrição da missão!');
+                //     }else{ 
 
-                       // alert('continua');
-                        const formData = new FormData();
-
-                        formData.append('file', this.miss.mis_image);
-                        const headers = { 'Content-Type': 'multipart/form-data' };
-
-                        console.log('cadastrado com sucesso!', formData)
-                        // axios.post('http://localhost:3000/missions', formData, { headers }).then((res) => {
-                        //         res.data; // binary representation of the file
-                        //         res.status; // HTTP status
-                        // });
+                        let formData = new FormData();
+                        // console.log(this.miss)
+                        formData.append('file', this.mis_image);
+                        formData.append('mis_name', this.mis_name);
+                        formData.append('mis_description', this.mis_description);
+                        formData.append('dept_id', this.dept_id);
+                        formData.append('user_id', this.user_id);
                     
+
+                        store.dispatch('savemission', formData)    
                         
-                    }
-                 }     
+                    
+                //     }
+                //  }     
                 
             }
         }

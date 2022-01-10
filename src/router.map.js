@@ -15,8 +15,10 @@ import DepartamentosCadastro from './components/cadastros/departamentos.vue';
 import CategoriasCadastro from './components/cadastros/categorias.vue';
 import UsuariosCadastro from './components/cadastros/usuarios.vue';
 import MissoesCadastro from './components/cadastros/missoes.vue';
-import CadastroIdea from './components/cadastros/ideas.vue';CadastroComment
+import CadastroIdea from './components/cadastros/ideas.vue';
 import CadastroComment from './components/cadastros/comentario.vue'
+import CadastroIdea from './components/cadastros/ideas.vue';
+import Uploadimagem from './components/cadastros/formupload.vue';
 
 import Listamissions from './components/listagem/listamissions.vue';
 import Listacategories from './components/listagem/listcategories.vue';
@@ -34,23 +36,30 @@ import Editarideia from './components/edit/Editarideia.vue';
 
 
 export default [
+    
+    {
+        name: 'uploadimagem',
+        path: '/uploadimagem',
+        component: Uploadimagem,
+        meta: {auth: true}
+    },
     {
         name: 'listmiss',
         path: '/listamissions',
         component: Listamissions,
-        meta: {auth: false}
+        meta: {auth: true}
     },
     {
         name: 'listcat',
         path: '/listcategories',
         component: Listacategories,
-        meta: {auth: false}
+        meta: {auth: true}
     },
     {
         name: 'listuser',
         path: '/listusers',
         component: Listausers,
-        meta: {auth: false}
+        meta: {auth: true}
     },
     {
         name: 'auth.login',
