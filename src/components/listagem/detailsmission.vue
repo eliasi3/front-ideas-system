@@ -1,5 +1,10 @@
+        <script type="text/javascript" src="vue-modal.umd.min.js"></script>
 <template>
+    
     <center>
+        
+        <link rel="stylesheet" href="vue-modal.css">
+
         <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;">
             <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">MISSÃO: {{miss.mis_name}}</span>
 
@@ -11,6 +16,7 @@
             </router-link>
 
         </span></div>
+        
         <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-top:10px;'>
             <table class="border-collapse table-auto w-full text-sm">
             <tbody class="bg-white bg-gray-800">
@@ -106,11 +112,38 @@
 
                     <tr>
                         <td style='padding:10px;border-radius:10px;width:100%;text-align:right;'>
-                             <router-link v-bind:to="{ name: 'listcomments', params: {id: user_id, idcom: ideas.id}}">
-                                    <a href="#" class="px-4 py-1 text-sm text-white bg-orange-400 rounded-full" >Ver comentarios</a>
+                             <router-link v-bind:to="{ name: '', params: {id: user_id, idcom: ideas.id}}">
+                                    <a @click="showModal=true" href="#" class="px-4 py-1 text-sm text-white bg-orange-400 rounded-full" >Ver comentarios</a>
                                 </router-link> 
                         </td>
                     </tr>
+
+
+                    <Modal :based-on="showModal" style='width:800px;' title="Comentários" @close="showModal = false">
+                    
+                        <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;' v-for="(com, i) in isCom" :key="i">
+                            <table class="border-collapse table-auto w-full text-sm">
+                            <tbody class="bg-white bg-gray-800">
+                                
+                                    <tr>
+                                        <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400" colspan='3'>
+                                            <span style='font-size:15px;'>#{{com.id}} {{com.user.user_name}}: <br></span><br>
+                                            <p>{{com.com_image}}</p>
+                                            <p style='padding:5px;border:1px solid lightgray;'>{{com.com_description}}</p>
+                                            <b style='font-size:10px;'> Ideia: </b> <span style='font-size:10px;'>{{com.idea.idea_name}}</span>
+                                            
+                                        </td>
+                                    </tr>
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                        <button class="btn btn-warning" type="button" @click="showSecondModal = true">Open second modal</button>
+                    </Modal>
+
+                    <Modal v-model="showSecondModal" title="Second modal">
+                        asdokdakso
+                    </Modal>
             
                 </tbody>
             </table>
@@ -118,8 +151,15 @@
             </div>    
      </center>
 </template>
-
 <script>
+
+
+import VueModal from '@kouts/vue-modal'
+import '@kouts/vue-modal/dist/vue-modal.css'
+import Vue from 'vue'
+Vue.component('Modal', VueModal);
+
+
 import store from '../../store';
 
 import { Missionid, Ideid } from '../../services/resources';
@@ -140,7 +180,9 @@ export default {
                 user_id: store.state.auth.user.id,
                 idea_id: ''
             },
-            //idea_id: this.$route.params.id,
+
+            showModal: false,
+            showSecondModal: false,
 
             mission_id: this.$route.params.id,
             user_id: store.state.auth.user.id,
@@ -148,6 +190,9 @@ export default {
             excluir: false,
             editar: false
             }
+    },
+    components: {
+        'Modal': VueModal
     },
     created(){
         store.dispatch('load-comments', this.com.idea_id);
@@ -207,9 +252,9 @@ export default {
 
     methods: {
         getImgUrl(pet) {
-            
-            return 'http://localhost:3000/missions?img=' + pet;
-            
+          
+             return 'http://localhost:3000/missions?img=' + pet;
+              
         },
         
         excluirmissao(mission_id, mis_name){
@@ -262,4 +307,11 @@ export default {
 #add:hover{
     cursor:pointer;
 }
+.modal-footer {
+  padding: 15px 0px 0px 0px;
+  border-top: 1px solid #e5e5e5;
+  margin-left: -14px;
+  margin-right: -14px;
+}
+
 </style>

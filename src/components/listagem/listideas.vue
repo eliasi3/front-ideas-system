@@ -63,6 +63,7 @@
                 
             </tbody>
             </table>
+            
             <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom: 10px;">
                         <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">COMENTARIOS</span> 
                     </div>
@@ -83,6 +84,7 @@
                         </table>
                     </div>
         </div>
+
         <!-- listando os comentarios das ideias  -->
                     
     
