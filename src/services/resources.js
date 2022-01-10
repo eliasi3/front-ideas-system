@@ -58,6 +58,7 @@ const Deptos = Vue.resource(`http://localhost:3000/depts`);
 const Categories = Vue.resource(`http://localhost:3000/categories`);
 const Ideas = Vue.resource(`http://localhost:3000/ideas`);
 const Missions = Vue.resource(`http://localhost:3000/missions`);
+const Comments = Vue.resource(`http://localhost:3000/comments`)
 
 const Userid = Vue.resource(`http://localhost:3000/users{/id}`);
 const Deptosid = Vue.resource(`http://localhost:3000/depts{/id}`);
@@ -66,6 +67,7 @@ const Ideid = Vue.resource(`http://localhost:3000/ideas{/id}`);
 const Missionid = Vue.resource(`http://localhost:3000/missions{/id}`);
 
 const Idemis = Vue.resource(`http://localhost:3000/ideas/?mission_id={id}`);
+const Idcom = Vue.resource(`http://localhost:3000/comments?idea_id={id}`);
 const Userdept = Vue.resource(`http://localhost:3000/users?dept_id={id}`);
 const Idecat = Vue.resource(`http://localhost:3000/ideas/?category_id={id}`);
 
@@ -74,4 +76,5 @@ const Idecat = Vue.resource(`http://localhost:3000/ideas/?category_id={id}`);
 
 
 
-export {User, Deptos, Userid, Categories, Deptosid, Ideas, Catid, Missions, Ideid, Missionid, Idemis, Userdept, Idecat};
+export {User, Deptos, Userid, Categories, Deptosid, Ideas, Catid, Missions, Comments, Ideid, Missionid, Idemis, Idcom, Userdept, Idecat};
+

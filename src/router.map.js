@@ -16,12 +16,15 @@ import CategoriasCadastro from './components/cadastros/categorias.vue';
 import UsuariosCadastro from './components/cadastros/usuarios.vue';
 import MissoesCadastro from './components/cadastros/missoes.vue';
 import CadastroIdea from './components/cadastros/ideas.vue';
+import CadastroComment from './components/cadastros/comentario.vue'
+
 
 import Listamissions from './components/listagem/listamissions.vue';
 import Listacategories from './components/listagem/listcategories.vue';
 import Listausers from './components/listagem/listusers.vue';
 import ListaDeptos from './components/listagem/Dashboard.vue';
 import Listaideas from './components/listagem/listideas.vue';
+import Listcomments from './components/listagem/listcomments.vue';
 import Detalhesmiss from './components/listagem/detailsmission.vue';
 
 import UsuariosEditar from './components/edit/Editaruser.vue';
@@ -71,6 +74,12 @@ export default [
         meta: {auth: true}
     },
     {
+        name: 'listcomments',
+        path: '/listcomments',
+        component : Listcomments,
+        meta: {auth: true}
+    },
+    {
         name: 'auth.logout',
         path: '/logout',
         component: LogoutComponent,
@@ -107,7 +116,12 @@ export default [
         component: CadastroIdea,
         meta: {auth: true}
     },
-
+    {
+        name: 'cadastrocomment',
+        path: '/comment',
+        component: CadastroComment,
+        meta: {auth: true}
+    },
     {
         name: 'editusuarios',
         path: '/editusuarios',
