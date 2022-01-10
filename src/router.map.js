@@ -16,7 +16,6 @@ import CategoriasCadastro from './components/cadastros/categorias.vue';
 import UsuariosCadastro from './components/cadastros/usuarios.vue';
 import MissoesCadastro from './components/cadastros/missoes.vue';
 import CadastroIdea from './components/cadastros/ideas.vue';
-import Uploadimagem from './components/cadastros/formupload.vue';
 
 import Listamissions from './components/listagem/listamissions.vue';
 import Listacategories from './components/listagem/listcategories.vue';
@@ -34,12 +33,7 @@ import Editarideia from './components/edit/Editarideia.vue';
 
 export default [
     
-    {
-        name: 'uploadimagem',
-        path: '/uploadimagem',
-        component: Uploadimagem,
-        meta: {auth: true}
-    },
+    
     {
         name: 'listmiss',
         path: '/listamissions',
