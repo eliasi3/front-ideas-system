@@ -111,38 +111,21 @@
                     </tr>
 
                     <tr>
-                        <td style='padding:10px;border-radius:10px;width:100%;text-align:right;'>
-                             <router-link v-bind:to="{ name: '', params: {id: user_id, idcom: ideas.id}}">
-                                    <a @click="showModal=true" href="#" class="px-4 py-1 text-sm text-white bg-orange-400 rounded-full" >Ver comentarios</a>
-                                </router-link> 
+                        <td style='padding:10px;border-radius:10px;width:100%;text-align:center;'>
+                                
+                                <p @click="showModal=true" v-bind:to="{params: {idcom: ideas.id}}" id='add' class="px-4 py-1 text-sm text-white bg-orange-400 rounded-full" >Ver modal comentarios</p>
                         </td>
                     </tr>
 
 
                     <Modal :based-on="showModal" style='width:800px;' title="Comentários" @close="showModal = false">
                     
-                        <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;' v-for="(com, i) in isCom" :key="i">
-                            <table class="border-collapse table-auto w-full text-sm">
-                            <tbody class="bg-white bg-gray-800">
-                                
-                                    <tr>
-                                        <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400" colspan='3'>
-                                            <span style='font-size:15px;'>#{{com.id}} {{com.user.user_name}}: <br></span><br>
-                                            <p>{{com.com_image}}</p>
-                                            <p style='padding:5px;border:1px solid lightgray;'>{{com.com_description}}</p>
-                                            <b style='font-size:10px;'> Ideia: </b> <span style='font-size:10px;'>{{com.idea.idea_name}}</span>
-                                            
-                                        </td>
-                                    </tr>
-                                
-                            </tbody>
-                            </table>
-                        </div>
-                        <button class="btn btn-warning" type="button" @click="showSecondModal = true">Open second modal</button>
+                        <Ideascomments />
+                        
                     </Modal>
 
                     <Modal v-model="showSecondModal" title="Second modal">
-                        asdokdakso
+                        <Cadastrocomentario />
                     </Modal>
             
                 </tbody>
@@ -161,6 +144,8 @@ Vue.component('Modal', VueModal);
 
 
 import store from '../../store';
+import Ideascomments from './listcomments.vue';
+import Cadastrocomentario from '../cadastros/comentario.vue';
 
 import { Missionid, Ideid } from '../../services/resources';
 export default {
@@ -192,10 +177,12 @@ export default {
             }
     },
     components: {
-        'Modal': VueModal
+        'Modal': VueModal,
+        Ideascomments,
+        Cadastrocomentario
+
     },
     created(){
-        store.dispatch('load-comments', this.com.idea_id);
         Ideid.query({id: this.com.idea_id}).then(response => {
                this.com.idea_id = response.data
                
