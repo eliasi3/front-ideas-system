@@ -46,7 +46,7 @@ export default {
             }
     },
     created(){
-        alert(this.idea_id)
+        // alert(this.idea_id)
             if(this.isAuth) {  
             store.dispatch('load-comments', this.idea_id);
             }
