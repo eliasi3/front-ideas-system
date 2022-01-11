@@ -31,6 +31,7 @@ import UsuariosEditar from './components/edit/Editaruser.vue';
 import Editardep from './components/edit/Editardep.vue';
 import Editarcat from './components/edit/Editarcat.vue';
 import Editarideia from './components/edit/Editarideia.vue';
+import Editperfil from './components/edit/Editperfil.vue';
 
 
 
@@ -41,6 +42,12 @@ export default [
         name: 'listmiss',
         path: '/listamissions',
         component: Listamissions,
+        meta: {auth: true}
+    },
+    {
+        name: 'editperfil',
+        path: '/editperfil',
+        component: Editperfil,
         meta: {auth: true}
     },
     {

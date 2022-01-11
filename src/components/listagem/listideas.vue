@@ -1,28 +1,37 @@
+  
+        
+
 <template>
 <div>
     <v-row>
+        
+        <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="filtrarcategory(count-1)"> PAGINA {{count}}</a>
+        
+
         <div class="mb-3 xl:w-35">
-        <select class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal 
-        text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded transition ease-in-out m-0
-        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none shadow-xl" 
-        v-model="selectedcategorie" @change="filtrarcategory()">
+        <select class="form-select mr-3 border-slate-300 p-2" 
+        v-model="selectedcategorie" ref='category_id' id='category_id' @change="filtrarcategory()">
                 <option value="">Selecionar categoria</option>
                 <option :value="categories.id" v-for="(categories, i) in isCategories" :key="i">{{categories.cat_name}}</option>
         </select>
-        </div>&nbsp&nbsp
+        </div>
         
         <div class="mb-3 xl:w-35">
-        <select class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal 
-        text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded transition ease-in-out m-0
-        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none shadow-xl" 
-        v-model="selectedmission" @change="filtrarmis()">
+        <select class="form-select p-2 border-slate-300 mr-3" 
+        v-model="selectedmission" ref='mission_id' id='mission_id' @change="filtrarcategory()">
                 <option value="">Selecionar Missão</option>
                 <option :value="missions.id" v-for="(missions, i) in isMissions" :key="i">{{missions.mis_name}}</option>
         </select>
         </div>
+
+        <div class="mb-3 xl:w-60 border-slate-300" >    
+            <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @blur="filtrarcategory()">
+
+        </div>
+        
         
         <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom: 10px;">
-            <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">IDEIAS</span> <span style='float:right;margin-right:10px;font-size:40px; ' id='pointmouser' class="font-bold text-3xl text-gray-900 text-sky-600"></span></div>
+            <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">IDEIAS {{countResults}}</span>  <span style='float:right;margin-right:10px;font-size:40px; ' id='pointmouser' class="font-bold text-3xl text-gray-900 text-sky-600"></span></div>
         <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;'
        v-for="(ideas, i) in isIde" :key="i">
             <table class="border-collapse table-auto w-full text-sm">
@@ -63,18 +72,17 @@
                 
             </tbody>
             </table>
-            
-            <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom: 10px;">
+            <!-- <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom: 10px;">
                         <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">COMENTARIOS</span> 
-                    </div>
-                    <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;' v-for="(com, i) in isCom" :key="i">
+                    </div> -->
+                    <!-- <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;' v-for="(com, i) in isCom" :key="i">
                         <table class="border-collapse table-auto w-full text-sm">
                             <tbody class="bg-white bg-gray-800">
                                 <tr>
                                     <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400" colspan='3'>
                                         <span style='font-size:25px;'>#Título do comentario: <br></span><br>
                                             <b>Comentario:</b>{{com.com_description}}, 
-                                            <!-- <b> imagem: </b> {{com.com_image}}, -->
+                                            
                                             <b> User: </b> {{com.user.user_name}},
                                             <b> Ideia: </b> {{com.idea.idea_name}}
                             
@@ -82,9 +90,8 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div> -->
         </div>
-
         <!-- listando os comentarios das ideias  -->
                     
     
@@ -133,14 +140,19 @@ export default {
                 store.dispatch('load-categories');
                 store.dispatch('load-missions');
             },
-    
+    filters: {
+        
+           
+    },
     computed: {
+         
         isEmail(){
             return store.state.auth.user.email
         },
         isIde(){
             return store.state.ideas;
         },
+
         isAuth() {
             return store.state.auth.check;
         },
@@ -153,6 +165,9 @@ export default {
         },
         isMissions() {
             return store.state.missions;
+        },
+        countResults(){
+            return Math.ceil(store.state.ideas.length/2);
         },
     },
     methods: {
@@ -171,14 +186,12 @@ export default {
         addidea(){
                 this.$router.push({name: 'cadastroidea'});
             },
-        filtrarcategory(){
-            this.selectedmission = ""
-            store.dispatch('load-ideasfiltrocategorie', this.selectedcategorie);
-            // alert(this.selectedcategorie);
-        },
-        filtrarmis(){
-            this.selectedcategorie = ""
-            store.dispatch('load-ideasfiltromission', this.selectedmission);
+        filtrarcategory(page){
+            
+            // alert(page)
+            
+            store.dispatch('load-ideasfiltrocategorie', page);
+           
         }
         }
 }

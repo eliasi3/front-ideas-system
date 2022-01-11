@@ -75,6 +75,31 @@ const mutations = {
 };
 
 const actions = {
+    
+    'load-ideasfiltrocategorie'(context, page){
+        var cat = document.getElementById('category_id').value;
+        var miss = document.getElementById('mission_id').value;
+        var search_up = document.getElementById('search').value;
+        
+
+                    // alert('Existe uma categoria');
+            // console.log('?category_id='+cat+'&mission_id='+miss+'&search='+search)
+            
+            Idecat.query({category_id: cat, mission_id: miss, search: search_up, page: page}).then(response => {
+                
+                
+                var an_obj = response.data;
+                // console.log(an_obj)
+                var responseobj = Object.values(an_obj);
+                // console.log(responseobj)
+                let ideas = responseobj.map(element => new IdeasModel(element.id, element.idea_name, element.idea_description, element.user, element.category, element.mission));  
+                context.commit('set-ideas', ideas);
+
+            });    
+
+
+        
+    },
     'load-depts'(context){
         // if(filtro != 0){
             // Deptos.query({author: filtro}).then(response => {

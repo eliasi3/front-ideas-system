@@ -1,10 +1,5 @@
-        <script type="text/javascript" src="vue-modal.umd.min.js"></script>
 <template>
-    
     <center>
-        
-        <link rel="stylesheet" href="vue-modal.css">
-
         <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;">
             <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">MISSÃO: {{miss.mis_name}}</span>
 
@@ -16,7 +11,6 @@
             </router-link>
 
         </span></div>
-        
         <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-top:10px;'>
             <table class="border-collapse table-auto w-full text-sm">
             <tbody class="bg-white bg-gray-800">
@@ -109,13 +103,6 @@
                 
                         </td>
                     </tr>
-
-                    <!-- <tr>
-                        <td style='padding:10px;border-radius:10px;width:100%;text-align:center;'>
-                                
-                                <p @click="showModal=true" v-bind:to="{params: {idcom: ideas.id}}" id='add' class="px-4 py-1 text-sm text-white bg-orange-400 rounded-full" >Ver modal comentarios</p>
-                        </td>
-                    </tr> -->
                     <tr>
                         <td style='padding:10px;border-radius:10px;width:100%;text-align:right;'>
                              <router-link v-bind:to="{ name: 'listcomments', params: {id: user_id, idcom: ideas.id}}">
@@ -123,24 +110,16 @@
                                 </router-link> 
                         </td>
                     </tr>
+            
                 </tbody>
             </table>
 
             </div>    
      </center>
 </template>
+
 <script>
-
-
-import VueModal from '@kouts/vue-modal'
-import '@kouts/vue-modal/dist/vue-modal.css'
-import Vue from 'vue'
-Vue.component('Modal', VueModal);
-
-
 import store from '../../store';
-import Ideascomments from './listcomments.vue';
-import Cadastrocomentario from '../cadastros/comentario.vue';
 
 import { Missionid, Ideid } from '../../services/resources';
 export default {
@@ -160,9 +139,7 @@ export default {
                 user_id: store.state.auth.user.id,
                 idea_id: ''
             },
-
-            showModal: false,
-            showSecondModal: false,
+            //idea_id: this.$route.params.id,
 
             mission_id: this.$route.params.id,
             user_id: store.state.auth.user.id,
@@ -171,13 +148,8 @@ export default {
             editar: false
             }
     },
-    components: {
-        'Modal': VueModal,
-        Ideascomments,
-        Cadastrocomentario
-
-    },
     created(){
+        store.dispatch('load-comments', this.com.idea_id);
         Ideid.query({id: this.com.idea_id}).then(response => {
                this.com.idea_id = response.data
                
@@ -234,9 +206,9 @@ export default {
 
     methods: {
         getImgUrl(pet) {
-          
-             return 'http://localhost:3000/missions?img=' + pet;
-              
+            
+            return 'http://localhost:3000/missions?img=' + pet;
+            
         },
         
         excluirmissao(mission_id, mis_name){
@@ -289,11 +261,4 @@ export default {
 #add:hover{
     cursor:pointer;
 }
-.modal-footer {
-  padding: 15px 0px 0px 0px;
-  border-top: 1px solid #e5e5e5;
-  margin-left: -14px;
-  margin-right: -14px;
-}
-
 </style>
