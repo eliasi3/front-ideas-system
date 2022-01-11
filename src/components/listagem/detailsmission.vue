@@ -110,24 +110,19 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    <!-- <tr>
                         <td style='padding:10px;border-radius:10px;width:100%;text-align:center;'>
                                 
                                 <p @click="showModal=true" v-bind:to="{params: {idcom: ideas.id}}" id='add' class="px-4 py-1 text-sm text-white bg-orange-400 rounded-full" >Ver modal comentarios</p>
                         </td>
+                    </tr> -->
+                    <tr>
+                        <td style='padding:10px;border-radius:10px;width:100%;text-align:right;'>
+                             <router-link v-bind:to="{ name: 'listcomments', params: {id: user_id, idcom: ideas.id}}">
+                                    <a href="#" class="px-4 py-1 text-sm text-white bg-orange-400 rounded-full" >Ver comentarios</a>
+                                </router-link> 
+                        </td>
                     </tr>
-
-
-                    <Modal :based-on="showModal" style='width:800px;' title="Comentários" @close="showModal = false">
-                    
-                        <Ideascomments />
-                        
-                    </Modal>
-
-                    <Modal v-model="showSecondModal" title="Second modal">
-                        <Cadastrocomentario />
-                    </Modal>
-            
                 </tbody>
             </table>
 

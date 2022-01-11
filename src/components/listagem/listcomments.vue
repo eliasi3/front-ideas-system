@@ -1,4 +1,4 @@
-<template>
+<template>         
     <center>
         <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom: 10px;">
             <span style='float:left;'  class="font-bold text-3xl text-gray-900 text-sky-600">COMENTARIOS</span> 
@@ -39,14 +39,13 @@ export default {
     name: 'Listcomments',
     data () {
         return {
-            comentario:false,
             
             idea_id: this.$route.params.idcom
 
             }
     },
     created(){
-        alert(this.idea_id)
+       // alert(this.idea_id)
             if(this.isAuth) {  
             store.dispatch('load-comments', this.idea_id);
             }
