@@ -118,6 +118,7 @@ export default {
             selectedcategorie: "",
             selectedmission: "",
             mission_id: null,
+            countpage: Math.ceil(store.state.ideas.length/2)
             }
     },
     created(){
@@ -130,18 +131,14 @@ export default {
 
             Idcom.query({id: this.com.idea_id}).then(response => {
                this.com.idea_id = response.data
-               
-               //console.log(response.data)
-
-            // this.id_livro = response.data.id 
-        })
+            })
                 store.dispatch('load-categories');
                 store.dispatch('load-missions');
+                
+                
+            
             },
-    filters: {
-        
-           
-    },
+    
     computed: {
          
         isEmail(){
@@ -157,7 +154,6 @@ export default {
         isCom(){
             return store.state.comments;
         },
-
         isCategories() {
             return store.state.categories;
         },
@@ -165,7 +161,7 @@ export default {
             return store.state.missions;
         },
         countResults(){
-            return Math.ceil(store.state.ideas.length/2);
+            return this.countpage
         },
     },
     methods: {
@@ -187,7 +183,6 @@ export default {
         filtrarcategory(page){
             
             // alert(page)
-            
             store.dispatch('load-ideasfiltrocategorie', page);
            
         }
