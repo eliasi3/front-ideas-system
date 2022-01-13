@@ -1,21 +1,20 @@
 <template>
     <div>
-        <v-row>
-          <div class="mb-3 xl:w-35">
+          <div class="mb-3 xl:w-35" style="float:left">
             <select class="form-select mr-3 border-slate-300 p-2" v-model="selectedept" ref='dept_id' id='dept_id' @change="filtrardept()">
                 <option value="">Selecione Departamento</option>
                 <option :value="depts.id" v-for="(depts, i) in isDepts" :key="i">{{depts.dep_name}}</option>
             </select>
           </div>
 
-        <div class="mb-3 xl:w-60 border-slate-300" >    
+        <div class="mb-3 xl:w-60 border-slate-300"  style="float:left">    
             <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @blur="filtrardept()">
        </div>
 
 
     <center>
         
-        <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;">
+        <div class='px-3 text-gray-500' style="padding:10px;float:left;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;">
             <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">MISSÕES:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='pointmouser' @click='addMission()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span></div>
         <center>
 
@@ -74,7 +73,7 @@
         
 
         </center>
-        </v-row>
+
     </div>
 </template>
 

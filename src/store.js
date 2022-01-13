@@ -102,8 +102,9 @@ const actions = {
     },
     'load-missionfiltrodept'(context, dept){
         var dept = document.getElementById('dept_id').value;
+        var search_up = document.getElementById('search').value;
         
-        Idept.query({dept_id: dept}).then(response => {
+        Idept.query({dept_id: dept, search: search_up}).then(response => {
             var an_obj = response.data;
             // console.log(an_obj)
                 // console.log(an_obj)
