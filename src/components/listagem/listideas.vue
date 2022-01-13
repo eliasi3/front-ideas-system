@@ -101,6 +101,8 @@
 </template>
 
 <script>
+import VueModal from '@kouts/vue-modal'
+import '@kouts/vue-modal/dist/vue-modal.css'
 import store from '../../store';
 import { Idcom } from '../../services/resources';
 export default {

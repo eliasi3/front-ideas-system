@@ -7,7 +7,7 @@ import {IdeasModel} from './ideas-model';
 import {CommentModel} from './comment-model';
 import JwtToken from './services/jwt-token';
 import {MissionModel} from './mission-model';
-import {Deptos, User, Categories, Userid, Ideas, Missions, Comments, Idemis, Idcom, Userdept, Idecat} from './services/resources';
+import {Deptos, User, Categories, Userid, Ideas, Missions, Comments, Idemis, Idcom, Userdept, Idecat, Idept} from './services/resources';
 import SessionStorage from './services/session-storage';
 import axios from 'axios';
 
@@ -99,6 +99,24 @@ const actions = {
                 // console.log(responseobj)
                 let ideas = responseobj.map(element => new IdeasModel(element.id, element.idea_name, element.idea_description, element.user, element.category, element.mission));  
                 context.commit('set-ideas', ideas);
+
+            });    
+
+
+        
+    },
+    'load-missionfiltrodept'(context, dept){
+        var dept = document.getElementById('dept_id').value;
+        
+        Idept.query({dept_id: dept}).then(response => {
+            var an_obj = response.data;
+            // console.log(an_obj)
+                // console.log(an_obj)
+            var responseobj = Object.values(an_obj);
+                // console.log(responseobj)
+            let missions = responseobj.map(element => new MissionModel(element.id, element.mis_name, element.mis_description, element.mis_image, element.dept, element.user));  
+            // console.log('load', user)
+            context.commit('set-mission', missions);
 
             });    
 

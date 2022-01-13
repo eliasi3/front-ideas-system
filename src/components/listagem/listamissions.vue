@@ -1,4 +1,18 @@
 <template>
+    <div>
+        <v-row>
+          <div class="mb-3 xl:w-35">
+            <select class="form-select mr-3 border-slate-300 p-2" v-model="selectedept" ref='dept_id' id='dept_id' @change="filtrardept()">
+                <option value="">Selecione Departamento</option>
+                <option :value="depts.id" v-for="(depts, i) in isDepts" :key="i">{{depts.dep_name}}</option>
+            </select>
+          </div>
+
+        <div class="mb-3 xl:w-60 border-slate-300" >    
+            <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @blur="filtrardept()">
+       </div>
+
+
     <center>
         
         <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;">
@@ -59,7 +73,9 @@
         
         
 
-    </center>
+        </center>
+        </v-row>
+    </div>
 </template>
 
 <script>
@@ -68,12 +84,14 @@ export default {
     name: 'Listamissoes',
     data () {
         return {
+            selectedept: "",
             }
     },
     created(){
         
             if(this.isAuth) {     
                 store.dispatch('load-missions');
+                store.dispatch('load-depts')
             }
     },
     computed: {
@@ -82,6 +100,9 @@ export default {
         },
         isAuth() {
             return store.state.auth.check;
+        },
+        isDepts() {
+            return store.state.depts;
         },
 
     },
@@ -103,7 +124,12 @@ export default {
         },
         addMission(){
                 this.$router.push({name: 'cadastromissoes'});
-            }
+            },
+        filtrardept(){
+        
+        store.dispatch('load-missionfiltrodept');
+        
+        }
         
         },
     filters: {

@@ -103,7 +103,6 @@
                 
                         </td>
                     </tr>
-
                     <tr>
                         <td style='padding:10px;border-radius:10px;width:100%;text-align:right;'>
                              <router-link v-bind:to="{ name: 'listcomments', params: {id: user_id, idcom: ideas.id}}">
