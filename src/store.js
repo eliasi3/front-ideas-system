@@ -328,18 +328,6 @@ const actions = {
             console.log('Erro no cadastro')
         })
     },
-
-    // savemission(context, miss){
-    //     Missions.save({missions: miss}, { headers: {
-    //         'Content-Type': 'multipart/form-data'
-    //     }}).then(response => {
-    //         console.log('Cadastro feito com sucesso!')
-    //         // success callback
-    //     }, response => {    
-    //         // error callback
-    //         alert('erro no cadastro');
-    //     });
-    // },
     
     saveidea(context, idea){
         console.log(idea)
@@ -353,16 +341,17 @@ const actions = {
     },
 
     savecomment(context, comment){
-        console.log('chegou no save comment', comment)
-        
-        Comments.save({comment: comment}).then(response => {
-            // console.log('Cadastro feito com sucesso!')
-            console.log(response.data)
-            // success callback
-        }, response => {    
-            // error callback
-            alert('erro no cadastro');
-        });
+        axios.post('http://localhost:3000/comments', comment, { headers: {
+            'Content-Type': 'multipart/form-data'
+        }})
+        .then(response => {
+            alert('Adicionado com sucesso!')
+            this.$router.push({name: 'listcomments'});
+
+        })
+        .catch(error => {
+            console.log('Erro no cadastro')
+        })
     },
 
 

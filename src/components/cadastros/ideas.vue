@@ -116,7 +116,7 @@
                 }else{
                     store.dispatch('saveidea', this.idea)
                     .then((response) => {
-                        this.$router.push({name: 'listideas'});
+                        this.$router.push({name: 'detalhesmiss'});
                         location.reload(true);
                         alert('Ideia cadastrada com sucesso!')
                         })

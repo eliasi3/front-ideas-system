@@ -2,8 +2,8 @@
     <center>
         <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom: 10px;">
             <span style='float:left;'  class="font-bold text-3xl text-gray-900 text-sky-600">COMENTARIOS</span> 
-            <span style='float:left;' v-if='comentario' class="font-bold text-3xl text-gray-900 text-sky-600">SEM COMENTARIOS</span> 
-             <router-link v-bind:to="{ name: 'cadastrocomment', params: {id: user_id, idcom: idea_id}}">
+            <!-- <span style='float:left;' v-if='comentario' class="font-bold text-3xl text-gray-900 text-sky-600">SEM COMENTARIOS</span>  -->
+             <router-link v-bind:to="{ name: 'cadastrocomment', params: {idcom: idea_id}}">
                     <a href="#" style='float:right;margin-right:10px;font-size:40px; ' id='pointmouser' class="font-bold text-3xl text-gray-900 text-sky-600" >+ </a>
             </router-link>
         </div> 
@@ -15,11 +15,18 @@
                     <tr>
                         <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400" colspan='3'>
                             <span style='font-size:25px;'> {{com.user.user_name}}, fez o seguinte comentario<br></span><br>
-                            <b>Comentario:</b>{{com.com_description}}, 
-                            <b> imagem: </b> {{com.com_image}},
-                         
                             <b> Ideia: </b> {{com.idea.idea_name}}
-                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400">
+
+                            <div style='float:left;margin-right:10px;width:230px;'>
+                                <img :src="getImgUrl(com.com_image)" style='' alt="">
+                            </div>
+                            <div style='margin:10px float:right;'>
+                                <span>{{com.com_description | truncate(200, '..')}} </span>
+                            </div>
                         </td>
                     </tr>
                 
@@ -62,20 +69,18 @@ export default {
         },
     },
     methods: {
+        getImgUrl(pet) {
+            
+            return 'http://localhost:3000/comments?img=' + pet;
+            
+        },
+    },
 
-        // deleteidea(id, idea_name){
-        //      if (confirm('Deseja excluir a ideia ' +idea_name+ ' permanentemente?')){
-        //       const req = fetch(`http://localhost:3000/ideas/${id}`,{
-        //         method: "DELETE"
-        //       });
-                
-        //         // store.dispatch('load-depts');
-        //      };
-        //      location.reload(true);
-        //      alert('Ideia excluida com sucesso!')
-        // },
-        
-        }
+    filters: {
+    truncate: function (text, length, suffix) {
+         return text.substring(0, length) + suffix;
+    },
+    },
 }
 </script>
 
