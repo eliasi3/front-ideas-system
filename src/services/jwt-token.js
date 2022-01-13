@@ -22,10 +22,10 @@ export default {
     },
 
     //acesso ao token
-    accessToken(email, password_digest){
-        // console.log(email, password_digest)
-        return Jwt.accessToken(email, password_digest).then((response) => {
-            console.log(response.data)
+    accessToken(email, password){
+        // console.log(email, password)
+        return Jwt.accessToken(email, password).then((response) => {
+            console.log('console jwt', response.data)
             this.token = response.data.token;
             // console.log(response.data.id)
             store.dispatch('getUser', response.data.id);

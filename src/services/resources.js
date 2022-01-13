@@ -14,10 +14,10 @@ require('./interceptors');
 
 export class Jwt{
 
-    static accessToken(email, password_digest){
+    static accessToken(email, password){
         return Vue.http.post('http://localhost:3000/auth', {
             email,
-            password_digest
+            password
         });
     }
 

@@ -283,12 +283,11 @@ const actions = {
     }
     // }
 },
-
-
-    login(context, {email, password_digest}){
+    
+    login(context, {email, password}){
         // console.log(email, password_digest)
         
-        return JwtToken.accessToken(email, password_digest)
+        return JwtToken.accessToken(email, password)
             .then(response => {
                 context.commit('authenticated');
                 // context.dispatch('getUser', response.data.id);

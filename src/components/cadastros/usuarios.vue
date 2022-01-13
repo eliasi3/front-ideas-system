@@ -21,7 +21,7 @@
 
                                 <label for="" class="text-xs font-semibold px-3">SENHA</label>
                                 <div class="text-center items-center border-b border-gray-500 py-2">
-                                <input v-model="user.password_digest" required='' type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Digite a Senha" >
+                                <input v-model="user.password" required='' type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Digite a Senha" >
                                 </div><br>
 
                                 <label for="" class="text-xs font-semibold px-3">NOME</label>
@@ -76,7 +76,7 @@
                     username: '',
                     user_name: '',
                     email: '',
-                    password_digest: '',
+                    password: '',
                     user_phone: '',
                     dept_id: '',
                 },
@@ -104,7 +104,7 @@
                   if(this.user.email.length <= 7){
                     alert('Preencha no mínimo 8 caracteres no campo de email!');
                     }else{
-                        if(this.user.password_digest.length <= 5){
+                        if(this.user.password.length <= 5){
                             alert('Preencha no mínimo 6 caracteres no campo de senha!');
                         }else{
                            if(this.user.user_name.length <= 3){

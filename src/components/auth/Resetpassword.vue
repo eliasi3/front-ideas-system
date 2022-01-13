@@ -8,41 +8,33 @@
             </div>
             <div class="w-full md:w-1/2 py-10 px-5 md:px-10">
                 <div class="text-center mb-10">
-                    <h1 class="font-bold text-3xl text-gray-900">ENTRAR</h1>
-                    <p>{{ error.message }}</p>
+                    <h1 class="font-bold text-3xl text-gray-900">ATUALIZAÇÃO DE SENHA DO USUARIO <br><span style='font-size:18px;'>{{user.user_name}}</span></h1>
+                    
                 </div>
-                <form  @submit.prevent="login()" method="POST">
+                <form  @submit.prevent="resetSenha()" method="POST">
                 <div>
                     <div class="flex -mx-3">
                         <div class="w-full px-3 mb-5">
-                            <label for="" class="text-xs font-semibold px-1">Email</label>
+                            <label for="" class="text-xs font-semibold px-1">Nova senha: </label>
                             <div class="flex">
                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
-                                <input type="email"  v-model="user.email" autocomplete="email" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="example@example.com">
+                                <input type="password" v-model="user.password" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="Digite a nova senha!">
                             </div>
                         </div>
                     </div>
                     <div class="flex -mx-3">
-                        <div class="w-full px-3 mb-12">
-                            <label for="" class="text-xs font-semibold px-1">Password</label>
+                        <div class="w-full px-3 mb-5">
+                            <label for="" class="text-xs font-semibold px-1">Confirmar senha: </label>
                             <div class="flex">
-                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                <input id="password" name="password" v-model="user.password" type="password" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="*****">
+                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
+                                <input type="password" v-model="confirm_new_password" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="Digite a nova senha!">
                             </div>
                         </div>
                     </div>
-
-                    <div class="flex -mx-3 mt-0" style='text-align:center'>
-                        <div class="w-full px-3 mb-5">
-                            
-                                <a href='#' @click="recuperarSenha()">Esqueci minha senha</a>
-                            
-                        </div>
-                    </div>
-
+                    
                     <div class="flex -mx-3">
                         <div class="w-full px-3 mb-5">
-                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" >ENTRAR</button>
+                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" >ENVIAR</button>
                         </div>
                     </div>
                 </div>
@@ -59,41 +51,67 @@
 
 <script type="text/javascript">
     import store from '../../store';
+    import { Userid } from '../../services/resources';
 
     export default {
         data(){
             return {
-                user: {
-                    email: '',
-                    password: ''
-                },
-                error: {
-                    error: false,
-                    message: 'Entre com sua conta já cadastrada'
-                }
+               user: {
+                 user_name: '',
+                 username: '',
+                 email: '',
+                 user_phone: '',
+                 dept_id: '',
+                 password: ''
+
+               },
+                 confirm_new_password: null,
+                 user_id: null
             }
         },
+        created() {
+          
+
+          let uri = window.location.href.split('?id=6FF213ssa213fFGD22g349')
+          let id = uri[1];
+          // alert(id);
+          this.user_id = id
+
+          Userid.query({id: this.user_id}).then(response => {
+            this.user.user_name = response.data.user_name
+            this.user.username = response.data.username
+            this.user.email = response.data.email
+            this.user.user_phone = response.data.user_phone
+            this.user.dept_id = response.data.dept_id
+          })
+          
+
+        },
         methods: {
-            login(){
+            resetSenha(){
+              if(this.user.password.length < 6){
+                alert('A nova senha deve conter no mínimo 6 caracteres')
               
-                // console.log(this.user);
+              }else{
+              
+                if(this.user.password === this.confirm_new_password){
+
+                  Userid.update({id: this.user_id}, {user: this.user}).then(response => {
                 
-                store.dispatch('login', this.user)
-                    .then((response) => {
-                        this.$router.push({name: 'listmiss'});
-                    })
-                    .catch((responseError) => {
-                        this.error.error = true;
-                        if (responseError.status === 400) {
-                            this.error.message = responseError.data.error;
-                        } else {
-                            alert('Email ou senha inválido!');
-                            this.error.message = 'Login inválido!'
-                        }
-                    })
-            },
-            recuperarSenha(){
-                this.$router.push({name: 'recuperarsenha'});
+                  console.log(this.user_id)
+                  alert('Usuário atualizado com sucesso!')
+                  this.$router.push({name: 'auth.login'}); 
+                  }, response => {    
+                  console.log('DEU ERRADO!')
+                  });
+
+                }else{
+                  alert('Confirmação de senha inválida!')
+                }
+                
+                }
+              
+                    
             }
         }
     }

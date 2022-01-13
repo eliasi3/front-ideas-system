@@ -19,7 +19,7 @@
                             </div><br>
                             <label for="" class="text-xs font-semibold px-3">SENHA</label>
                             <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <input v-model="user.password_digest" type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome e Sobrenome do Usuário" >
+                                <input v-model="user.password" type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome e Sobrenome do Usuário" >
                             </div><br>
                             <label for="" class="text-xs font-semibold px-3">NOME</label>
                             <div class="text-center flex items-center border-b border-gray-500 py-2">
@@ -71,7 +71,7 @@ import { Userid } from '../../services/resources';
           user: {
             username: null,
             user_name: null,
-            password_digest: null,
+            password: null,
             email: null,
             user_phone: null,
             dept_id: null,
@@ -92,7 +92,7 @@ import { Userid } from '../../services/resources';
       Userid.query({id: this.user_id}).then(response => {
             this.user.username = response.data.username,
             this.user.user_name = response.data.user_name,
-            this.user.password_digest = response.data.password_digest
+            this.user.password = response.data.password_digest
             this.user.email = response.data.email
             this.user.user_phone = response.data.user_phone
             this.user.dept_id = response.data.dept_id

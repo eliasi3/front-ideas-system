@@ -10,6 +10,7 @@
 
 import LoginComponent from './components/auth/Login.vue';
 import LogoutComponent from './components/auth/Logout.vue';
+import Resetpassword from './components/auth/Resetpassword.vue';
 import Recuperarsenha from './components/auth/Recuperarsenha.vue';
 
 import DepartamentosCadastro from './components/cadastros/departamentos.vue';
@@ -39,6 +40,12 @@ import Editperfil from './components/edit/Editperfil.vue';
 export default [
     
     
+    {
+        name: 'resetpassword',
+        path: '/resetpassword',
+        component: Resetpassword,
+        meta: {auth: false}
+    },
     {
         name: 'recuperarsenha',
         path: '/recuperarsenha',
