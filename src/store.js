@@ -120,10 +120,26 @@ const actions = {
             context.commit('set-mission', missions);
 
             });    
-
-
-        
     },
+
+    'load-userfiltrodept'(context, dept){
+        var dept = document.getElementById('dept_id').value;
+        var search_up = document.getElementById('search').value;
+        
+        Userdept.query({dept_id: dept, search: search_up}).then(response => {
+            var an_obj = response.data;
+            // console.log(an_obj)
+                // console.log(an_obj)
+            var responseobj = Object.values(an_obj);
+                // console.log(responseobj)
+            let users = responseobj.map(element => new UsersModel(element.id, element.dept, element.username, element.email, element.user_name, element.user_phone, element.dept_id));   
+            // console.log('load', user)
+            context.commit('set-users', users);
+
+            });    
+    },
+
+
     'load-depts'(context){
         // if(filtro != 0){
             // Deptos.query({author: filtro}).then(response => {
