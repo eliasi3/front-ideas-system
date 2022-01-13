@@ -2,6 +2,7 @@
 <div>
     <br>
     <v-row>
+        <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="filtrardept(count-1)"> PAGINA {{count}}</a><br><br>
         <div class="mb-3 xl:w-35">
         <select class="form-select mr-3 border-slate-300 p-2" v-model="selectedept" ref='dept_id' id='dept_id' @change="filtrardept()">
                <option value="">Selecione Departamento</option>
@@ -100,6 +101,7 @@ export default {
         return {
             menuPerfil: false,
             selectedept: "",
+            countpage: Math.ceil(store.state.users.length/2)
             // index: this.selected
             }
     },
@@ -122,6 +124,9 @@ export default {
         isDepts() {
             return store.state.depts;
         },
+        countResults(){
+            return this.countpage
+        },
     },
     methods: {
     
@@ -141,12 +146,12 @@ export default {
         
         adduser(){
                 this.$router.push({name: 'cadastrousuarios'});
-            },
-
-        filtrardept(){
-            store.dispatch('load-userfiltrodept');
+        },
+    
+        filtrardept(page){
+            store.dispatch('load-userfiltrodept', page);
         }
-        }
+      }
     }
     
   

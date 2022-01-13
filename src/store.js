@@ -122,11 +122,11 @@ const actions = {
             });    
     },
 
-    'load-userfiltrodept'(context, dept){
+    'load-userfiltrodept'(context, page){
         var dept = document.getElementById('dept_id').value;
         var search_up = document.getElementById('search').value;
         
-        Userdept.query({dept_id: dept, search: search_up}).then(response => {
+        Userdept.query({dept_id: dept, search: search_up, page: page}).then(response => {
             var an_obj = response.data;
             // console.log(an_obj)
                 // console.log(an_obj)
