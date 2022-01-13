@@ -10,6 +10,7 @@
 
 import LoginComponent from './components/auth/Login.vue';
 import LogoutComponent from './components/auth/Logout.vue';
+import Recuperarsenha from './components/auth/Recuperarsenha.vue';
 
 import DepartamentosCadastro from './components/cadastros/departamentos.vue';
 import CategoriasCadastro from './components/cadastros/categorias.vue';
@@ -38,6 +39,12 @@ import Editperfil from './components/edit/Editperfil.vue';
 export default [
     
     
+    {
+        name: 'recuperarsenha',
+        path: '/recuperarsenha',
+        component: Recuperarsenha,
+        meta: {auth: false}
+    },
     {
         name: 'listmiss',
         path: '/listamissions',

@@ -13,6 +13,7 @@
     "@kouts/vue-modal": "^2.1.4",
     "axios": "^0.24.0",
     "bootstrap": "^3.3.7",
+    "emailjs-com": "^3.2.0",
     "jquery": "^3.1.1",
     "lodash": "^4.16.4",
     "vue": "^2.5.11",
