@@ -112,6 +112,7 @@
                             }else{
                                 store.dispatch('saveuser', this.user)
                                 .then((response) => {
+                                    alert('Cadastrado com sucesso!')
                                     this.$router.push({name: 'listuser'});
                                 })
                                 .catch((responseError) => {

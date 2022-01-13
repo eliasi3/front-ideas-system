@@ -212,7 +212,8 @@ export default {
         },
         
         excluirmissao(mission_id, mis_name){
-            if (confirm('Deseja excluir a missão ' +mis_name+ ' permanentemente?')){
+            
+            if (confirm('Deseja excluir a missão ' +mission_id+ ' permanentemente?')){
                 const req = fetch(`http://localhost:3000/missions/${mission_id}`,{
                 method: "DELETE"
                 });

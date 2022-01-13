@@ -68,7 +68,7 @@
             recuperarSenha(){
                 store.dispatch('recuperar-senha', this.email)
                     .then((response) => {
-                        console.log('deu certo')
+                        console.log(response)
                     })
             }
         }

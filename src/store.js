@@ -7,7 +7,7 @@ import {IdeasModel} from './ideas-model';
 import {CommentModel} from './comment-model';
 import JwtToken from './services/jwt-token';
 import {MissionModel} from './mission-model';
-import {Deptos, User, Categories, Userid, Ideas, Missions, Comments, Idemis, Idcom, Userdept, Idecat, Idept} from './services/resources';
+import {Deptos, User, Categories, Userid, Ideas, Missions, Comments, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword} from './services/resources';
 import SessionStorage from './services/session-storage';
 import axios from 'axios';
 
@@ -76,10 +76,12 @@ const mutations = {
 
 const actions = {
     'recuperar-senha'(context, email){
-        User.query({email: email}).then(response => {
-            
-            console.log(response.data)
-        });
+        Resetpassword.query({email: email}).then(response => {
+            alert('Email enviado com sucesso para '+ email +'!')
+        }).catch((responseError) => {
+            alert('Email inválido, tente novamente!')
+        })
+        
     },
     'load-ideasfiltrocategorie'(context, page){
         var cat = document.getElementById('category_id').value;
