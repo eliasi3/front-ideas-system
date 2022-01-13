@@ -75,7 +75,12 @@ const mutations = {
 };
 
 const actions = {
-    
+    'recuperar-senha'(context, email){
+        User.query({email: email}).then(response => {
+            
+            console.log(response.data)
+        });
+    },
     'load-ideasfiltrocategorie'(context, page){
         var cat = document.getElementById('category_id').value;
         var miss = document.getElementById('mission_id').value;

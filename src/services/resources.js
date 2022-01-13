@@ -53,7 +53,7 @@ export class Criarautor{
 // const Livroaut = Vue.resource(`http://localhost:3000/livros/?author={author}`);
 // const Livroid = Vue.resource(`http://localhost:3000/livros{/id}`);
 
-const User = Vue.resource('http://localhost:3000/users');
+const User = Vue.resource('http://localhost:3000/users?email={email}');
 const Deptos = Vue.resource(`http://localhost:3000/depts`);
 const Categories = Vue.resource(`http://localhost:3000/categories`);
 const Ideas = Vue.resource(`http://localhost:3000/ideas`);

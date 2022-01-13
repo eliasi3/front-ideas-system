@@ -8,41 +8,30 @@
             </div>
             <div class="w-full md:w-1/2 py-10 px-5 md:px-10">
                 <div class="text-center mb-10">
-                    <h1 class="font-bold text-3xl text-gray-900">ENTRAR</h1>
+                    <h1 class="font-bold text-3xl text-gray-900">RECUPERAÇÃO DE SENHA</h1>
                     <p>{{ error.message }}</p>
                 </div>
-                <form  @submit.prevent="login()" method="POST">
+                <form  @submit.prevent="recuperarSenha()" method="POST">
                 <div>
                     <div class="flex -mx-3">
                         <div class="w-full px-3 mb-5">
                             <label for="" class="text-xs font-semibold px-1">Email</label>
                             <div class="flex">
                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
-                                <input type="email"  v-model="user.email" autocomplete="email" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="example@example.com">
+                                <input type="email"  v-model="email" autocomplete="email" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="example@example.com">
                             </div>
                         </div>
                     </div>
-                    <div class="flex -mx-3">
-                        <div class="w-full px-3 mb-12">
-                            <label for="" class="text-xs font-semibold px-1">Password</label>
-                            <div class="flex">
-                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                <input id="password" name="password" v-model="user.password_digest" type="password" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="*****">
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="flex -mx-3 mt-0" style='text-align:center'>
                         <div class="w-full px-3 mb-5">
                             
-                                <a href='#' @click="recuperarSenha()">Esqueci minha senha</a>
+                                <a href='#' @click="login()">Entrar com uma nova conta</a>
                             
                         </div>
                     </div>
-
                     <div class="flex -mx-3">
                         <div class="w-full px-3 mb-5">
-                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" >ENTRAR</button>
+                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" >ENVIAR</button>
                         </div>
                     </div>
                 </div>
@@ -63,37 +52,24 @@
     export default {
         data(){
             return {
-                user: {
-                    email: '',
-                    password_digest: ''
-                },
+                
+                email: '',
+                
                 error: {
                     error: false,
-                    message: 'Entre com sua conta já cadastrada'
+                    message: 'Atualize sua senha usando seu email'
                 }
             }
         },
         methods: {
             login(){
-              
-                // console.log(this.user);
-                
-                store.dispatch('login', this.user)
-                    .then((response) => {
-                        this.$router.push({name: 'listmiss'});
-                    })
-                    .catch((responseError) => {
-                        this.error.error = true;
-                        if (responseError.status === 400) {
-                            this.error.message = responseError.data.error;
-                        } else {
-                            alert('Email ou senha inválido!');
-                            this.error.message = 'Login inválido!'
-                        }
-                    })
+                this.$router.push({name: 'auth.login'});
             },
             recuperarSenha(){
-                this.$router.push({name: 'recuperarsenha'});
+                store.dispatch('recuperar-senha', this.email)
+                    .then((response) => {
+                        console.log('deu certo')
+                    })
             }
         }
     }
