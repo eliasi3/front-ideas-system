@@ -1,5 +1,7 @@
 <template>
     <div>
+        <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="filtrardept(count-1)"> PAGINA {{count}}</a><br><br>
+
           <div class="mb-3 xl:w-35" style="float:left">
             <select class="form-select mr-3 border-slate-300 p-2" v-model="selectedept" ref='dept_id' id='dept_id' @change="filtrardept()">
                 <option value="">Selecione Departamento</option>
@@ -84,6 +86,7 @@ export default {
     data () {
         return {
             selectedept: "",
+            countpage: Math.ceil(store.state.missions.length/2)
             }
     },
     created(){
@@ -102,6 +105,9 @@ export default {
         },
         isDepts() {
             return store.state.depts;
+        },
+        countResults(){
+            return this.countpage
         },
 
     },
@@ -124,19 +130,17 @@ export default {
         addMission(){
                 this.$router.push({name: 'cadastromissoes'});
             },
-        filtrardept(){
+        filtrardept(page){
         
-        store.dispatch('load-missionfiltrodept');
+        store.dispatch('load-missionfiltrodept', page);
         
         }
         
         },
     filters: {
     truncate: function (text, length, suffix) {
-            return text.substring(0, length) + suffix;
-        
-
-    },
+        return text.substring(0, length) + suffix;
+        },
     },
 }
 </script>

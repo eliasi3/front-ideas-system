@@ -1,6 +1,3 @@
-  
-        
-
 <template>
 <div>
     <v-row>
@@ -127,7 +124,7 @@ export default {
                 store.dispatch('load-ideas', this.mission_id);
             }  
             
-            console.log(this.com.idea_id)
+            //console.log(this.com.idea_id)
             store.dispatch('load-comments', this.com.idea_id);
 
             Idcom.query({id: this.com.idea_id}).then(response => {
