@@ -25,7 +25,7 @@
         </div>
 
         <div class="mb-3 xl:w-60 border-slate-300" >    
-            <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @blur="filtrarcategory()">
+            <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @change="filtrarcategory()">
 
         </div>
         
@@ -101,8 +101,7 @@
 </template>
 
 <script>
-import VueModal from '@kouts/vue-modal'
-import '@kouts/vue-modal/dist/vue-modal.css'
+
 import store from '../../store';
 import { Idcom } from '../../services/resources';
 export default {

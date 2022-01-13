@@ -8,7 +8,7 @@
           </div>
 
         <div class="mb-3 xl:w-60 border-slate-300"  style="float:left">    
-            <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @blur="filtrardept()">
+            <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @change="filtrardept()">
        </div>
 
 

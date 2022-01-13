@@ -122,10 +122,26 @@ const actions = {
             context.commit('set-mission', missions);
 
             });    
-
-
-        
     },
+
+    'load-userfiltrodept'(context, dept){
+        var dept = document.getElementById('dept_id').value;
+        var search_up = document.getElementById('search').value;
+        
+        Userdept.query({dept_id: dept, search: search_up}).then(response => {
+            var an_obj = response.data;
+            // console.log(an_obj)
+                // console.log(an_obj)
+            var responseobj = Object.values(an_obj);
+                // console.log(responseobj)
+            let users = responseobj.map(element => new UsersModel(element.id, element.dept, element.username, element.email, element.user_name, element.user_phone, element.dept_id));   
+            // console.log('load', user)
+            context.commit('set-users', users);
+
+            });    
+    },
+
+
     'load-depts'(context){
         // if(filtro != 0){
             // Deptos.query({author: filtro}).then(response => {
@@ -314,18 +330,6 @@ const actions = {
             console.log('Erro no cadastro')
         })
     },
-
-    // savemission(context, miss){
-    //     Missions.save({missions: miss}, { headers: {
-    //         'Content-Type': 'multipart/form-data'
-    //     }}).then(response => {
-    //         console.log('Cadastro feito com sucesso!')
-    //         // success callback
-    //     }, response => {    
-    //         // error callback
-    //         alert('erro no cadastro');
-    //     });
-    // },
     
     saveidea(context, idea){
         console.log(idea)
@@ -339,16 +343,17 @@ const actions = {
     },
 
     savecomment(context, comment){
-        console.log('chegou no save comment', comment)
-        
-        Comments.save({comment: comment}).then(response => {
-            // console.log('Cadastro feito com sucesso!')
-            console.log(response.data)
-            // success callback
-        }, response => {    
-            // error callback
-            alert('erro no cadastro');
-        });
+        axios.post('http://localhost:3000/comments', comment, { headers: {
+            'Content-Type': 'multipart/form-data'
+        }})
+        .then(response => {
+            alert('Adicionado com sucesso!')
+            this.$router.push({name: 'listcomments'});
+
+        })
+        .catch(error => {
+            console.log('Erro no cadastro')
+        })
     },
 
 

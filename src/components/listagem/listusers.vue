@@ -3,18 +3,15 @@
     <br>
     <v-row>
         <div class="mb-3 xl:w-35">
-        <select class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal 
-        text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded transition ease-in-out m-0
-        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none shadow-xl" 
-        v-model="selected" @change="filtrardepts()">
-                <option value="" placeholder="valor" >Departamentos</option>
-                <option :value="depts.id" v-for="(depts, i) in isDepts" :key="i">{{depts.dep_name}}</option>
+        <select class="form-select mr-3 border-slate-300 p-2" v-model="selectedept" ref='dept_id' id='dept_id' @change="filtrardept()">
+               <option value="">Selecione Departamento</option>
+               <option :value="depts.id" v-for="(depts, i) in isDepts" :key="i">{{depts.dep_name}}</option>
         </select>
-        </div>&nbsp&nbsp
+        </div>
         
-    <div class="mb-3 xl:w-60">    
-    <input class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none shadow-xl " type="text" id="search-bar" placeholder="Busca">
-      </div>
+    <div class="mb-3 xl:w-60 border-slate-300"  style="float:left">    
+        <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @change="filtrardept()">
+    </div>
     <br><br>  
 
     <div class='px-3 text-gray-500 shadow-xl ' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;margin-left:10px;' class="font-bold text-3xl text-gray-900 text-sky-600" >USUÁRIOS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adduser()' class="font-bold text-3xl text-gray-900 text-sky-600 ">+</span><br>
@@ -102,7 +99,7 @@ export default {
     data () {
         return {
             menuPerfil: false,
-            selected: ""
+            selectedept: "",
             // index: this.selected
             }
     },
@@ -110,16 +107,7 @@ export default {
             if(this.isAuth) {
                 
                 store.dispatch('load-users');
-                store.dispatch('load-depts');
-                //console.log('entrou')
-                
-                // const res = axios.get('http://localhost:3000/users');
-                // console.log(res),
-
-                // Autor.query().then(response => {
-                // this.options = response.data.autores
-                // this.id_livro = response.data.id 
-                // })
+                store.dispatch('load-depts')
             }
        
     },
@@ -131,27 +119,16 @@ export default {
         isAuth() {
             return store.state.auth.check;
         },
-         isDepts() {
+        isDepts() {
             return store.state.depts;
         },
     },
     methods: {
-        // filtro(){
-            
-        //     console.log(this.selected)
-        //     store.dispatch('load-livros', this.selected);
-        //     return false;
-        //     // console.log(this.selected)
-        // },
+    
         abrir() {
             this.menuPerfil = this.menuPerfil == false ? true : false;
             },
-        // User() {
-        //     return User.get(id)
-        // },
-        // MethoddeTextoTeste() {
-        //     return 'TESTE'
-        // }
+
         deleteuser(id, user_name){
             if (confirm('Deseja excluir o usuário ' +user_name+ ' permanentemente?')){
                 const req = fetch(`http://localhost:3000/users/${id}`,{
@@ -161,11 +138,13 @@ export default {
             location.reload(true);
             }
         },
+        
         adduser(){
                 this.$router.push({name: 'cadastrousuarios'});
             },
-        filtrardepts(){
-            store.dispatch('load-users', this.selected);
+
+        filtrardept(){
+            store.dispatch('load-userfiltrodept');
         }
         }
     }
