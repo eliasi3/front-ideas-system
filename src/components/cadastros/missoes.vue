@@ -23,12 +23,25 @@
                                 <textarea type="text" v-model="mis_description" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Adicione uma descrição" ></textarea>
                                 </div><br>
 
-                                
-
                                 <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
                                 <div class="text-center flex items-center border-gray-500 py-2" >
                                      <b>{{userId.user_name}}</b>, você será o criador desta missão
                                 </div><br>
+
+                                <label for="" class="text-xs font-semibold px-3">DATA LIMITE {{dat_limite}}</label>
+                                <div class="text-left items-center py-2">
+                                <input type="date" v-model="dat_limite" class="" required=''>
+                                </div><br>
+
+                                <div>
+                                    <input type="checkbox" v-model="ies_multi" id="scales" @change="formatCheckMultiDepts(ies_multi)" name="scales" value='1'>
+                                    <label for="scales">Multiplos departamentos podem responder: {{ies_multi}}</label>
+
+                                    <input style='margin-left:30px;' type="checkbox" id="scales" @change="formatCheckAtivo(ies_ativo)" name="scales" value='1' checked>
+                                    <label for="scales">Ativo {{ies_ativo}}</label>
+                                    
+                                </div><br>
+                                    
 
                                <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
                                 <div class="text-center flex items-center border border-gray-500 py-2" >
@@ -73,8 +86,12 @@
                     dept_id: null,
                     user_id: store.state.auth.user.id,
                     mis_name: '',
-                
-                    mis_image: null
+                    mis_image: null,
+
+                    dat_limite: null,
+                    ies_multi: 0,
+                    ies_ativo: 1
+                    
                     
                
                     
@@ -97,6 +114,23 @@
         },
         methods: {
             
+            formatCheckMultiDepts(CheckMD) {
+                if (CheckMD == false){
+                    this.ies_multi = 0
+                }else{
+                    this.ies_multi = 1
+                }
+                
+            },
+            formatCheckAtivo(CheckAT) {
+                if (CheckAT == false){
+                    this.ies_ativo = 1
+                }else{
+                    this.ies_ativo = 0
+                }
+                
+            },
+
             handleFileUpload( event ){
                     this.mis_image = event.target.files[0];
                 },
@@ -119,7 +153,10 @@
                         formData.append('mis_description', this.mis_description);
                         formData.append('dept_id', this.dept_id);
                         formData.append('user_id', this.user_id);
-                    
+                        
+                        formData.append('dat_limite', this.dat_limite);
+                        formData.append('ies_ativo', this.ies_ativo);
+                        formData.append('ies_multi', this.ies_multi);
 
                         store.dispatch('savemission', formData)
                         .then(response => {

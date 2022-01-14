@@ -90,7 +90,9 @@
                 if(this.com_description.length <= 4){
                     alert('Preencha no mínimo 5 caracteres no comentario!');
                 }else{
-
+                    if(!this.idea_id){
+                        alert('É necessário selecionar uma ideia, para fazer esse comentario')
+                    }else{
                     let formData = new FormData();
 
                         formData.append('file', this.com_image);
@@ -106,6 +108,7 @@
                     .catch((responseError) => {
                     console.log('erro no cadastro de Comentario: /comentario.vue')
                 })
+                }
               }    
                 
             }
