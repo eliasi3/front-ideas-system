@@ -6,7 +6,8 @@
             
             <div class="w-full md:w-1/1 py-10 px-5 md:px-10" >
                 <div class="text-center mb-100">
-                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR CATEGORIA</h1>
+                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600" v-if="!cat_id">CADASTRAR CATEGORIA</h1>
+                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600" v-if="cat_id">ATUALIZAR CATEGORIA</h1>
                     <br>
                 </div>
                 <form  @submit.prevent="cadastrar()" method="POST">
@@ -25,7 +26,8 @@
  
                     <div class="flex -mx-3">
                         <div class="w-full px-3 mb-5">
-                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" >CADASTRAR</button>
+                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="!cat_id">CADASTRAR</button>
+                             <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="cat_id">ATUALIZAR</button>
                         </div>
                     </div>
                 </div>
@@ -42,11 +44,12 @@
 
 <script type="text/javascript">
     import store from '../../store';
-    // import Deptos from '../../services/resources.js';
+    import { Catid } from '../../services/resources';
 
     export default {
         data(){
             return {
+                cat_id: this.$route.params.id,
                 cat: {
                     cat_name: null,
                 },
@@ -56,6 +59,12 @@
             }
         },
         created(){
+            if(this.cat_id){
+                Catid.query({id: this.cat_id}).then(response => {
+                this.cat.cat_name = response.data.cat_name
+            
+            })
+            }
             store.dispatch('load-categories');
         },
         computed: {
@@ -65,9 +74,7 @@
         },
         methods: {
             cadastrar(){
-              
-                //alert('Comunicando com o Servidor API....');
-                // console.log( this.user)
+                if(!this.cat_id){
                 if(this.cat.cat_name.length <= 4){
                     alert('Preencha no mínimo 5 caracteres no nome da categoria!');
                 }else{
@@ -81,7 +88,20 @@
                         console.log('erro no cadastro de categoria: /categorias.vue')
                     })
                 }
-                
+                }else{
+                     if(confirm("Deseja realmente editar esse categoria?")){
+                        Catid.update({id: this.cat_id}, {category: this.cat}).then(response => {
+                        console.log(this.cat_id)
+                        location.reload(true);
+                        alert('Categoria atualizada com sucesso!')
+                        }, response => {    
+                        console.log('DEU ERRADO!')
+                        });
+
+                        
+                    this.$router.push({name: 'listcat'});
+                    }
+                } 
             }
         }
     }
