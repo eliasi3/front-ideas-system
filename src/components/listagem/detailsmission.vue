@@ -4,10 +4,14 @@
             <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">MISSÃO: {{miss.mis_name}}</span>
 
         <span style='float:right;'>
-                <a href="#" v-if='excluir' @click='excluirmissao(mission_id, miss.mis_name)' style='font-size:15px;' class="px-4 py-1 text-sm text-white bg-red-700 rounded-full" > Excluir </a>
+                <a href="#" v-if='excluir' @click='excluirmissao(mission_id, miss.mis_name)' style='font-size:15px;margin-left:10px;' class="px-4 py-1 text-sm text-white bg-red-700 rounded-full" > Excluir </a>
+
+            <router-link v-bind:to="{ name: 'cadastromissoes', params: {id: mission_id}}">
+                <a href="#" style='font-size:15px;margin-left:10px;' class="px-4 py-1 text-sm text-blue-600 bg-orange-200 rounded-full" > Editar </a>
+            </router-link>
 
             <router-link v-bind:to="{ name: 'listmiss'}">
-                <a href="#" style='font-size:15px;' class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" > Voltar</a>
+                <a href="#" style='font-size:15px;margin-left:10px;' class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" > Voltar</a>
             </router-link>
 
         </span></div>

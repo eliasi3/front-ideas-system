@@ -6,7 +6,8 @@
             
             <div class="w-full md:w-1/1 py-10 px-5 md:px-10">
                 <div class="text-center mb-100">
-                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR MISSÃO</h1>
+                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600" v-if="!mission_id">CADASTRAR MISSÃO</h1>
+                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600" v-if="mission_id">ATUALIZAR MISSÃO</h1>
                 </div><br>
                 <form @submit.prevent="cadastrar()" method="POST">
                 <div>
@@ -60,7 +61,8 @@
  
                     <div class="flex -mx-3">
                         <div class="w-full px-3 mb-5">
-                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" >CADASTRAR</button>
+                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="!mission_id">CADASTRAR</button>
+                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="mission_id">ATUALIZAR</button>
                         </div>
                     </div>
                 </div>
@@ -77,27 +79,43 @@
 
 <script type="text/javascript">
     import store from '../../store';
+    import { Missionid } from '../../services/resources';
     // import axios from 'axios'; 
     export default {
         data(){
             return {
+                    mission_id: this.$route.params.id,
                 
                     mis_description: '',
                     dept_id: null,
                     user_id: store.state.auth.user.id,
                     mis_name: '',
-                    mis_image: null,
+                    mis_image: [],
 
                     dat_limite: null,
                     ies_multi: 0,
                     ies_ativo: 1
-                    
                     
                
                     
             }
         }, 
         created(){
+            
+            if(this.mission_id){
+                Missionid.query({id: this.mission_id}).then(response => {
+                this.mis_description = response.data.mis_description,
+                this.dept_id = response.data.dept_id,
+                this.user_id = response.data.user_id
+                this.mis_name = response.data.mis_name
+                this.mis_image = response.data.mis_image
+                this.dat_limite = response.data.dat_limite
+                this.ies_multi = response.data.ies_multi
+                this.ies_ativo = response.data.ies_ativo
+            })
+
+            }
+            
             store.dispatch('load-users');
             store.dispatch('load-depts');
         },
@@ -133,6 +151,7 @@
 
             handleFileUpload( event ){
                     this.mis_image = event.target.files[0];
+                    console.log('imagens:', this.mis_image)
                 },
 
             cadastrar(){
@@ -145,27 +164,53 @@
                     alert('Preencha no mínimo 11 caracteres no campo de descrição da missão!');
                     }else{ 
                         
-                        let formData = new FormData();
+                        if(!this.mission_id){
+                            // alert('você está criando')
+                            let formData = new FormData();
 
-                        // console.log(this.miss)
-                        formData.append('file', this.mis_image);
-                        formData.append('mis_name', this.mis_name);
-                        formData.append('mis_description', this.mis_description);
-                        formData.append('dept_id', this.dept_id);
-                        formData.append('user_id', this.user_id);
+                            // console.log(this.miss)
+                            formData.append('file', this.mis_image);
+                            formData.append('mis_name', this.mis_name);
+                            formData.append('mis_description', this.mis_description);
+                            formData.append('dept_id', this.dept_id);
+                            formData.append('user_id', this.user_id);
+                            
+                            formData.append('dat_limite', this.dat_limite);
+                            formData.append('ies_ativo', this.ies_ativo);
+                            formData.append('ies_multi', this.ies_multi);
+
+                            store.dispatch('savemission', formData)
+                            .then(response => {
+                                alert('Adicionado com sucesso!')
+                                this.$router.push({name: 'listmiss'});
+
+                            })    
                         
-                        formData.append('dat_limite', this.dat_limite);
-                        formData.append('ies_ativo', this.ies_ativo);
-                        formData.append('ies_multi', this.ies_multi);
+                        }else{
 
-                        store.dispatch('savemission', formData)
-                        .then(response => {
-                            alert('Adicionado com sucesso!')
-                            this.$router.push({name: 'listmiss'});
+                            alert('ATENÇÃO: A parte de edição ainda está em manutenção')
 
-                        })    
-                        
-                    
+                            // let formData = new FormData();
+
+                            // formData.append('mis_name', this.mis_name);
+                            // formData.append('mis_description', this.mis_description);
+                            // formData.append('dept_id', this.dept_id);
+                            // formData.append('user_id', this.user_id);
+                            
+                            // formData.append('dat_limite', this.dat_limite);
+                            // formData.append('ies_ativo', this.ies_ativo);
+                            // formData.append('ies_multi', this.ies_multi);
+
+                            // Missionid.update({id: this.mission_id}, {mission: formData.mis_name}).then(response => {
+                            //     console.log(response.data)
+                            //     alert('Missão atualizada com sucesso!')
+                            // }, response => {    
+                            //     alert('DEU ERRADO!')
+                            // });
+                            
+                            // this.$router.push({name: 'listmiss'});
+
+                        }
                     }
                  }     
                 
