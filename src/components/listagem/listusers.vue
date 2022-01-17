@@ -150,6 +150,7 @@ export default {
     
         filtrardept(page){
             store.dispatch('load-userfiltrodept', page);
+            
         }
       }
     }
