@@ -13,7 +13,7 @@
                 <div>
                     <div class="text-center">
                         <div class="w-full px-3 mb-5 text-left">
-
+                        
                                 <label for="" class="text-xs font-semibold px-3">NOME</label>
                                 <div class="text-center flex items-center border-b border-gray-500 py-2">
                                 <input type="text" v-model="mis_name" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome da Missão" >
@@ -44,7 +44,22 @@
                                 </div><br>
                                     
 
-                               <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
+
+                                <center>
+                                <input type="hidden" name="hm_deptos">
+                                <select multiple size="10" name="deptosfora" style="padding:5px; width:40%;border:1px solid gray;">
+                                    <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
+                                </select>
+
+                                <select multiple size="10" name="deptosfora" style="padding:5px;width:40%;border:1px solid gray;">
+                                    <option value=''>OPÇÃO DE EXEMPLO</option>
+                                </select><br>
+                                
+                                <input type="button" value=">" id='btn' @click="adddeptos()">
+                                <input type="button" value="<" id='btn' @click="removedeptos()">
+                                </center>
+
+                               <br><label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
                                 <div class="text-center flex items-center border border-gray-500 py-2" >
                                 <select v-model="dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
                                     <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
@@ -90,13 +105,13 @@
                     dept_id: null,
                     user_id: store.state.auth.user.id,
                     mis_name: '',
-                    mis_image: [],
+                    mis_image: null,
 
                     dat_limite: null,
                     ies_multi: 0,
-                    ies_ativo: 1
+                    ies_ativo: 1,
                     
-               
+                    options: []
                     
             }
         }, 
@@ -131,7 +146,13 @@
             },
         },
         methods: {
-            
+            adddeptos(){
+                alert('remove')
+            },
+            removedeptos(){
+                alert('remove')
+            },
+
             formatCheckMultiDepts(CheckMD) {
                 if (CheckMD == false){
                     this.ies_multi = 0
@@ -218,3 +239,9 @@
         }
     }
 </script>
+<style>
+#btn {
+    background-color:rgb(219, 219, 219);
+    padding: 5px;
+}
+</style>
