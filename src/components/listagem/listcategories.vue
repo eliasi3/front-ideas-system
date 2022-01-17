@@ -42,7 +42,7 @@
                                 {{cats.created_at}}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <router-link v-bind:to="{ name: 'editcat', params: {id: cats.id} }">
+                                <router-link v-bind:to="{ name: 'cadastrocategorias', params: {id: cats.id} }">
                                     <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
                                 </router-link>
                             </td>

@@ -41,7 +41,7 @@
                                 {{depts.created_at}}
                             </td>
                             <td class="px-6 py-4 text-right">
-                               <router-link v-bind:to="{ name: 'editdep', params: {id: depts.id} }">
+                               <router-link v-bind:to="{ name: 'cadastrodepartamentos', params: {id: depts.id} }">
                                     <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
                                 </router-link>
                             </td>

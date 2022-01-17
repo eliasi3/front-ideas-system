@@ -94,7 +94,7 @@
 
 <script type="text/javascript">
     import store from '../../store';
-    import { Missionid } from '../../services/resources';
+    import { c } from '../../services/resources';
     // import axios from 'axios'; 
     export default {
         data(){

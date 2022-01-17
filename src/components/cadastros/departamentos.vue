@@ -6,7 +6,8 @@
             
             <div class="w-full md:w-1/1 py-10 px-5 md:px-10">
                 <div class="text-center mb-100">
-                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR DEPARTAMENTO</h1>
+                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600"  v-if="!dept_id">CADASTRAR DEPARTAMENTO</h1>
+                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600" v-if="dept_id">ATUALIZAR DEPARTAMENTO</h1>
                     <br>
                 </div>
                 <form  @submit.prevent="cadastrar()" method="POST">
@@ -22,7 +23,8 @@
  
                     <div class="flex -mx-3">
                         <div class="w-full px-3 mb-5">
-                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" >CADASTRAR</button>
+                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="!dept_id" >CADASTRAR</button>
+                             <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="dept_id">ATUALIZAR</button>
                         </div>
                     </div>
                 </div>
@@ -39,10 +41,12 @@
 
 <script type="text/javascript">
     import store from '../../store';
+    import { Deptosid } from '../../services/resources';
     // import Deptos from '../../services/resources.js';
     export default {
         data(){
             return {
+                dept_id: this.$route.params.id,
                 dep: {
                     dep_name: null,
                 },
@@ -51,6 +55,13 @@
             }
         },
         created(){
+        
+            if(this.dept_id){
+                Deptosid.query({id: this.dept_id}).then(response => {
+                this.dep.dep_name = response.data.dep_name
+               
+                })
+            }
             store.dispatch('load-depts');
         },
         computed: {
@@ -60,9 +71,7 @@
         },
         methods: {
             cadastrar(){
-              
-                //alert('Comunicando com o Servidor API....');
-                // console.log( this.user)
+                if(!this.dept_id){
                 store.dispatch('savedep', this.dep)
                     .then((response) => {
                         this.$router.push({name: 'listdep'});
@@ -73,6 +82,16 @@
                     .catch((responseError) => {
                         console.log('erro no cadastro de departamento: /departamento.vue')
                     })
+                }else{
+                    Deptosid.update({id: this.dept_id}, {dept: this.dep}).then(response => {
+                        location.reload(true);
+                            alert('Departamento atualizado com sucesso!')
+                            }, response => {  
+                            alert('DEU ERRADO!')  
+                    });   
+                    this.$router.push({name: 'listdep'});
+
+                }
             }
         }
     }
