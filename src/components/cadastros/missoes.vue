@@ -262,7 +262,7 @@
                         
                         }else{
 
-                            alert('ATENÇÃO: A parte de edição ainda está em manutenção')
+                            alert('ATENÇÃO: A parte de edição ainda está em manutenção, volte mais tarde')
 
                             // let formData = new FormData();
 
