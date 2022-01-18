@@ -7,7 +7,7 @@ import {IdeasModel} from './ideas-model';
 import {CommentModel} from './comment-model';
 import JwtToken from './services/jwt-token';
 import {MissionModel} from './mission-model';
-import {Deptos, User, Categories, Userid, Ideas, Missions, Comments, Idemis, Idcom, Userdept, Idecat, Idept, Deptosid, Catid, Resetpassword} from './services/resources';
+import {Deptos, User, Categories, Userid, Ideas, Missions, Comments, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword} from './services/resources';
 import SessionStorage from './services/session-storage';
 import axios from 'axios';
 
@@ -140,51 +140,33 @@ const actions = {
 
             });    
     },
-    'load-buscadept'(context, page){
-        var search_up = document.getElementById('search').value;
-        
-        Deptosid.query({search: search_up, page: page}).then(response => {
-            var an_obj = response.data;
-            // console.log(an_obj)
-                // console.log(an_obj)
-            var responseobj = Object.values(an_obj);
-                // console.log(responseobj)
-            let depts = responseobj.map(element => new DeptosModel(element.id, element.dep_name, element.created_at))  
-            // console.log('load', user)
-            context.commit('set-deptos', depts);
-
-            });    
-    },
-
-    'load-catbusca'(context, page){
-        var search_up = document.getElementById('search').value;
-        
-        Catid.query({search: search_up, page: page}).then(response => {
-            var an_obj = response.data;
-            console.log(an_obj)
-                // console.log(an_obj)
-            var responseobj = Object.values(an_obj);
-                // console.log(responseobj)
-            let categories = responseobj.map(element => new CategoriesModel(element.id, element.cat_name, element.created_at));  
-            context.commit('set-categories', categories);
-
-            });    
-    },
 
 
     'load-depts'(context){
-        Deptos.query().then(response => {
-            var an_obj = response.data;
-            // console.log(an_obj)
-                // console.log(an_obj)
-            var responseobj = Object.values(an_obj);
-                // console.log(responseobj)
-            let depts = responseobj.map(element => new DeptosModel(element.id, element.dep_name, element.created_at));  
+        // if(filtro != 0){
+            // Deptos.query({author: filtro}).then(response => {
             
-            context.commit('set-deptos', depts);
-        
-        });
-       
+            // var an_obj = response.data.data;
+            //     // console.log(an_obj)
+            // var responseobj = Object.values(an_obj);
+            //     // console.log(responseobj)
+            // let livros = responseobj.map(element => new LivrosModel(element.id, element.name, element.author, element.description));  
+            // context.commit('set-livros', livros);
+            
+            // });
+        // }else {
+            Deptos.query().then(response => {
+                var an_obj = response.data;
+                // console.log(an_obj)
+                    // console.log(an_obj)
+                var responseobj = Object.values(an_obj);
+                    // console.log(responseobj)
+                let depts = responseobj.map(element => new DeptosModel(element.id, element.dep_name, element.created_at));  
+                
+                context.commit('set-deptos', depts);
+            
+            });
+        // }
     },
     'load-categories'(context){
         Categories.query().then(response => {
@@ -232,6 +214,18 @@ const actions = {
         }
     },   
 
+    //     Ideas.query().then(response => {
+    //             var an_obj = response.data;
+    //             // console.log(an_obj)
+    //                 // console.log(an_obj)
+    //             var responseobj = Object.values(an_obj);
+    //                 // console.log(responseobj)
+    //             let ideas = responseobj.map(element => new IdeasModel(element.id, element.idea_name, element.idea_description, element.user, element.category, element.mission));  
+    //             context.commit('set-ideas', ideas);
+            
+    //         });
+    //     // }
+    // },
     'load-users'(context){
             User.query().then(response => {
                 var response = response.data;
@@ -322,31 +316,26 @@ const actions = {
     },
 
     savemission(context, miss){
-         //console.log('O que chegou no save mission:', miss)
-        axios.post('http://localhost:3000/missions', miss, { headers: {
-            'Content-Type': 'multipart/form-data'
-        }})
+        // console.log(mis_image)
+        axios.post('http://localhost:3000/missions', miss, { headers: {'Content-Type': 'multipart/form-data'}})
         .then(response => {
             alert('Adicionado com sucesso!')
-            console.log(response.data.mis_image)
-            //this.$router.push({name: 'listmiss'});
-
+            // this.$router.push({name: 'listmiss'});
+        }).catch(error => {
+            console.log('Erro no cadastro:'+ error)
         })
-        .catch(error => {
-            console.log('Erro no cadastro')
-        })
-    },
+        },
     
     saveidea(context, idea){
-        console.log(idea)
-        Ideas.save({idea: idea}).then(response => {
-            console.log('Cadastro feito com sucesso!')
-            // success callback
-        }, response => {    
-            // error callback
-            alert('erro no cadastro');
-        });
-    },
+        axios.post('http://localhost:3000/ideas', idea, { headers: {'Content-Type': 'multipart/form-data'}})
+        .then(response => {
+           // console.log(response.data)
+            //alert('Adicionado com sucesso!')
+            // this.$router.push({name: 'listmiss'});
+        }).catch(error => {
+            console.log('Erro no cadastro:'+ error)
+        })
+        },
 
     savecomment(context, comment){
         axios.post('http://localhost:3000/comments', comment, { headers: {

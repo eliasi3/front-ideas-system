@@ -19,6 +19,7 @@ import UsuariosCadastro from './components/cadastros/usuarios.vue';
 import MissoesCadastro from './components/cadastros/missoes.vue';
 import CadastroIdea from './components/cadastros/ideas.vue';
 import CadastroComment from './components/cadastros/comentario.vue'
+import Testeform from './components/cadastros/testeform.vue'
 
 
 import Listamissions from './components/listagem/listamissions.vue';
@@ -40,6 +41,12 @@ import Editperfil from './components/edit/Editperfil.vue';
 export default [
     
     
+    {
+        name: 'testeform',
+        path: '/testeform',
+        component: Testeform,
+        meta: {auth: false}
+    },
     {
         name: 'resetpassword',
         path: '/resetpassword',

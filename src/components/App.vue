@@ -32,6 +32,8 @@
                                 <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'cadastrodepartamentos'}">Departamentos</router-link></span>
 
                                 <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'cadastrocategorias'}">Categorias</router-link></span>
+                                
+                                <span class='block px-4 py-2 text-sm text-gray-700'><router-link class="btn btn-primary" :to="{name: 'testeform'}">Testeform</router-link></span>
 
                                 
                                 

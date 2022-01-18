@@ -9,11 +9,11 @@
                     <h1 class="font-bold text-3xl text-gray-900 text-sky-600" v-if="!mission_id">CADASTRAR MISSÃO</h1>
                     <h1 class="font-bold text-3xl text-gray-900 text-sky-600" v-if="mission_id">ATUALIZAR MISSÃO</h1>
                 </div><br>
-                <form @submit.prevent="cadastrar()" method="POST">
+                <form @submit.prevent="cadastrar()" method="POST" name='editFrm'>
                 <div>
                     <div class="text-center">
                         <div class="w-full px-3 mb-5 text-left">
-
+                        
                                 <label for="" class="text-xs font-semibold px-3">NOME</label>
                                 <div class="text-center flex items-center border-b border-gray-500 py-2">
                                 <input type="text" v-model="mis_name" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome da Missão" >
@@ -44,12 +44,34 @@
                                 </div><br>
                                     
 
-                               <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
+
+                                <center>
+                                    <input type="hidden" name="hm_deptos">
+
+                                    <select multiple size="10" name="deptosfora" v-model="deptosfora" style="padding:5px; width:40%;border:1px solid gray;">
+                                    
+                                        <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
+
+                                    </select>
+
+                                    <select multiple size="10" name="deptosdentro" v-model="deptosdentro" style="padding:5px;width:40%;border:1px solid gray;">
+                                        
+                                        <option v-for="fim in final" :key='fim.dept_id' :value='fim.dept_id'>{{fim.dep_name}}</option>
+
+                                    </select><br>
+
+                                    <input type="button" value=">" id='btn' @click="adddeptos()">
+                                    <input type="button" value="<" id='btn' @click="removedeptos()">
+                                </center>
+
+                               <br><label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
                                 <div class="text-center flex items-center border border-gray-500 py-2" >
                                 <select v-model="dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
                                     <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
                                 </select>    
-                                </div><br>     
+                                </div><br>  
+
+
 
                                 <label for="avatar" class="text-xs font-semibold px-3">ADICIONAR CAPA</label>
                                 <div class="flex items-center justify-center pt-5" >
@@ -79,7 +101,6 @@
 
 <script type="text/javascript">
     import store from '../../store';
-    import { c } from '../../services/resources';
     // import axios from 'axios'; 
     export default {
         data(){
@@ -90,13 +111,14 @@
                     dept_id: null,
                     user_id: store.state.auth.user.id,
                     mis_name: '',
-                    mis_image: [],
+                    mis_image: null,
 
                     dat_limite: null,
                     ies_multi: 0,
-                    ies_ativo: 1
-                    
-               
+                    ies_ativo: 1,
+                    mission_deptos: null,
+                    final: [],
+                    componentKey: 0
                     
             }
         }, 
@@ -131,7 +153,47 @@
             },
         },
         methods: {
+            update(){
+                this.componentKey += 1;
+            },
+            newDept(cod, text){
+             
+                var ndep = [{'dept_id': cod,'dep_name': text}]
+                var fn = this.final.concat(ndep)
+                // console.log('vai inserir:', ndep)
+                
+                this.final = fn
+                // console.log('lado direito:', fn)
+            },
+            removedeptos(){
+                var form = document.editFrm;
+                var fl = this.final.length -1;
+                
+                for (fl; fl > -1; fl--) {
+                    if (form.deptosdentro.options[fl].selected) {
+                        this.final.splice(fl, 1);
+                    }
+                }
+            },
+            adddeptos(){
+                var form = document.editFrm;
+                var fl = form.deptosfora.length -1;
+                var au = form.deptosdentro.length -1;
+                var deptos_adic = "x";
+                
+                for (au; au > -1; au--) {
+		          deptos_adic = deptos_adic + "," + form.deptosdentro.options[au].value + ","
+	            }
+                for (fl; fl > -1; fl--) {
+                    if (form.deptosfora.options[fl].selected && deptos_adic.indexOf( "," + form.deptosfora.options[fl].value + "," ) == -1) {
+                        var t = form.deptosdentro.length
+                        
+                        this.newDept(form.deptosfora.options[fl].value, form.deptosfora.options[fl].text)
+	                }
+	            }
+            },
             
+
             formatCheckMultiDepts(CheckMD) {
                 if (CheckMD == false){
                     this.ies_multi = 0
@@ -166,6 +228,18 @@
                         
                         if(!this.mission_id){
                             // alert('você está criando')
+
+                            var form = document.editFrm;
+                            var hm_depto = '';
+                            var fl = this.final.length -1;
+
+                            for (fl; fl > -1; fl--) {
+                                hm_depto = ',' + hm_depto + ',' + form.deptosdentro.options[fl].value
+                            }
+                                form.hm_deptos.value = hm_depto
+                                this.mission_deptos = form.hm_deptos.value
+                           
+
                             let formData = new FormData();
 
                             // console.log(this.miss)
@@ -174,16 +248,16 @@
                             formData.append('mis_description', this.mis_description);
                             formData.append('dept_id', this.dept_id);
                             formData.append('user_id', this.user_id);
-                            
+                            formData.append('mission_deptos', this.mission_deptos);
+
                             formData.append('dat_limite', this.dat_limite);
                             formData.append('ies_ativo', this.ies_ativo);
                             formData.append('ies_multi', this.ies_multi);
-
+                            
+                            console.log([...formData])
                             store.dispatch('savemission', formData)
                             .then(response => {
-                                alert('Adicionado com sucesso!')
                                 this.$router.push({name: 'listmiss'});
-
                             })    
                         
                         }else{
@@ -218,3 +292,9 @@
         }
     }
 </script>
+<style>
+#btn {
+    background-color:rgb(219, 219, 219);
+    padding: 5px;
+}
+</style>

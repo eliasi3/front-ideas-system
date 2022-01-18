@@ -139,13 +139,13 @@
                     formData.append('user_id', this.user_id);
         
 
-                   // console.log(formData)
+                    console.log([...formData])
                         
                     store.dispatch('saveidea', formData)
                     .then((response) => {
-                        this.$router.push({name: 'detalhesmiss'});
-                        location.reload(true);
-                        alert('Ideia cadastrada com sucesso!')
+                        // this.$router.push({name: 'detalhesmiss'});
+                        // location.reload(true);
+                        // alert('Ideia cadastrada com sucesso!')
                         })
                     .catch((responseError) => {
                     console.log('erro no cadastro de ideia: /ideas.vue')
