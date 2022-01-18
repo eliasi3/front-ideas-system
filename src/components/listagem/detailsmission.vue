@@ -56,7 +56,7 @@
                     
                     </tr>                
                     <tr>
-                        <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400" colspan='2' style='text-align:left;width:85%;'>
+                        <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400" colspan='2' style='text-align:left;width:85%;' >
                             <span> {{miss.mis_description}} </span>
                         </td>
                     </tr>

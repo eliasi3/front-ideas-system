@@ -1,9 +1,9 @@
 <template>
 <div>
-    <v-row>
+   
         
-        <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="filtrarcategory(count-1)"> PAGINA {{count}}</a>
-        
+        <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="filtrarcategory(count-1)"> PAGINA {{count}}</a><br><br>
+       <v-row>  
 
         <div class="mb-3 xl:w-35">
         <select class="form-select mr-3 border-slate-300 p-2" 

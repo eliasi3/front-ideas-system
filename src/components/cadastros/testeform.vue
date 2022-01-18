@@ -35,7 +35,7 @@
                                 <input type="button" value="<" id='btn' @click="removedeptos()">
                                 
 
-                                <input type='number' v-model="moeda" value='' id='moeda' @blur="formataDinheiro()">
+                                <input type='number' v-model="moeda" value='' id='moeda' @change="formataDinheiro()">
                                 {{moedas}}
                                 </center>
                         </div>

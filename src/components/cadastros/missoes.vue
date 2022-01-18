@@ -214,7 +214,7 @@
             handleFileUpload( event ){
                     this.mis_image = event.target.files[0];
                     console.log('imagens:', this.mis_image)
-                },
+            },
 
             cadastrar(){
               

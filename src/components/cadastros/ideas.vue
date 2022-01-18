@@ -16,12 +16,12 @@
                             
                                 <label for="" class="text-xs font-semibold px-3">IDEIA</label>
                                 <div class="text-center flex items-center border-b border-gray-500 py-2" style=''>
-                                <input v-model="idea.idea_name" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome da ideia" >
+                                <input v-model="idea_name" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome da ideia" >
                                 </div><br>
 
                                 <label for="" class="text-xs font-semibold px-3">DESCRIÇÃO</label>
                                 <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <textarea v-model="idea.idea_description" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Descrição da ideia" ></textarea>
+                                <textarea v-model="idea_description" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Descrição da ideia" ></textarea>
                                 </div><br>
 
                                 <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
@@ -31,14 +31,19 @@
 
                                 <label for="" class="text-xs font-semibold px-3">MISSÃO</label>
                                 <div class="text-center flex items-center border-gray-500 py-2" >
-                                     Sua missão é: <b> {{idea.mission_name}}</b>
+                                     Sua missão é: <b> {{mission_name}}</b>
                                 </div><br>  
                             
                                 <label for="" class="text-xs font-semibold px-3">CATEGORIA</label>
                                 <div class="text-center flex items-center border border-gray-500 py-2" >
-                                <select v-model="idea.category_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+                                <select v-model="category_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
                                 <option v-for="cat in isCats" :key='cat.id' :value='cat.id'>{{cat.cat_name}}</option> 
                                 </select>   
+                                </div><br>
+
+                                 <label for="avatar" class="text-xs font-semibold px-3">ADICIONAR CAPA</label>
+                                <div class="flex items-center justify-center pt-5" >
+                                    <input type="file" multiple id="avatar"  ref="avatar" name="avatar[]" >
                                 </div><br>
 
                                 
@@ -70,26 +75,26 @@
     export default {
         data(){
             return {
-                idea: {
-                    idea_name: '',
-                    idea_description: '',
-                    user_id: store.state.auth.user.id,
-                    category_id: '',
-                    mission_id: this.$route.params.idmis,
-                    mission_name: null
-                },
-                options: [],
+                idea_name: 'Nome da ideia',
+                idea_description: ' Descrição da ideia',
+                user_id: store.state.auth.user.id,
+                category_id: '',
+                // mission_id: this.$route.params.idmis,
+                mission_id: '42',
+                mission_name: null,
+
+                allimages: [],
                 id_user: null,
                 category_id: null,
-
+                count: null
             }
         },
         created(){
             store.dispatch('load-users');
             store.dispatch('load-categories');
             store.dispatch('load-missions');
-            Missionid.query({id: this.idea.mission_id}).then(response => {
-               this.idea.mission_name = response.data.mis_name
+            Missionid.query({id: this.mission_id}).then(response => {
+               this.mission_name = response.data.mis_name
             // console.log(reponse.data)
 
             // this.id_livro = response.data.id 
@@ -110,21 +115,47 @@
         },
         methods: {
             cadastrar(){
-                console.log(this.idea)
-                if(this.idea.idea_name.length <= 4){
+                //console.log(this.idea)
+                if(this.idea_name.length <= 4){
                     alert('Preencha no mínimo 5 caracteres na ideia!');
                 }else{
-                    store.dispatch('saveidea', this.idea)
+                    
+                    // alert('você está criando')
+                    let formData = new FormData();
+                    var av = document.getElementById('avatar');
+                    // console.log('av', av.files)
+                    for( var i = 0; i < av.files.length; i++ ){
+                        let file = av.files[i];
+                        formData.append('file_' + i, file);
+                    }
+                    this.count = av.files.length;
+                    // console.log('append com stringify= ', JSON.stringify(this.allimages))
+
+                    formData.append('idea_name', this.idea_name);
+                    formData.append('idea_description', this.idea_description);
+                    formData.append('category_id', this.category_id);
+                    formData.append('mission_id', this.mission_id);
+                    formData.append('user_id', this.user_id);
+                    formData.append('count', this.count);
+        
+                    for (var i = 0; i < this.allimages.length; i++) {
+                        console.log('a imagem:', i, 'é', this.allimages[i].name);
+                    }
+                    console.log('conteudo do formdata', [...formData])
+                        
+                    store.dispatch('saveidea', formData)
                     .then((response) => {
-                        this.$router.push({name: 'detalhesmiss'});
-                        location.reload(true);
-                        alert('Ideia cadastrada com sucesso!')
+                        // console.log('resposta do rails:', response.data)
+                        // this.$router.push({name: 'detalhesmiss'});
+                        // location.reload(true);
+                        // alert('Ideia cadastrada com sucesso!')
                         })
                     .catch((responseError) => {
-                    console.log('erro no cadastro de ideia: /ideas.vue')
-                })
-              }    
-                
+                        console.log('erro no cadastro de ideia: /ideas.vue')
+                    })
+
+                    this.allimages = []
+                }     
             }
         }
     }

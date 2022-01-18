@@ -327,15 +327,15 @@ const actions = {
         },
     
     saveidea(context, idea){
-        console.log(idea)
-        Ideas.save({idea: idea}).then(response => {
-            console.log('Cadastro feito com sucesso!')
-            // success callback
-        }, response => {    
-            // error callback
-            alert('erro no cadastro');
-        });
-    },
+        axios.post('http://localhost:3000/ideas', idea, { headers: {'Content-Type': 'multipart/form-data'}})
+        .then(response => {
+           console.log('resposta do rails: ', response.data)
+            //alert('Adicionado com sucesso!')
+            // this.$router.push({name: 'listmiss'});
+        }).catch(error => {
+            console.log('Erro no cadastro:'+ error)
+        })
+        },
 
     savecomment(context, comment){
         axios.post('http://localhost:3000/comments', comment, { headers: {
