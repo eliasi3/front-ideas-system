@@ -317,18 +317,14 @@ const actions = {
 
     savemission(context, miss){
         // console.log(mis_image)
-        axios.post('http://localhost:3000/missions', miss, { headers: {
-            'Content-Type': 'multipart/form-data'
-        }})
+        axios.post('http://localhost:3000/missions', miss, { headers: {'Content-Type': 'multipart/form-data'}})
         .then(response => {
             alert('Adicionado com sucesso!')
-            this.$router.push({name: 'listmiss'});
-
+            // this.$router.push({name: 'listmiss'});
+        }).catch(error => {
+            console.log('Erro no cadastro:'+ error)
         })
-        .catch(error => {
-            console.log('Erro no cadastro')
-        })
-    },
+        },
     
     saveidea(context, idea){
         console.log(idea)
