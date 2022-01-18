@@ -34,6 +34,11 @@
                                 <input v-model="user.email" type="email" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="E-mail do usuário" >
                                 </div><br>
 
+
+                                 <input style='margin-left:30px;' type="checkbox" id="scales"  @change="formatCheckAtivo(ies_ativo)" name="scales" value='1' checked>
+                                    <label for="scales">Ativo {{user.ies_ativo}}</label><br>
+
+
                                 <label for="" class="text-xs font-semibold px-3">TELEFONE</label>
                                 <div class="text-center flex items-center border-b border-gray-500 py-2">
                                 <input v-model="user.user_phone" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Telefone do usuário" >
@@ -79,9 +84,11 @@
                     password: '',
                     user_phone: '',
                     dept_id: '',
+                    ies_ativo: 1
                 },
                 options: [],
                 id_depto: null,
+               
 
             }
         },
@@ -94,10 +101,18 @@
             },
         },
         methods: {
+            formatCheckAtivo(CheckAT) {
+                if (CheckAT == false){
+                    this.user.ies_ativo = 1
+                }else{
+                    this.user.ies_ativo = 0
+                }
+                
+            },
             cadastrar(){
               
                 //alert('Comunicando com o Servidor API....');
-                // console.log( this.user)
+                 console.log( this.user)
                 if(this.user.username.length <= 4){
                     alert('Preencha no mínimo 5 caracteres no username!');
                 }else{

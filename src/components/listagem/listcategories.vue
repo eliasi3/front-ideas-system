@@ -1,8 +1,13 @@
 <template>
 <div>
     <br>
-    <v-row><div class='px-3 text-gray-500 shadow-xl' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">CATEGORIAS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='addcat()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span><br>
-        <table class="divide-y divide-gray-300 "  width='100%' style=''>
+    <v-row>
+         <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="buscarcat(count-1)"> PAGINA {{count}}</a><br><br>
+        <div class="mb-3 xl:w-60 border-slate-300"  style="float:left">    
+            <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @change="buscarcat()">
+        </div>
+         <div class='px-3 text-gray-500 shadow-xl' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">CATEGORIAS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='addcat()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span><br>
+            <table class="divide-y divide-gray-300 "  width='100%' style=''>
                     <thead class="bg-blue-200">
                         <tr>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
@@ -71,6 +76,7 @@ export default {
             menuPerfil: false,
             selected: '0',
             options: [],
+            countpage: Math.ceil(store.state.categories.length/2)
             // index: this.selected
             }
             
@@ -92,25 +98,16 @@ export default {
         isAuth() {
             return store.state.auth.check;
         },
+        countResults(){
+            return this.countpage
+        },
     },
     methods: {
-        // filtro(){
-            
-        //     console.log(this.selected)
-        //     store.dispatch('load-livros', this.selected);
-        //     return false;
-        //     // console.log(this.selected)
-        // },
         abrir() {
             this.menuPerfil = this.menuPerfil == false ? true : false;
-            },
-        // User() {
-        //     return User.get(id)
-        // },
-        // MethoddeTextoTeste() {
-        //     return 'TESTE'
-        // }
-         deletecat(id, cat_name){
+        },
+
+        deletecat(id, cat_name){
              if (confirm('Deseja excluir a categoria ' +cat_name+ ' permanentemente?')){
               const req = fetch(`http://localhost:3000/categories/${id}`,{
                 method: "DELETE"
@@ -121,9 +118,14 @@ export default {
              location.reload(true);
              alert('Categoria excluida com sucesso!')
         },
+
         addcat(){
-                this.$router.push({name: 'cadastrocategorias'});
-            }
+            this.$router.push({name: 'cadastrocategorias'});
+        },
+
+        buscarcat(page){
+            store.dispatch('load-catbusca', page);
+        }
     },
     
   

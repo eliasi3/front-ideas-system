@@ -1,7 +1,14 @@
 <template>
 <div>
     <br>
-    <v-row><div class='px-3 text-gray-500 shadow-xl' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">DEPARTAMENTOS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adddep()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span><br>
+    <v-row>
+        <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="buscardept(count-1)"> PAGINA {{count}}</a><br>
+
+    <div class="mb-3 xl:w-60 border-slate-300"  style="float:left">    
+        <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @change="buscardept()">
+    </div>
+    <br><br>  
+    <div class='px-3 text-gray-500 shadow-xl' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">DEPARTAMENTOS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adddep()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span><br>
         <table class="divide-y divide-gray-300 "  width='100%' style=''>
                     <thead class="bg-blue-200">
                         <tr>
@@ -70,25 +77,15 @@ export default {
             menuPerfil: false,
             selected: '0',
             options: [],
+            countpage: Math.ceil(store.state.depts.length/2)
             // index: this.selected
             }
             
     },
     created(){
-            if(this.isAuth) {
-                
-                store.dispatch('load-depts');
-                
-                //console.log('entrou')
-                
-                // const res = axios.get('http://localhost:3000/depts');
-                // console.log(res),
-
-                // Autor.query().then(response => {
-                // this.options = response.data.autores
-                // this.id_livro = response.data.id 
-                // })
-            }
+        if(this.isAuth) {
+            store.dispatch('load-depts');
+        }
        
     },
     computed: {
@@ -98,25 +95,16 @@ export default {
         isAuth() {
             return store.state.auth.check;
         },
+        countResults(){
+            return this.countpage
+        },
     },
     methods: {
-        // filtro(){
-            
-        //     console.log(this.selected)
-        //     store.dispatch('load-livros', this.selected);
-        //     return false;
-        //     // console.log(this.selected)
-        // },
         abrir() {
             this.menuPerfil = this.menuPerfil == false ? true : false;
             },
-        // User() {
-        //     return User.get(id)
-        // },
-        // MethoddeTextoTeste() {
-        //     return 'TESTE'
-        // }
-         deletedepto(id, dep_name){
+
+        deletedepto(id, dep_name){
              if (confirm('Deseja excluir o departamento '+ dep_name +' permanentemente?')){
               const req = fetch(`http://localhost:3000/depts/${id}`,{
                 method: "DELETE"
@@ -129,7 +117,10 @@ export default {
              },
         adddep(){
                 this.$router.push({name: 'cadastrodepartamentos'});
-            }
+            },
+        buscardept(page){
+            store.dispatch('load-buscadept', page);
+        }
     },
     
   

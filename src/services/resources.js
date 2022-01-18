@@ -61,8 +61,8 @@ const Missions = Vue.resource(`http://localhost:3000/missions`);
 const Comments = Vue.resource(`http://localhost:3000/comments`)
 
 const Userid = Vue.resource(`http://localhost:3000/users{/id}`);
-const Deptosid = Vue.resource(`http://localhost:3000/depts{/id}`);
-const Catid = Vue.resource(`http://localhost:3000/categories{/id}`);
+const Deptosid = Vue.resource(`http://localhost:3000/depts{/id}?search={search}&page={page}`);
+const Catid = Vue.resource(`http://localhost:3000/categories{/id}?search={search}&page={page}`);
 const Ideid = Vue.resource(`http://localhost:3000/ideas{/id}`);
 const Missionid = Vue.resource(`http://localhost:3000/missions{/id}`);
 

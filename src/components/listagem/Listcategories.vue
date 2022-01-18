@@ -146,4 +146,4 @@ export default {
 .mx-auto{
     text-align: justify;
 }
-</st
+</style>
