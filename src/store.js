@@ -322,13 +322,14 @@ const actions = {
     },
 
     savemission(context, miss){
-        // console.log(mis_image)
+         //console.log('O que chegou no save mission:', miss)
         axios.post('http://localhost:3000/missions', miss, { headers: {
             'Content-Type': 'multipart/form-data'
         }})
         .then(response => {
             alert('Adicionado com sucesso!')
-            this.$router.push({name: 'listmiss'});
+            console.log(response.data.mis_image)
+            //this.$router.push({name: 'listmiss'});
 
         })
         .catch(error => {

@@ -50,8 +50,8 @@
                             <img :src="getImgUrl(missions.mis_image)" style='' alt="">
                                 
                         </div>
-                        <div style='margin:10px;'>
-                            <span>{{missions.mis_description | truncate(280, '...')}} </span>
+                        <div style='margin:10px;' align="justify">
+                            <span >{{missions.mis_description | truncate(280, '...')}} </span>
                         
                         </div>
                         </td>
