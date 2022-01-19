@@ -52,7 +52,7 @@
                                 </router-link>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deletecat(cats.id,cats.cat_name)'>Excluir</a>
+                                <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deletecat(cats.id,cats.cat_name), reRender()'>Excluir</a>
                             </td>
                         </tr>
                     </tbody>
@@ -103,6 +103,9 @@ export default {
         },
     },
     methods: {
+        reRender(){
+           store.dispatch('load-categories');
+        },
         abrir() {
             this.menuPerfil = this.menuPerfil == false ? true : false;
         },

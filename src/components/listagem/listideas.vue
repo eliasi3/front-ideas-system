@@ -25,6 +25,7 @@
             <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @change="filtrarcategory()">
 
         </div>
+
         
         
         <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom: 10px;">
@@ -61,7 +62,7 @@
                             <router-link v-bind:to="{ name: 'editarideia', params: {id: ideas.id} }">
                                 <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
                             </router-link>
-                            <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deleteidea(ideas.id, ideas.idea_name)'>Excluir</a>
+                            <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" @click='deleteidea(ideas.id, ideas.idea_name), reRender()'>Excluir</a>
                         </td>
                     </tr>
                 
@@ -114,8 +115,21 @@ export default {
             selectedcategorie: "",
             selectedmission: "",
             mission_id: null,
-            countpage: Math.ceil(store.state.ideas.length/2)
+            countpage: Math.ceil(store.state.ideas.length/2),
+
+            country: null,
+            city: null,
+            locations: [
+            {
+                name: 'Canada',
+                cities: ['Vancouver', 'Calgary', 'Toronto']
+            },
+            {
+                name: 'United States',
+                cities: ['San Francisco', 'New York', 'Seattle']
             }
+            ]
+        }
     },
     created(){
              
@@ -136,6 +150,9 @@ export default {
             },
     
     computed: {
+        availableCities() {
+            return this.country ? this.country.cities : false
+        },
          
         isEmail(){
             return store.state.auth.user.email
@@ -166,6 +183,12 @@ export default {
 
     },
     methods: {
+         reRender(){
+           store.dispatch('load-ideas');
+        },
+        firstListItemObj() {
+                this.secondOption = firstOption.list
+        },
         
         getImgUrl(pet) {
              if(pet){
