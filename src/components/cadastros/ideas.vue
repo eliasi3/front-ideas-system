@@ -24,6 +24,11 @@
                                 <textarea v-model="idea_description" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Descrição da ideia" ></textarea>
                                 </div><br>
 
+                                <label for="" class="text-xs font-semibold px-3">VALOR ESTIMADO R$ {{moedas}}</label>
+                                <div class="flex py-2">
+                                <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" style='padding:4px;border:1px solid gray ' type="number" maxlength = "11" value='' id='moeda' v-model="modeas" v-on:keyup="formataDinheiro();">
+                                </div><br>
+
                                 <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
                                 <div class="text-center flex items-center border-gray-500 py-2" >
                                      <b>{{userId.user_name}}</b>, você será o criador desta ideia
@@ -85,7 +90,8 @@
                 allimages: [],
                 id_user: null,
                 category_id: null,
-                count: null
+                count: null,
+                moedas: null
             }
         },
         created(){
@@ -113,6 +119,16 @@
 
         },
         methods: {
+            formataDinheiro() {
+                var n = document.getElementById("moeda").value
+                var v = n.replace(/\D/g,'');
+                v = (v/100).toFixed(2) + '';
+                v = v.replace(".", ",");
+                v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+                v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+                this.moedas = v
+
+            },
             cadastrar(){
                 //console.log(this.idea)
                 if(this.idea_name.length <= 4){
