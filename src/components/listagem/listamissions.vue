@@ -29,7 +29,7 @@
                         <router-link v-bind:to="{ name: 'detalhesmiss', params: {id: missions.id} }">
                             <div class='bg-blue-200' style='border-radius:10px;' id='pointmouser' >
                                 <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400">
-                                        <span style='font-size:20px;' class='flex-auto text-lg font-semibold text-gray-900'>
+                                        <span style='font-size:16px;' class='flex-auto text-lg font-semibold text-gray-900'>
                                             <span style='float:left;margin-right:7px;' class="font-bold text-white-900 text-sky-600">
                                                 TÍTULO: 
                                             </span> {{missions.mis_name.toUpperCase()}}

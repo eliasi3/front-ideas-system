@@ -69,8 +69,10 @@
         <!-- LISTAGEM DAS IDEIAS  -->
 
         <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;">
-            <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">IDEIAS DA MISSÃO:</span></div>
-            <div style='background-color:white; border-radius:10px; width:100%;padding:10px; margin-bottom:10px;'
+            <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">IDEIAS DA MISSÃO:</span>
+        </div>
+
+        <div style='background-color:white; border-radius:10px; width:100%;padding:10px; margin-bottom:10px;'
        v-for="(ideas, i) in isIdea" :key="i">
             
             <table class="border-collapse table-auto w-full text-sm">
@@ -89,13 +91,13 @@
                         <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400" colspan='3'>
                             
                         
-                            <div style='float:left;margin-right:10px;width:230px;'>
-                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" style='position: relative;' alt="">
+                            <tr>
+                            <span v-for="(img, i) in getIdeaFile" :key="i" style=''>
+                                <img v-if="img.idea_id == ideas.id" :src="getImgUrl_ideas(`${img.idea_id == ideas.id ? img.idea_file : ''}`)" style='float:left;width:280px;height:190px;margin-left:8px;margin-bottom:10px;'>
 
-                            </div>
-                            <div style='margin:10px;text-align: justify'>
-                                <span>{{ideas.idea_description}} </span>
-                            </div>
+                            </span>
+                        </tr>
+                        <span><b>DESCRIÇÃO:</b> {{ideas.idea_description}} </span>
                         </td>
                     </tr>
                     <tr>
@@ -118,7 +120,8 @@
                 </tbody>
             </table>
 
-            </div>    
+            </div> 
+             <!-- FIM DA LISTAGEM DAS IDEIAS  -->    
      </center>
 </template>
 
@@ -156,11 +159,10 @@ export default {
         store.dispatch('load-comments', this.com.idea_id);
         Ideid.query({id: this.com.idea_id}).then(response => {
                this.com.idea_id = response.data
-               
                console.log(response.data)
-
             // this.id_livro = response.data.id 
         })
+
         store.dispatch('load-users');
 
         store.dispatch('load-ideas', this.mission_id);       
@@ -169,6 +171,7 @@ export default {
                 }   
                          
                 store.dispatch('load-missions');
+                store.dispatch('load-ideasfiles');
 
                 Missionid.query({id: this.mission_id}).then(response => {
                     this.miss.mis_description = response.data.mis_description,
@@ -206,9 +209,19 @@ export default {
         isCom(){
             return store.state.comments;
         },
+        getIdeaFile() {
+            return store.state.ideas_file;
+        },
     },
 
     methods: {
+        getImgUrl_ideas(pet) {
+             if(pet){
+                 this.semimg = false
+                return 'http://localhost:3000/idea_files?img=' + pet;
+             }
+              
+        },
         getImgUrl(pet) {
             
             return 'http://localhost:3000/missions?img=' + pet;

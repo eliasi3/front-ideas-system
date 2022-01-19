@@ -45,17 +45,15 @@
                     <tr>
                         
                         <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400" colspan='3'>
-                            
-                        
-                        <div style='float:left;margin-right:10px;width:230px;'>
+                                            
+                        <tr>
+                            <span v-for="(img, i) in getIdeaFile" :key="i" style=''>
+                                <img v-if="img.idea_id == ideas.id" :src="getImgUrl(`${img.idea_id == ideas.id ? img.idea_file : ''}`)" style='float:left;width:280px;height:190px;margin-left:8px;margin-bottom:10px;'>
+                            </span>
+                        </tr>
+                        <span><b>DESCRIÇÃO:</b> {{ideas.idea_description}} </span>
+                    
 
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" style='position: relative;' alt="">
-
-                        </div>
-                        <div style='margin:10px;text-align: justify'>
-                            <span>{{ideas.idea_description}} </span>
-                        
-                        </div>
                         </td>
                     </tr>
                     <tr>
@@ -120,6 +118,7 @@ export default {
             }
     },
     created(){
+             
             if(this.isAuth) {     
                 store.dispatch('load-ideas', this.mission_id);
             }  
@@ -132,8 +131,7 @@ export default {
             })
                 store.dispatch('load-categories');
                 store.dispatch('load-missions');
-                
-                
+                store.dispatch('load-ideasfiles');
             
             },
     
@@ -157,13 +155,24 @@ export default {
         },
         isMissions() {
             return store.state.missions;
+           
         },
         countResults(){
-            return this.countpage
+            return this.countpage;
         },
+        getIdeaFile() {
+            return store.state.ideas_file;
+        },
+
     },
     methods: {
-
+        
+        getImgUrl(pet) {
+             if(pet){
+                return 'http://localhost:3000/idea_files?img=' + pet;
+             }
+              
+        },
         deleteidea(id, idea_name){
              if (confirm('Deseja excluir a ideia ' +idea_name+ ' permanentemente?')){
               const req = fetch(`http://localhost:3000/ideas/${id}`,{

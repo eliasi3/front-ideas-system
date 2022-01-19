@@ -75,12 +75,11 @@
     export default {
         data(){
             return {
-                idea_name: 'Nome da ideia',
-                idea_description: ' Descrição da ideia',
+                idea_name: '',
+                idea_description: '',
                 user_id: store.state.auth.user.id,
                 category_id: '',
-                // mission_id: this.$route.params.idmis,
-                mission_id: '42',
+                mission_id: this.$route.params.idmis,
                 mission_name: null,
 
                 allimages: [],
@@ -146,9 +145,9 @@
                     store.dispatch('saveidea', formData)
                     .then((response) => {
                         // console.log('resposta do rails:', response.data)
-                        // this.$router.push({name: 'detalhesmiss'});
-                        // location.reload(true);
-                        // alert('Ideia cadastrada com sucesso!')
+                        this.$router.push({name: 'detalhesmiss'});
+                        location.reload(true);
+                        alert('Ideia cadastrada com sucesso!')
                         })
                     .catch((responseError) => {
                         console.log('erro no cadastro de ideia: /ideas.vue')
