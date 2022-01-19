@@ -90,11 +90,9 @@
                     <tr>
                         <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400" colspan='3'>
                             
-                        
                             <tr>
                             <span v-for="(img, i) in getIdeaFile" :key="i" style=''>
-                                <img v-if="img.idea_id == ideas.id" :src="getImgUrl_ideas(`${img.idea_id == ideas.id ? img.idea_file : ''}`)" style='float:left;width:280px;height:190px;margin-left:8px;margin-bottom:10px;'>
-
+                                <img v-if="img.idea_id == ideas.id" :src="getImgUrl_ideas(`${img.idea_id == ideas.id ? img.idea_file : ''}`)" style='float:left;width:280px;height:190px;margin-left:2px;margin-bottom:10px;'>
                             </span>
                         </tr>
                         <span><b>DESCRIÇÃO:</b> {{ideas.idea_description}} </span>
@@ -217,7 +215,6 @@ export default {
     methods: {
         getImgUrl_ideas(pet) {
              if(pet){
-                 this.semimg = false
                 return 'http://localhost:3000/idea_files?img=' + pet;
              }
               

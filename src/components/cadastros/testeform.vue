@@ -14,9 +14,9 @@
                     <div class="text-center">
                         <div class="w-full px-3 mb-5 text-left">                             
 
-
+                                SELECT MULTIPLE
                                 <center>
-
+                                
                                 <input type="hidden" name="hm_deptos">
 
                                 <select multiple size="10" name="deptosfora" v-model="deptosfora" style="padding:5px; width:40%;border:1px solid gray;">
@@ -34,9 +34,24 @@
                                 <input type="button" value=">" id='btn' @click="adddeptos()">
                                 <input type="button" value="<" id='btn' @click="removedeptos()">
                                 
+                                <hr><br>
+                                VALOR MOEDA
+                                <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "11" v-model="moeda" value='' id='moeda' style='border: 1px solid gray' v-on:keyup="formataDinheiro();">
+                                R$ {{moedas}}
+                                <br><br><hr><br>
+                                
+                                
+                                    <select style='border:1px solid gray' name='selectpai' v-model="firstOption">
+                                        <option v-for="(item, index) in list" :key='item.id'>{{ index }}</option>
+                                    </select>
 
-                                <input type='number' v-model="moeda" value='' id='moeda' @change="formataDinheiro()">
-                                {{moedas}}
+                                    <select style='border:1px solid gray' v-model="secondOption" v-if="firstOption == 'Finalizado' || firstOption == 'Arquivado'">
+                                        <option value=''> Selecione a Razão </option>
+                                        <option v-for="option in list[firstOption]" :key='option.id' :value="option.size">{{option.razao}}</option>
+                                    </select>
+                                
+
+                                <br><hr><br>
                                 </center>
                         </div>
                     </div>
@@ -64,9 +79,20 @@
     export default {
         data(){
             return {   
-                 moedas: '',
+                 moedas: null,
                  componentKey: 0,
-                 final: []
+                 final: [],
+                
+                 firstOption: 'Em coleta',
+                 secondOption: '',
+                 list: {
+                    'Em coleta': [],
+
+                    'Finalizado': [{id:'1', razao:'Redução de Custos'}, {id:'1', razao:'Melhorar o produto'},{id:'1', razao:'Melhorar o processo'}, {id:'2', razao:'Melhorar a cultura'}, {id:'3', razao:'Melhorar a sustentabilidade'}],
+                    
+                    'Arquivado': [{id:'1', razao:'Mesclada com outra ideia'}, {id:'2', razao:'Questões legais'}, {id:'3', razao:'Não é o Momento'}, {id:'3', razao:'Limites de orçamento'}, {id:'3', razao:'Faltando detalhes'}]
+                    }
+
             }
         }, 
         created(){
@@ -78,10 +104,18 @@
             },
         },
         methods: {
+            mudarbairros(){
+                alert('alterou')
+            },
             formataDinheiro() {
                 var n = document.getElementById("moeda").value
-                alert(n)
-                this.moedas = "R$" + parseFloat(n).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+                var v = n.replace(/\D/g,'');
+                v = (v/100).toFixed(2) + '';
+                v = v.replace(".", ",");
+                v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+                v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+                this.moedas = v
+
             },
             update(){
                 this.componentKey += 1;
