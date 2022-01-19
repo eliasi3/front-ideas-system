@@ -127,9 +127,7 @@
                     //alert(av.files.length)
                     for( var i = 0; i < av.files.length; i++ ){
                         let file = av.files[i];
-                            formData.append('file[' + i + ']', file);
-                        
-                        
+                        formData.append('file_' + i, file);
                     }
                     //console.log([...formData])
                     formData.append('idea_name', this.idea_name);

@@ -329,7 +329,7 @@ const actions = {
     saveidea(context, idea){
         axios.post('http://localhost:3000/ideas', idea, { headers: {'Content-Type': 'multipart/form-data'}})
         .then(response => {
-           // console.log(response.data)
+           console.log(response.data)
             //alert('Adicionado com sucesso!')
             // this.$router.push({name: 'listmiss'});
         }).catch(error => {
