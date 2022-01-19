@@ -29,7 +29,7 @@
                         <router-link v-bind:to="{ name: 'detalhesmiss', params: {id: missions.id} }">
                             <div class='bg-blue-200' style='border-radius:10px;' id='pointmouser' >
                                 <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400">
-                                        <span style='font-size:20px;' class='flex-auto text-lg font-semibold text-gray-900'>
+                                        <span style='font-size:16px;' class='flex-auto text-lg font-semibold text-gray-900'>
                                             <span style='float:left;margin-right:7px;' class="font-bold text-white-900 text-sky-600">
                                                 TÍTULO: 
                                             </span> {{missions.mis_name.toUpperCase()}}
@@ -55,15 +55,23 @@
                         
                         </div>
                         </td>
+                        
                     </tr>
                     <tr>
+                        
+                            
+                        
                         <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400" colspan='2' style='text-align:right;width:85%;'>
+                            <span style='float:left;'>Existem {{ }} idéias nesta missão</span>
+
                             <router-link v-bind:to="{ name: 'cadastroidea', params: {id: missions.user.id, idmis: missions.id} }">
                                 <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >+ Adicionar Ideia</a>
                             </router-link>
+
                             <router-link v-bind:to="{ name: 'detalhesmiss', params: {id: missions.id} }">
                                 <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Ver detalhes</a>
                             </router-link>
+
                         </td>
                     </tr>
                 

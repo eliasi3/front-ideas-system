@@ -72,11 +72,12 @@ const Userdept = Vue.resource(`http://localhost:3000/users?dept_id={dept_id}&sea
 const Idecat = Vue.resource(`http://localhost:3000/ideas?category_id={category_id}&mission_id={mission_id}&search={search}&page={page}`);
 const Resetpassword = Vue.resource(`http://localhost:3000/reset_password?email={email}`);
 const Idept = Vue.resource(`http://localhost:3000/missions?dept_id={dept_id}&search={search}&page={page}`);
+const IdeaFile = Vue.resource(`http://localhost:3000/idea_files?idea_id={idea_id}`);
 
 
 
 
 
 
-export {User, Deptos, Userid, Categories, Deptosid, Ideas, Catid, Missions, Comments, Ideid, Missionid, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword};
+export {User, Deptos, Userid, Categories, Deptosid, Ideas, Catid, Missions, Comments, Ideid, Missionid, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword, IdeaFile};
 

@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {DeptosModel} from './deptos-model';
+import {IdeaFiles} from './ideafiles-model';
 import {UsersModel} from './users-model';
 import {CategoriesModel} from './categories-model';
 import {IdeasModel} from './ideas-model';
 import {CommentModel} from './comment-model';
 import JwtToken from './services/jwt-token';
 import {MissionModel} from './mission-model';
-import {Deptos, User, Categories, Userid, Ideas, Missions, Comments, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword} from './services/resources';
+import {Deptos, User, Categories, Userid, Ideas, Missions, Comments, IdeaFile, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword} from './services/resources';
 import SessionStorage from './services/session-storage';
 import axios from 'axios';
 
@@ -15,6 +16,7 @@ Vue.use(Vuex);
 
 
 const state = {
+    ideas_file: [],
     depts: [],
     categories: [],
     users: [],
@@ -29,6 +31,10 @@ const state = {
 };
 
 const mutations = {
+    'set-ideasfile'(state, ideas_file){
+        state.ideas_file = ideas_file;
+        // console.log(state.livros);
+    },
     'set-categories'(state, categories){
         state.categories = categories;
         // console.log(state.livros);
@@ -82,6 +88,18 @@ const actions = {
             alert('Email inválido, tente novamente!')
         })
         
+    },
+    'load-ideasfiles'(context, page){
+        IdeaFile.query().then(response => {
+                    
+            var an_obj = response.data;
+            // console.log(an_obj)
+            var responseobj = Object.values(an_obj);
+            // console.log(responseobj)
+            let ideas_file = responseobj.map(element => new IdeaFiles(element.id, element.idea_id, element.idea_file));  
+            context.commit('set-ideasfile', ideas_file);
+
+        }); 
     },
     'load-ideasfiltrocategorie'(context, page){
         var cat = document.getElementById('category_id').value;
@@ -329,7 +347,7 @@ const actions = {
     saveidea(context, idea){
         axios.post('http://localhost:3000/ideas', idea, { headers: {'Content-Type': 'multipart/form-data'}})
         .then(response => {
-           console.log(response.data)
+           console.log('resposta do rails: ', response.data)
             //alert('Adicionado com sucesso!')
             // this.$router.push({name: 'listmiss'});
         }).catch(error => {

@@ -71,7 +71,6 @@
         },
         created() {
           
-
           let uri = window.location.href.split('?id=6FF213ssa213fFGD22g349')
           let id = uri[1];
           // alert(id);

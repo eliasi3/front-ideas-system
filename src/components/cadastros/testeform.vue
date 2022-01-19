@@ -35,6 +35,8 @@
                                 <input type="button" value="<" id='btn' @click="removedeptos()">
                                 
 
+                                <input type='number' v-model="moeda" value='' id='moeda' @change="formataDinheiro()">
+                                {{moedas}}
                                 </center>
                         </div>
                     </div>
@@ -62,6 +64,7 @@
     export default {
         data(){
             return {   
+                 moedas: '',
                  componentKey: 0,
                  final: []
             }
@@ -75,6 +78,11 @@
             },
         },
         methods: {
+            formataDinheiro() {
+                var n = document.getElementById("moeda").value
+                alert(n)
+                this.moedas = "R$" + parseFloat(n).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+            },
             update(){
                 this.componentKey += 1;
             },

@@ -82,9 +82,10 @@
                 mission_id: this.$route.params.idmis,
                 mission_name: null,
 
-                options: [],
+                allimages: [],
                 id_user: null,
-                category_id: null
+                category_id: null,
+                count: null
             }
         },
         created(){
@@ -120,36 +121,39 @@
                     
                     // alert('você está criando')
                     let formData = new FormData();
-
-                    // console.log(this.miss)
                     var av = document.getElementById('avatar');
-                    console.log(av.files[0])
-                    //alert(av.files.length)
+                    // console.log('av', av.files)
                     for( var i = 0; i < av.files.length; i++ ){
                         let file = av.files[i];
                         formData.append('file_' + i, file);
                     }
-                    //console.log([...formData])
+                    this.count = av.files.length;
+                    // console.log('append com stringify= ', JSON.stringify(this.allimages))
+
                     formData.append('idea_name', this.idea_name);
                     formData.append('idea_description', this.idea_description);
                     formData.append('category_id', this.category_id);
                     formData.append('mission_id', this.mission_id);
                     formData.append('user_id', this.user_id);
+                    formData.append('count', this.count);
         
-
-                    console.log([...formData])
+                    for (var i = 0; i < this.allimages.length; i++) {
+                        console.log('a imagem:', i, 'é', this.allimages[i].name);
+                    }
+                    console.log('conteudo do formdata', [...formData])
                         
                     store.dispatch('saveidea', formData)
                     .then((response) => {
-                        // this.$router.push({name: 'detalhesmiss'});
-                        // location.reload(true);
-                        // alert('Ideia cadastrada com sucesso!')
+                        // console.log('resposta do rails:', response.data)
+                        this.$router.push({name: 'detalhesmiss'});
+                        location.reload(true);
+                        alert('Ideia cadastrada com sucesso!')
                         })
                     .catch((responseError) => {
-                    console.log('erro no cadastro de ideia: /ideas.vue')
-
+                        console.log('erro no cadastro de ideia: /ideas.vue')
                     })
-                  
+
+                    this.allimages = []
                 }     
             }
         }
