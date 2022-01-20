@@ -36,20 +36,18 @@
                                 
                                 <hr><br>
                                 VALOR MOEDA
-                                <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "11" v-model="moeda" value='' id='moeda' style='border: 1px solid gray' v-on:keyup="formataDinheiro();">
+                                <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "text" maxlength = "11" v-model="moeda" value='' id='moeda' style='border: 1px solid gray' @keyup="formataDinheiro();">
                                 R$ {{moedas}}
                                 <br><br><hr><br>
                                 
                                 
+                                    <select style='border:1px solid gray' name='selectpai' v-model="firstOption" @change='alterstatus(firstOption)'>
+                                        <option v-for="(item, i) in status" :key='i' :value='item.id'>{{ item.name }}</option>
+                                    </select>
+                                    
                                     <select style='border:1px solid gray' name='selectpai' v-model="firstOption">
-                                        <option v-for="(item, index) in list" :key='item.id'>{{ index }}</option>
+                                        <option v-for="(item, i) in carregarstatus" :key='i'>{{ item.razao_name }}</option>
                                     </select>
-
-                                    <select style='border:1px solid gray' v-model="secondOption" v-if="firstOption == 'Finalizado' || firstOption == 'Arquivado'">
-                                        <option value=''> Selecione a Razão </option>
-                                        <option v-for="option in list[firstOption]" :key='option.id' :value="option.size">{{option.razao}}</option>
-                                    </select>
-                                
 
                                 <br><hr><br>
                                 </center>
@@ -83,30 +81,35 @@
                  componentKey: 0,
                  final: [],
                 
-                 firstOption: 'Em coleta',
+                 firstOption: 'A',
                  secondOption: '',
-                 list: {
-                    'Em coleta': [],
 
-                    'Finalizado': [{id:'1', razao:'Redução de Custos'}, {id:'1', razao:'Melhorar o produto'},{id:'1', razao:'Melhorar o processo'}, {id:'2', razao:'Melhorar a cultura'}, {id:'3', razao:'Melhorar a sustentabilidade'}],
-                    
-                    'Arquivado': [{id:'1', razao:'Mesclada com outra ideia'}, {id:'2', razao:'Questões legais'}, {id:'3', razao:'Não é o Momento'}, {id:'3', razao:'Limites de orçamento'}, {id:'3', razao:'Faltando detalhes'}]
-                    }
+                 status: [
+                     {'id': 'A', 'name': 'Aberto'}, 
+                     {'id': 'X', 'name': 'Arquivado'}, 
+                     {'id': 'F', 'name': 'Finalizado'}, 
+                     {'id': 'C', 'name': 'Em coleta'}, 
+                 ],
 
             }
         }, 
         created(){
             store.dispatch('load-depts');
+            store.dispatch('load-razaos', this.firstOption);
         },
         computed: {
             isDept(){
                 return store.state.depts;
             },
+            carregarstatus(){
+                return store.state.razaos;
+            },
         },
         methods: {
-            mudarbairros(){
-                alert('alterou')
+            alterstatus(stat){
+                store.dispatch('load-razaos', stat);
             },
+
             formataDinheiro() {
                 var n = document.getElementById("moeda").value
                 var v = n.replace(/\D/g,'');
@@ -115,7 +118,10 @@
                 v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
                 v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
                 this.moedas = v
-
+                document.getElementById("moeda").value = this.moedas
+                console.log('moedas ', this.moedas)
+                console.log('n ', document.getElementById("moeda").value)
+                console.log('v ',v)
             },
             update(){
                 this.componentKey += 1;

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {DeptosModel} from './deptos-model';
+import {RazaosModel} from './razaos-model';
 import {IdeaFiles} from './ideafiles-model';
 import {UsersModel} from './users-model';
 import {CategoriesModel} from './categories-model';
@@ -8,7 +9,7 @@ import {IdeasModel} from './ideas-model';
 import {CommentModel} from './comment-model';
 import JwtToken from './services/jwt-token';
 import {MissionModel} from './mission-model';
-import {Deptos, User, Categories, Userid, Ideas, Missions, Comments, IdeaFile, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword} from './services/resources';
+import {Razaos, Deptos, User, Categories, Userid, Ideas, Missions, Comments, IdeaFile, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword} from './services/resources';
 import SessionStorage from './services/session-storage';
 import axios from 'axios';
 
@@ -23,6 +24,7 @@ const state = {
     ideas: [],
     missions: [],
     comments: [],
+    razaos: [],
     auth: {
         check: JwtToken.token != null,
         user: SessionStorage.getObject('user')
@@ -59,6 +61,12 @@ const mutations = {
         state.comments = comments;
         // console.log(state.users);
     },
+    'set-razaos'(state, razaos){
+        state.razaos = razaos;
+        // console.log(state.users);
+    },
+    
+    
     update(state, time){
         let index = state.times.findIndex(element => time.id == element.id);
         if (index != -1) {
@@ -81,6 +89,18 @@ const mutations = {
 };
 
 const actions = {
+    'load-razaos'(context, stat){
+        Razaos.query({ies_status: stat}).then(response => {
+            console.log(response.data)        
+            var an_obj = response.data;
+            // console.log(an_obj)
+            var responseobj = Object.values(an_obj);
+            // console.log(responseobj)
+            let razaos = responseobj.map(element => new RazaosModel(element.id, element.razao_name, element.razao_desc, element.ies_status));  
+            context.commit('set-razaos', razaos);
+
+        }); 
+    },
     'recuperar-senha'(context, email){
         Resetpassword.query({email: email}).then(response => {
             alert('Email enviado com sucesso para '+ email +'!')

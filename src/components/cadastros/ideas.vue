@@ -24,7 +24,7 @@
                                 <textarea v-model="idea_description" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Descrição da ideia" ></textarea>
                                 </div><br>
 
-                                <label for="" class="text-xs font-semibold px-3">VALOR ESTIMADO R$ {{moedas}}</label>
+                                <label for="" class="text-xs font-semibold px-3">VALOR PARA REALIZAÇÃO R$ {{moedas}}</label>
                                 <div class="flex py-2">
                                 <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" style='padding:4px;border:1px solid gray ' type="number" maxlength = "11" value='' id='moeda' v-model="modeas" v-on:keyup="formataDinheiro();">
                                 </div><br>
