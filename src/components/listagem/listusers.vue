@@ -79,7 +79,7 @@
                                 </router-link>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="#" @click='deleteuser(users.id, users.user_name)' class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full">Excluir</a>
+                                <a href="#"  @click='deleteuser(users.id, users.user_name), reRender()' class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full">Excluir</a>
                             </td>
                             
                         </tr>
@@ -101,7 +101,7 @@ export default {
         return {
             menuPerfil: false,
             selectedept: "",
-            countpage: Math.ceil(store.state.users.length/2)
+            countpage: Math.ceil(store.state.users.length/2),
             // index: this.selected
             }
     },
@@ -129,6 +129,9 @@ export default {
         },
     },
     methods: {
+       reRender(){
+           store.dispatch('load-users');
+        },
     
         abrir() {
             this.menuPerfil = this.menuPerfil == false ? true : false;
@@ -137,15 +140,15 @@ export default {
         deleteuser(id, user_name){
             if (confirm('Deseja excluir o usuário ' +user_name+ ' permanentemente?')){
                 const req = fetch(`http://localhost:3000/users/${id}`,{
-                method: "DELETE"
+                    method: "DELETE"
                 });
             alert('Excluido com sucesso');
-            location.reload(true);
             }
         },
         
         adduser(){
-                this.$router.push({name: 'cadastrousuarios'});
+            
+            this.$router.push({name: 'cadastrousuarios'});
         },
     
         filtrardept(page){
