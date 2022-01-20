@@ -86,7 +86,7 @@
                 category_id: '',
                 mission_id: this.$route.params.idmis,
                 mission_name: null,
-
+                ies_status: 'A',
                 allimages: [],
                 id_user: null,
                 category_id: null,
@@ -152,6 +152,7 @@
                     formData.append('mission_id', this.mission_id);
                     formData.append('user_id', this.user_id);
                     formData.append('count', this.count);
+                    formData.append('ies_status', this.ies_status);
         
                     for (var i = 0; i < this.allimages.length; i++) {
                         console.log('a imagem:', i, 'é', this.allimages[i].name);

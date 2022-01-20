@@ -125,19 +125,20 @@ const actions = {
         var cat = document.getElementById('category_id').value;
         var miss = document.getElementById('mission_id').value;
         var search_up = document.getElementById('search').value;
+        var ies_status = document.getElementById('ies_status').value;
         
 
                     // alert('Existe uma categoria');
             // console.log('?category_id='+cat+'&mission_id='+miss+'&search='+search)
             
-            Idecat.query({category_id: cat, mission_id: miss, search: search_up, page: page}).then(response => {
+            Idecat.query({category_id: cat, mission_id: miss, search: search_up, page: page, ies_status: ies_status}).then(response => {
                 
                 
                 var an_obj = response.data;
                 // console.log(an_obj)
                 var responseobj = Object.values(an_obj);
                 // console.log(responseobj)
-                let ideas = responseobj.map(element => new IdeasModel(element.id, element.idea_name, element.idea_description, element.user, element.category, element.mission));  
+                let ideas = responseobj.map(element => new IdeasModel(element.id, element.idea_name, element.idea_description, element.user, element.category, element.mission, element.ies_status));  
                 context.commit('set-ideas', ideas);
 
             });    
@@ -412,6 +413,17 @@ const actions = {
             console.log('erro no cadastro')
         });
     },
+
+    // saverazao(context, razao){
+    //     Deptos.save({dept: dept}).then(response => {
+    //         console.log('Cadastro feito com sucesso!')
+    //         // success callback
+    //         console.log(response.data)
+    //     }, response => {    
+    //         // error callback
+    //         console.log('erro no cadastro')
+    //     });
+    // },
 
     
     
