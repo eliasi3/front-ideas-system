@@ -174,6 +174,9 @@ export default {
         isCategories() {
             return store.state.categories;
         },
+        isMissions() {
+            return store.state.missions;
+        },
         isStatus() {
             return store.state.razaos;
            
@@ -199,7 +202,7 @@ export default {
             });
         },
         alterrazao(razao_id, ideas){
-            alert(razao_id)
+            //alert(razao_id)
             store.dispatch('load-razaos', razao_id);
              Ideid.update({id: ideas}, {razao_id: razao_id}).then(response => {
                 console.log(response.data)
@@ -239,17 +242,6 @@ export default {
         filtrarcategory(page){
             store.dispatch('load-ideasfiltrocategorie', page);
         },
-
-        enviar(){
-           store.dispatch('saveidea')
-            .then((response) => {
-                alert('Cadastrado com sucesso!')
-                //this.$router.push({name: 'listuser'});
-            })
-            .catch((responseError) => {
-                console.log('erro no cadastro')
-            })
-        }
     }
 }
 </script>

@@ -1,6 +1,7 @@
 <template>
  
 <div class="min-w-screen min-h-screen flex items-center justify-center px-5 py-5" style="margin-bottom:-90px"> 
+    <link rel="stylesheet" href="vue-modal.css">
     <div class="bg-white text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:600px">
         <div class="md:flex w-full">
             
@@ -63,20 +64,68 @@
                 </form>
             </div>
         </div>
+        <hr>
+
+
+        <!-- AQUI COMEÇA O MODAL -->
+        <div class="col">
+            <button type="button" class="btn btn-primary"  @click="showModal=true">Open a modal</button>
+        </div>
+        <div>
+             <Modal :based-on="showModal" style='width:800px;'  title="Comentários" @close="showModal = false">
+                <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;' v-for="(com, i) in isCom" :key="i">
+                <table class="border-collapse table-auto w-full text-sm">
+                    <tbody class="bg-white bg-gray-800">
+                        <tr>
+                            <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400" colspan='3'>
+                                <span style='font-size:25px;'> {{com.user.user_name}}, fez o seguinte comentario<br></span><br>
+                                <b> Ideia: </b> {{com.idea.idea_name}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400">
+
+                                <div style='float:left;margin-right:10px;width:230px;'>
+                                    <img :src="getImgUrl(com.com_image)" style='' alt="">
+                                </div>
+                                <div style='margin:10px float:right;'>
+                                    <span>{{com.com_description | truncate(200, '..')}} </span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+             <!-- <button class="btn btn-warning" type="button" @click="showSecondModal = true">Open second modal</button> -->
+            </Modal>
+            <!-- <Modal :based-on="showModal" v-model="showSecondModal" title="Second modal">
+                        second modal
+             </Modal> -->
+
+        </div>
+        <!-- AQUI TERMINA O MODAL  -->
+ 
     </div>
 </div>
-
-<!-- BUY ME A BEER AND HELP SUPPORT OPEN-SOURCE RESOURCES -->
-
    
 </template>
 
-<script type="text/javascript">
+<script type="text/javascript" >
+    import VueModal from '@kouts/vue-modal'
+    import '@kouts/vue-modal/dist/vue-modal.css'
+    import Vue from 'vue'
+    Vue.component('Modal', VueModal)
+
     import store from '../../store';
     import axios from 'axios'; 
     export default {
         data(){
-            return {   
+            return { 
+                idea_id: this.$route.params.idcom,
+
+                showModal: false,
+                showSecondModal: false,
+
                  moedas: null,
                  componentKey: 0,
                  final: [],
@@ -92,10 +141,15 @@
                  ],
 
             }
-        }, 
+
+        },
+         components: {
+        'Modal': VueModal
+        },
         created(){
             store.dispatch('load-depts');
             store.dispatch('load-razaos', this.firstOption);
+            store.dispatch('load-comments', this.idea_id);
         },
         computed: {
             isDept(){
@@ -104,8 +158,15 @@
             carregarstatus(){
                 return store.state.razaos;
             },
+            isCom(){
+            return store.state.comments;
+            },
         },
         methods: {
+            getImgUrl(pet) {
+                return 'http://localhost:3000/comments?img=' + pet;
+            
+            },
             alterstatus(stat){
                 store.dispatch('load-razaos', stat);
             },
@@ -186,7 +247,7 @@
                     console.log('Erro no cadastro')
                 })
                 
-            }
+            }, 
         }
     }
 </script>
@@ -195,4 +256,14 @@
     background-color:rgb(219, 219, 219);
     padding: 5px;
 }
+.overflow-hidden {
+  overflow: hidden;
+}
+.modal-footer {
+  padding: 15px 0px 0px 0px;
+  border-top: 1px solid #e5e5e5;
+  margin-left: -14px;
+  margin-right: -14px;
+}
+
 </style>

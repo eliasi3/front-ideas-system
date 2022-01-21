@@ -108,11 +108,41 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style='padding:10px;border-radius:10px;width:100%;text-align:right;'>
-                             <router-link v-bind:to="{ name: 'listcomments', params: {id: user_id, idcom: ideas.id}}">
-                                    <a href="#" class="px-4 py-1 text-sm text-white bg-orange-400 rounded-full" >Ver comentarios</a>
-                                </router-link> 
-                        </td>
+                         <!-- AQUI COMEÇA O MODAL -->
+                        <div class="col">
+                            <router-link v-bind:to="{ name: '', params: {id: user_id, idcom: ideas.id}}">
+                                    <a @click="showModal=true" href="#" class="px-4 py-1 text-sm text-white bg-orange-400 rounded-full" >Ver comentarios</a>
+                            </router-link>
+                            <button type="button" class="btn btn-primary" @click="showModal=true">Ver comentarios</button>
+                        </div>
+                        <div>
+                            <Modal :based-on="showModal" style='width:800px;'  title="Comentários" @close="showModal = false">
+                                <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;' v-for="(com, i) in isCom" :key="i">
+                                <table class="border-collapse table-auto w-full text-sm">
+                                    <tbody class="bg-white bg-gray-800">
+                                        <tr>
+                                            <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400" colspan='3'>
+                                                <span style='font-size:25px;'> {{com.user.user_name}}, fez o seguinte comentario<br></span><br>
+                                                <b> Ideia: </b> {{com.idea.idea_name}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400">
+
+                                                <div style='float:left;margin-right:10px;width:230px;'>
+                                                    <img :src="getImgUrl(com.com_image)" style='' alt="">
+                                                </div>
+                                                <div style='margin:10px float:right;'>
+                                                    <span>{{com.com_description | truncate(200, '..')}} </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                        </Modal>
+                        </div>
+                        <!-- AQUI TERMINA O MODAL  -->
                     </tr>
             
                 </tbody>
@@ -125,12 +155,18 @@
 
 <script>
 import store from '../../store';
+import VueModal from '@kouts/vue-modal'
+import '@kouts/vue-modal/dist/vue-modal.css'
+import Vue from 'vue'
+Vue.component('Modal', VueModal)
 
 import { Missionid, Ideid } from '../../services/resources';
 export default {
     name: 'Detalhesmissoes',
     data () {
         return {
+            showModal: false,
+            showSecondModal: false,
             miss: {
                 mis_description: null,
                 user_name: null,
@@ -145,7 +181,7 @@ export default {
                 idea_id: ''
             },
             //idea_id: this.$route.params.id,
-
+            idea_id: this.$route.params.idcom,
             mission_id: this.$route.params.id,
             user_id: store.state.auth.user.id,
             criador: null,
@@ -153,6 +189,9 @@ export default {
             editar: false
             }
     },
+     components: {
+        'Modal': VueModal
+        },
     created(){
         store.dispatch('load-comments', this.com.idea_id);
         Ideid.query({id: this.com.idea_id}).then(response => {
@@ -278,5 +317,11 @@ export default {
 
 #add:hover{
     cursor:pointer;
+}
+.modal-footer {
+  padding: 15px 0px 0px 0px;
+  border-top: 1px solid #e5e5e5;
+  margin-left: -14px;
+  margin-right: -14px;
 }
 </style>

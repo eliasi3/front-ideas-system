@@ -20,6 +20,7 @@ import MissoesCadastro from './components/cadastros/missoes.vue';
 import CadastroIdea from './components/cadastros/ideas.vue';
 import CadastroComment from './components/cadastros/comentario.vue'
 import Testeform from './components/cadastros/testeform.vue'
+import Modal from './components/cadastros/modal.vue'
 
 
 import Listamissions from './components/listagem/listamissions.vue';
@@ -39,8 +40,12 @@ import Editperfil from './components/edit/Editperfil.vue';
 
 
 export default [
-    
-    
+    {
+        name: 'modal',
+        path: '/modal',
+        component: Modal,
+        meta: {auth: false}
+    },
     {
         name: 'testeform',
         path: '/testeform',
