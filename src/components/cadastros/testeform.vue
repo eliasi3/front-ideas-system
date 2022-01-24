@@ -66,44 +66,7 @@
         </div>
         <hr>
 
-
-        <!-- AQUI COMEÇA O MODAL -->
-        <div class="col">
-            <button type="button" class="btn btn-primary"  @click="showModal=true">Open a modal</button>
-        </div>
-        <div>
-             <Modal :based-on="showModal" style='width:800px;'  title="Comentários" @close="showModal = false">
-                <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;' v-for="(com, i) in isCom" :key="i">
-                <table class="border-collapse table-auto w-full text-sm">
-                    <tbody class="bg-white bg-gray-800">
-                        <tr>
-                            <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400" colspan='3'>
-                                <span style='font-size:25px;'> {{com.user.user_name}}, fez o seguinte comentario<br></span><br>
-                                <b> Ideia: </b> {{com.idea.idea_name}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400">
-
-                                <div style='float:left;margin-right:10px;width:230px;'>
-                                    <img :src="getImgUrl(com.com_image)" style='' alt="">
-                                </div>
-                                <div style='margin:10px float:right;'>
-                                    <span>{{com.com_description | truncate(200, '..')}} </span>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-        </div>
-             <!-- <button class="btn btn-warning" type="button" @click="showSecondModal = true">Open second modal</button> -->
-            </Modal>
-            <!-- <Modal :based-on="showModal" v-model="showSecondModal" title="Second modal">
-                        second modal
-             </Modal> -->
-
-        </div>
-        <!-- AQUI TERMINA O MODAL  -->
+        <ModalForm id='1'/>
  
     </div>
 </div>
@@ -111,10 +74,7 @@
 </template>
 
 <script type="text/javascript" >
-    import VueModal from '@kouts/vue-modal'
-    import '@kouts/vue-modal/dist/vue-modal.css'
-    import Vue from 'vue'
-    Vue.component('Modal', VueModal)
+    import ModalForm from './modal.vue'
 
     import store from '../../store';
     import axios from 'axios'; 
@@ -144,7 +104,7 @@
 
         },
          components: {
-        'Modal': VueModal
+        'ModalForm': ModalForm
         },
         created(){
             store.dispatch('load-depts');
