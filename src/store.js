@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import {DeptosModel} from './deptos-model';
 import {RazaosModel} from './razaos-model';
+import {CamposModel} from './campos-model';
 import {IdeaFiles} from './ideafiles-model';
 import {UsersModel} from './users-model';
 import {CategoriesModel} from './categories-model';
@@ -9,7 +10,7 @@ import {IdeasModel} from './ideas-model';
 import {CommentModel} from './comment-model';
 import JwtToken from './services/jwt-token';
 import {MissionModel} from './mission-model';
-import {Razaos, Deptos, User, Categories, Userid, Ideas, Missions, Comments, IdeaFile, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword} from './services/resources';
+import {Campos, Razaos, Deptos, User, Categories, Userid, Ideas, Missions, Comments, IdeaFile, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword} from './services/resources';
 import SessionStorage from './services/session-storage';
 import axios from 'axios';
 
@@ -25,6 +26,7 @@ const state = {
     missions: [],
     comments: [],
     razaos: [],
+    campos: [],
     auth: {
         check: JwtToken.token != null,
         user: SessionStorage.getObject('user')
@@ -33,6 +35,10 @@ const state = {
 };
 
 const mutations = {
+    'set-campos'(state, campos){
+        state.campos = campos;
+        // console.log(state.livros);
+    },
     'set-ideasfile'(state, ideas_file){
         state.ideas_file = ideas_file;
         // console.log(state.livros);
@@ -89,6 +95,18 @@ const mutations = {
 };
 
 const actions = {
+    'load-campos'(context, miss_id){
+        Campos.query({mission_id: miss_id}).then(response => {
+            // console.log(response.data)        
+            var an_obj = response.data;
+            // console.log(an_obj)
+            var responseobj = Object.values(an_obj);
+            // console.log(responseobj)
+            let campos = responseobj.map(element => new CamposModel(element.id, element.cam_nome, element.cam_tipo, element.ies_ordem, element.ies_obrigatorio, element.mission_id));  
+            context.commit('set-campos', campos);
+
+        }); 
+    },
     'load-razaos'(context, stat){
         Razaos.query({ies_status: stat}).then(response => {
             console.log(response.data)        
@@ -405,6 +423,17 @@ const actions = {
 
     savedep(context, dept){
         Deptos.save({dept: dept}).then(response => {
+            console.log('Cadastro feito com sucesso!')
+            // success callback
+            //console.log(response.data)
+        }, response => {    
+            // error callback
+            console.log('erro no cadastro')
+        });
+    },
+
+    savecampo(context, campo){
+        Campos.save({campo: campo}).then(response => {
             console.log('Cadastro feito com sucesso!')
             // success callback
             //console.log(response.data)
