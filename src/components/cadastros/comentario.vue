@@ -65,7 +65,7 @@
         created(){
             store.dispatch('load-users');
             store.dispatch('load-comments');
-            store.dispatch('load-ideas');
+            store.dispatch('load-ideas');z
         },
         computed: {
             isUser(){

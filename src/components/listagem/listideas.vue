@@ -74,7 +74,7 @@
                         </select>
                         
 
-                            <ModalForm :id="ideas.id" />
+                        <ModalForm :id="ideas.id" />
                         <router-link v-bind:to="{ name: 'editarideia', params: {id: ideas.id} }">
                             <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
                         </router-link>
