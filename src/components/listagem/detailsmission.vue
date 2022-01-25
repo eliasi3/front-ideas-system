@@ -32,10 +32,12 @@
                         </td>
                         <td width='50%' class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400">
                             <div style='padding:10px;border-radius:10px;width:100%;text-align:right;'> 
+
+                                <Ideias :idmis="mission_id"/>
  
-                                <router-link v-bind:to="{ name: 'cadastroidea', params: {id: user_id, idmis: mission_id}}">
+                                <!-- <router-link v-bind:to="{ name: 'cadastroidea', params: {id: user_id, idmis: mission_id}}">
                                     <a href="#" class="px-4 py-1 text-sm text-white bg-orange-400 rounded-full" >+ Adicionar Ideia</a>
-                                </router-link>
+                                </router-link> -->
 
                             </div>
                         </td>
@@ -124,6 +126,7 @@
 </template>
 
 <script>
+import Ideias from '../cadastros/ideas.vue'
 import store from '../../store';
 
 import { Missionid, Ideid } from '../../services/resources';
@@ -152,6 +155,9 @@ export default {
             excluir: false,
             editar: false
             }
+    },
+    components: {
+        'Ideias': Ideias
     },
     created(){
         store.dispatch('load-comments', this.com.idea_id);

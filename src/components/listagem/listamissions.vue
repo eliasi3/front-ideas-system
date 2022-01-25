@@ -18,8 +18,8 @@
         
         <div class='px-3 text-gray-500' style="padding:10px;float:left;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;">
             <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">MISSÕES:</span>
-            <ModalForm />
             <!-- <span style='float:right;margin-right:10px;font-size:40px;' id='pointmouser' @click='addMission()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span> -->
+            <Missoes />
         </div>
         <center>
 
@@ -66,11 +66,11 @@
                         
                         <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400" colspan='2' style='text-align:right;width:85%;'>
                             <span style='float:left;'>Existem {{ }} idéias nesta missão</span>
-
-                            <router-link v-bind:to="{ name: 'cadastroidea', params: {id: missions.user.id, idmis: missions.id} }">
+                            <!-- <router-link v-bind:to="{ name: 'cadastroidea', params: {id: missions.user.id, idmis: missions.id} }">
                                 <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >+ Adicionar Ideia</a>
-                            </router-link>
-
+                            </router-link> -->
+                        
+                            <Ideias :id="missions.user.id" :idmis="missions.id"/>
                             <router-link v-bind:to="{ name: 'detalhesmiss', params: {id: missions.id} }">
                                 <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Ver detalhes</a>
                             </router-link>
@@ -91,8 +91,10 @@
 </template>
 
 <script>
-import ModalForm from '../cadastros/modal.vue'
+import Ideias from '../cadastros/ideas.vue'
+import Missoes from '../cadastros/missoes.vue'
 import store from '../../store';
+
 export default {
     name: 'Listamissoes',
     data () {
@@ -124,7 +126,8 @@ export default {
 
     },
     components: {
-        'ModalForm': ModalForm
+        'Ideias': Ideias,
+        'Missoes': Missoes
     },
     methods: {
         getImgUrl(pet) {

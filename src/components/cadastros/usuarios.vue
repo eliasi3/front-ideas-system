@@ -1,82 +1,109 @@
 <template>
- 
-<div class="min-w-screen min-h-screen flex items-center justify-center px-5 py-5" style="margin-top:; margin-bottom:-90px"> 
-    <div class="bg-white text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:600px">
-        <div class="md:flex w-full">
-            
-            <div class="w-full md:w-1/1 py-10 px-5 md:px-10">
-                <div class="text-center mb-100">
-                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR USUÁRIO</h1>
-                    <br><br>
-                </div>
-                <form  @submit.prevent="cadastrar()" method="POST">
-                <div>
-                    <div class="text-center">
-                        <div class="w-full px-3 mb-5 text-left">
-                            
-                                <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
-                                <div class="text-center flex items-center border-b border-gray-500 py-2" style=''>
-                                <input v-model="user.username" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Username do Usuário" >
-                                </div><br>
+<div>
+    <link rel="stylesheet" href="vue-modal.css">
 
-                                <label for="" class="text-xs font-semibold px-3">SENHA</label>
-                                <div class="text-center items-center border-b border-gray-500 py-2">
-                                <input v-model="user.password" required='' type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Digite a Senha" >
-                                </div><br>
-
-                                <label for="" class="text-xs font-semibold px-3">NOME</label>
-                                <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <input v-model="user.user_name" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome e Sobrenome do Usuário" >
-                                </div><br>
-                                
-                                <label for="" class="text-xs font-semibold px-3">E-MAIL</label>
-                                <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <input v-model="user.email" type="email" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="E-mail do usuário" >
-                                </div><br>
-
-
-                                 <input style='margin-left:30px;' type="checkbox" id="scales"  @change="formatCheckAtivo(ies_ativo)" name="scales" value='1' checked>
-                                    <label for="scales">Ativo {{user.ies_ativo}}</label><br>
-
-
-                                <label for="" class="text-xs font-semibold px-3">TELEFONE</label>
-                                <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <input v-model="user.user_phone" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Telefone do usuário" >
-                                </div><br>
-
-                                <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
-                                <div class="text-center flex items-center border border-gray-500 py-2" >
-                                <select v-model="user.dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
-                                <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
-                                </select>    
-                                </div><br>
-                        </div>
-                    </div>
- 
-                    <div class="flex -mx-3">
-                        <div class="w-full px-3 mb-5">
-                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" >CADASTRAR</button>
-                        </div>
-                    </div>
-                </div>
-                </form>
-            </div>
+        <div class="col">
+            <span style='float:right;margin-right:10px;font-size:40px;margin-top:-15px;' id='pointmouser' @click="showModal=true" class="font-bold text-3xl text-gray-900 text-sky-600">+</span>  
         </div>
-    </div>
-</div>
 
-<!-- BUY ME A BEER AND HELP SUPPORT OPEN-SOURCE RESOURCES -->
+        <FormModal :based-on="showModal" style='width:900px;'  title="CADASTRAR USUARIO" @close="showModal = false"> 
+            <div class="bg-white text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:900px">
+                <div class="md:flex w-full">
+                    
+                    <div class="w-full md:w-1/1 py-10 px-5 md:px-10">
+                        <!-- <div class="text-center mb-100">
+                            <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR USUÁRIO</h1>
+                            <br><br>
+                        </div> -->
+                        <form  @submit.prevent="cadastrar()" method="POST">
+                        <div>
+                            <div class="text-center">
+                                <div class="w-full px-3 mb-5 text-left">
+                                   <table class="w-full">
+                                        <tr>
+                                            <td>                 
+                                                <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
+                                                <div class="text-center flex items-center border-b border-gray-500 py-2" style=''>
+                                                <input v-model="user.username" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Username do Usuário" >
+                                                </div><br>
+                                            </td>
+                                            <td style="padding-left: 10px;">
+                                                <label for="" class="text-xs font-semibold px-3">SENHA</label>
+                                                <div class="text-center items-center border-b border-gray-500 py-2">
+                                                <input v-model="user.password" required='' type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Digite a Senha" >
+                                                </div><br>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td > 
+                                                <label for="" class="text-xs font-semibold px-3">NOME</label>
+                                                <div class="text-center flex items-center border-b border-gray-500 py-2">
+                                                <input v-model="user.user_name" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome e Sobrenome do Usuário" >
+                                                </div><br>
+                                            </td>
+                                            <td style="padding-left: 10px;">                
+                                                <label for="" class="text-xs font-semibold px-3">E-MAIL</label>
+                                                <div class="text-center flex items-center border-b border-gray-500 py-2">
+                                                <input v-model="user.email" type="email" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="E-mail do usuário" >
+                                                </div><br>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label for="" class="text-xs font-semibold px-3">TELEFONE</label>
+                                                <div class="text-center flex items-center border-b border-gray-500 py-2">
+                                                <input v-model="user.user_phone" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Telefone do usuário" >
+                                                </div><br>
+                                            </td>
+                                            <td style="padding-left: 10px;">
+                                                 <input style='margin-left:30px;' type="checkbox" id="scales"  @change="formatCheckAtivo(ies_ativo)" name="scales" value='1' checked>
+                                                     <label for="scales">Ativo {{user.ies_ativo}}</label><br>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
 
-   
+                                                <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
+                                                <div class="text-center flex items-center border border-gray-500 py-2" >
+                                                <select v-model="user.dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+                                                <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
+                                                </select>    
+                                                </div><br>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+        
+                            <div class="flex -mx-3">
+                                <div class="w-full px-3 mb-5">
+                                    <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" >CADASTRAR</button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </FormModal>
+    </div>  
 </template>
 
 <script type="text/javascript">
     import store from '../../store';
-    // import Deptos from '../../services/resources.js';
+    import VueModal from '@kouts/vue-modal'
+    import '../vue-modal.css'
+    import Vue from 'vue'
 
+    Vue.component('FormModal', VueModal)
     export default {
+        name: 'Usuarios',
+            props: [
+                'id'
+            ],
         data(){
             return {
+                showModal: false,
                 user: {
                     username: '',
                     user_name: '',
@@ -92,6 +119,9 @@
 
             }
         },
+        components: {
+        'FormModal': VueModal
+         },
         created(){
             store.dispatch('load-depts');
         },

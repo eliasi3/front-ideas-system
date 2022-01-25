@@ -15,17 +15,19 @@
                         <form @submit.prevent="cadastrar()" method="POST" name='editFrm'>
                         <div>
                             <div class="text-center">
-                                <div class="w-full px-12 mb-5 text-left">
-                                
-                                    <label for="" class="text-xs font-semibold px-3">NOME</label>
-                                    <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                    <input type="text" v-model="mis_name" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome da Missão" >
-                                    </div><br>
+                                <div class=" px-6 mb-5 text-left">
+                                    <div class="flex">
+                                        <div class=" w-1/2 text-left flex items-center border-b border-gray-500 py-2">
+                                        <label for="" class="text-xs font-semibold px-3">NOME DA MISSÃO</label>
+                                        <input type="text" v-model="mis_name" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome da Missão" >
+                                        </div>
 
-                                    <label for="" class="text-xs font-semibold px-3">DESCRIÇÃO</label>
-                                    <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                    <textarea type="text" v-model="mis_description" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Adicione uma descrição" ></textarea>
-                                    </div><br>
+                                        <div class=" w-1/2 text-center flex items-center border-b border-gray-500 py-2">
+                                        <label for="" class="text-xs font-semibold px-3">DESCRIÇÃO</label>
+                                            <textarea type="text" v-model="mis_description" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Adicione uma descrição" ></textarea>
+                                        </div><br>
+                                    </div>
+                                    <br>
 
                                     <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
                                     <div class="text-center flex items-center border-gray-500 py-2" >

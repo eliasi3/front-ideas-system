@@ -1,23 +1,26 @@
 <template>
-<div>
-    <br>
-    <v-row>
-        <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="filtrardept(count-1)"> PAGINA {{count}}</a><br><br>
-        <div class="mb-3 xl:w-35">
-        <select class="form-select mr-3 border-slate-300 p-2" v-model="selectedept" ref='dept_id' id='dept_id' @change="filtrardept()">
-               <option value="">Selecione Departamento</option>
-               <option :value="depts.id" v-for="(depts, i) in isDepts" :key="i">{{depts.dep_name}}</option>
-        </select>
-        </div>
-        
-    <div class="mb-3 xl:w-60 border-slate-300"  style="float:left">    
-        <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @change="filtrardept()">
-    </div>
-    <br><br>  
+    <div>
+        <br>
+        <v-row>
+            <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="filtrardept(count-1)"> PAGINA {{count}}</a><br><br>
+                <div class="mb-3 xl:w-35">
+                    <select class="form-select mr-3 border-slate-300 p-2" v-model="selectedept" ref='dept_id' id='dept_id' @change="filtrardept()">
+                        <option value="">Selecione Departamento</option>
+                        <option :value="depts.id" v-for="(depts, i) in isDepts" :key="i">{{depts.dep_name}}</option>
+                    </select>
+                </div>
+            
+            <div class="mb-3 xl:w-60 border-slate-300"  style="float:left">    
+                <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @change="filtrardept()">
+            </div>
+                <br><br>  
 
-    <div class='px-3 text-gray-500 shadow-xl ' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;"><span style='float:left;margin-left:10px;' class="font-bold text-3xl text-gray-900 text-sky-600" >USUÁRIOS:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adduser()' class="font-bold text-3xl text-gray-900 text-sky-600 ">+</span><br>
+            <div class='px-3 text-gray-500 shadow-xl ' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;">
+                <span style='float:left;margin-left:10px;' class="font-bold text-3xl text-gray-900 text-sky-600" >USUÁRIOS:</span> 
+                <!-- <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adduser()' class="font-bold text-3xl text-gray-900 text-sky-600 ">+</span><br> -->
+                <Usuarios />
 
-        <table class="divide-y divide-gray-300"  width='100%' style=''>
+                <table class="divide-y divide-gray-300"  width='100%' style=''>
                     <thead class="bg-blue-200">
                         <tr>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
@@ -85,15 +88,16 @@
                         </tr>
                     </tbody>
                 </table>    
-    </div>
-    </v-row>   
+            </div>
+        </v-row>   
     </div>
 </template>
 
 <script>
 
 import store from '../../store.js';
-// import { Autor, Livro } from '../services/resources';
+import Usuarios from '../cadastros/usuarios.vue'
+
 
 export default {
     
@@ -112,6 +116,9 @@ export default {
                 store.dispatch('load-depts')
             }
        
+    },
+     components: {
+        'Usuarios': Usuarios
     },
     computed: {
         isUser(){
