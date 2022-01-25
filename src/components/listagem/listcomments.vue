@@ -10,7 +10,7 @@
         <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;'
        v-for="(com, i) in isCom" :key="i">
             <table class="border-collapse table-auto w-full text-sm">
-            <tbody class="bg-white bg-gray-800">
+                <tbody class="bg-white bg-gray-800">
                 
                     <tr>
                         <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400" colspan='3'>
@@ -29,8 +29,7 @@
                             </div>
                         </td>
                     </tr>
-                
-            </tbody>
+                </tbody>
             </table>
         </div>
     

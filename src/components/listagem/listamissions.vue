@@ -17,7 +17,10 @@
     <center>
         
         <div class='px-3 text-gray-500' style="padding:10px;float:left;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;">
-            <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">MISSÕES:</span> <span style='float:right;margin-right:10px;font-size:40px;' id='pointmouser' @click='addMission()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span></div>
+            <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">MISSÕES:</span>
+            <ModalForm />
+            <!-- <span style='float:right;margin-right:10px;font-size:40px;' id='pointmouser' @click='addMission()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span> -->
+        </div>
         <center>
 
         <div style='background-color:white; border-radius:10px; width:49%;margin-right:10px;padding:10px;margin-top:10px;float:left'
@@ -88,6 +91,7 @@
 </template>
 
 <script>
+import ModalForm from '../cadastros/modal.vue'
 import store from '../../store';
 export default {
     name: 'Listamissoes',
@@ -118,6 +122,9 @@ export default {
             return this.countpage
         },
 
+    },
+    components: {
+        'ModalForm': ModalForm
     },
     methods: {
         getImgUrl(pet) {

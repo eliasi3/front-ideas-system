@@ -407,7 +407,7 @@ const actions = {
         Deptos.save({dept: dept}).then(response => {
             console.log('Cadastro feito com sucesso!')
             // success callback
-            console.log(response.data)
+            //console.log(response.data)
         }, response => {    
             // error callback
             console.log('erro no cadastro')
