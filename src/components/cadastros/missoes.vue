@@ -1,97 +1,114 @@
 <template>
- 
-<div class="min-w-screen min-h-screen flex items-center justify-center px-5 py-5" style="margin-top:15px; margin-bottom:-90px"> 
-    <div class="bg-white text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:600px">
-        <div class="md:flex w-full">
+<div>
+    <link rel="stylesheet" href="vue-modal.css">
+
+        <div class="col">
+            <span style='float:right;margin-right:10px;font-size:40px;margin-top:-15px;' id='pointmouser' @click="showModal=true" class="font-bold text-3xl text-gray-900 text-sky-600">+</span>  
+        </div>
+
+        <FormModal :based-on="showModal" style='width:800px;'  title="CADASTRAR MISSÃO" @close="showModal = false">
             
-            <div class="w-full md:w-1/1 py-10 px-5 md:px-10">
-                <div class="text-center mb-100">
-                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600" v-if="!mission_id">CADASTRAR MISSÃO</h1>
-                    <h1 class="font-bold text-3xl text-gray-900 text-sky-600" v-if="mission_id">ATUALIZAR MISSÃO</h1>
-                </div><br>
-                <form @submit.prevent="cadastrar()" method="POST" name='editFrm'>
-                <div>
-                    <div class="text-center">
-                        <div class="w-full px-3 mb-5 text-left">
-                        
-                                <label for="" class="text-xs font-semibold px-3">NOME</label>
-                                <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <input type="text" v-model="mis_name" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome da Missão" >
-                                </div><br>
+            <div class="bg-white text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:900px">
+                <div class="md:flex w-full">
+                    
+                    <div class="w-full md:w-1/1 py-10 px-5 md:px-10">
+                        <form @submit.prevent="cadastrar()" method="POST" name='editFrm'>
+                        <div>
+                            <div class="text-center">
+                                <div class=" px-6 mb-5 text-left">
+                                    <table class="w-full">
+                                        <tr>
+                                            <td>
+                                                <label for="" class=" text-xs font-semibold px-3">NOME </label><br>
+                                                    <div class=" text-center flex items-center border-b border-gray-500 py-2">
+                                                        <input type="text" v-model="mis_name" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome da Missão" >
+                                                    </div>
+                                            </td>
+                                            <td style="padding-left: 10px;">
+                                                <label for="" class="text-center text-xs font-semibold px-3">DEPARTAMENTO</label>
+                                                    <div class=" text-center flex items-center border border-gray-500 py-2" >
+                                                        <select v-model="dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+                                                            <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
+                                                        </select>    
+                                                    </div>
+                                            </td>
+                                        </tr>
+                                    </table>
 
-                                <label for="" class="text-xs font-semibold px-3">DESCRIÇÃO</label>
-                                <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                <textarea type="text" v-model="mis_description" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Adicione uma descrição" ></textarea>
-                                </div><br>
-
-                                <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
-                                <div class="text-center flex items-center border-gray-500 py-2" >
-                                     <b>{{userId.user_name}}</b>, você será o criador desta missão
-                                </div><br>
-
-                                <label for="" class="text-xs font-semibold px-3">DATA LIMITE {{dat_limite}}</label>
-                                <div class="text-left items-center py-2">
-                                <input type="date" v-model="dat_limite" class="" required=''>
-                                </div><br>
-
-                                <div>
-                                    <input type="checkbox" v-model="ies_multi" id="scales" @change="formatCheckMultiDepts(ies_multi)" name="scales" value='1'>
-                                    <label for="scales">Multiplos departamentos podem responder: {{ies_multi}}</label>
-
-                                    <input style='margin-left:30px;' type="checkbox" id="scales" @change="formatCheckAtivo(ies_ativo)" name="scales" value='1' checked>
-                                    <label for="scales">Ativo {{ies_ativo}}</label>
-                                    
-                                </div><br>
-                                    
+                                    <br>
+                                    <label for="" class="text-xs font-semibold px-3">DESCRIÇÃO</label>
+                                        <div class="text-center flex items-center border-b border-gray-500 py-2">
+                                            <textarea type="text" v-model="mis_description" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Adicione uma descrição" ></textarea>
+                                        </div><br>
 
 
-                                <center>
-                                    <input type="hidden" name="hm_deptos">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
+                                                <div class="text-center flex items-center border-gray-500 py-2" >
+                                                    <b>{{userId.user_name}}</b>, você será o criador desta missão
+                                                </div><br>
+                                            </td>
+                                            <td style="padding-left: 70px;">
+                                                <label for="" class="text-xs font-semibold px-3">DATA LIMITE {{dat_limite}}</label>
+                                                <div class="text-left items-center py-2">
+                                                <input type="date" v-model="dat_limite" class="" required=''>
+                                                </div><br>
+                                            </td>
+                                        </tr>
+                                    </table>
 
-                                    <select multiple size="10" name="deptosfora" v-model="deptosfora" style="padding:5px; width:40%;border:1px solid gray;">
-                                    
-                                        <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
+                                    <div>
+                                        <input type="checkbox" v-model="ies_multi" id="scales" @change="formatCheckMultiDepts(ies_multi)" name="scales" value='1'>
+                                        <label for="scales">Multiplos departamentos podem responder: {{ies_multi}}</label>
+                                    </div>
+                                            
+                                        <center>
+                                            <input type="hidden" name="hm_deptos">
 
-                                    </select>
+                                            <select multiple size="10" name="deptosfora" v-model="deptosfora" style="padding:5px; width:40%;border:1px solid gray;">
+                                            
+                                                <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
 
-                                    <select multiple size="10" name="deptosdentro" v-model="deptosdentro" style="padding:5px;width:40%;border:1px solid gray;">
-                                        
-                                        <option v-for="fim in final" :key='fim.dept_id' :value='fim.dept_id'>{{fim.dep_name}}</option>
+                                            </select>
 
-                                    </select><br>
+                                            <select multiple size="10" name="deptosdentro" v-model="deptosdentro" style="padding:5px;width:40%;border:1px solid gray;">
+                                                
+                                                <option v-for="fim in final" :key='fim.dept_id' :value='fim.dept_id'>{{fim.dep_name}}</option>
 
-                                    <input type="button" value=">" id='btn' @click="adddeptos()">
-                                    <input type="button" value="<" id='btn' @click="removedeptos()">
-                                </center>
+                                            </select><br>
 
-                               <br><label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
-                                <div class="text-center flex items-center border border-gray-500 py-2" >
-                                <select v-model="dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
-                                    <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
-                                </select>    
-                                </div><br>  
+                                            <input type="button" value=">" id='btn' @click="adddeptos()">
+                                            <input type="button" value="<" id='btn' @click="removedeptos()">
+                                        </center>
 
+                                    <!-- <br><label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
+                                        <div class="text-center flex items-center border border-gray-500 py-2" >
+                                        <select v-model="dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+                                            <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
+                                        </select>    
+                                        </div><br>   -->
 
-
-                                <label for="avatar" class="text-xs font-semibold px-3">ADICIONAR CAPA</label>
-                                <div class="flex items-center justify-center pt-5" >
-                                    <input type="file" id="avatar" name="avatar" @change="handleFileUpload( $event )">
-                                </div><br>
-                        
+                                        <label for="avatar" class="text-xs font-semibold px-3">ADICIONAR CAPA</label>
+                                        <div class="flex items-center justify-center pt-5" >
+                                            <input type="file" id="avatar" name="avatar" @change="handleFileUpload( $event )">
+                                        </div><br>
+                                </div>
+                            </div>
+        
+                            <div class="flex -mx-3">
+                                <div class="w-full px-3 mb-5">
+                                    <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="!mission_id">CADASTRAR</button>
+                                    <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="mission_id">ATUALIZAR</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
- 
-                    <div class="flex -mx-3">
-                        <div class="w-full px-3 mb-5">
-                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="!mission_id">CADASTRAR</button>
-                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="mission_id">ATUALIZAR</button>
-                        </div>
+                        </form>
                     </div>
                 </div>
-                </form>
-            </div>
-        </div>
-    </div>
+            </div>   
+        </FormModal>
 </div>
 
 <!-- BUY ME A BEER AND HELP SUPPORT OPEN-SOURCE RESOURCES -->
@@ -100,28 +117,40 @@
 </template>
 
 <script type="text/javascript">
+    import VueModal from '@kouts/vue-modal'
+    import '../vue-modal.css'
+    import Vue from 'vue'
     import store from '../../store';
     // import axios from 'axios'; 
+    Vue.component('FormModal', VueModal)
     export default {
+          name: 'Missoes',
+            props: [
+                'id'
+            ],
         data(){
             return {
-                    mission_id: this.$route.params.id,
-                
-                    mis_description: '',
-                    dept_id: null,
-                    user_id: store.state.auth.user.id,
-                    mis_name: '',
-                    mis_image: null,
+                showModal: false,
+                mission_id: this.$route.params.id,
+            
+                mis_description: '',
+                dept_id: null,
+                user_id: store.state.auth.user.id,
+                mis_name: '',
+                mis_image: null,
 
-                    dat_limite: null,
-                    ies_multi: 0,
-                    ies_ativo: 1,
-                    mission_deptos: null,
-                    final: [],
-                    componentKey: 0
+                dat_limite: null,
+                ies_multi: 0,
+                ies_ativo: 1,
+                mission_deptos: null,
+                final: [],
+                componentKey: 0
                     
             }
         }, 
+        components: {
+        'FormModal': VueModal
+         },
         created(){
             
             if(this.mission_id){
@@ -297,4 +326,9 @@
     background-color:rgb(219, 219, 219);
     padding: 5px;
 }
+
+#pointmouser:hover{
+    cursor:pointer;
+}
+</style>
 </style>

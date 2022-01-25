@@ -73,8 +73,6 @@
                             <option v-for="(item, i) in carregarstatus" :key='i' :value='item.id'>{{ item.razao_name }}</option>
                         </select>
                         
-
-                        <ModalForm :id="ideas.id" />
                         <router-link v-bind:to="{ name: 'editarideia', params: {id: ideas.id} }">
                             <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
                         </router-link>
@@ -109,7 +107,6 @@
 
 <script>
 
-import ModalForm from '../cadastros/modal.vue'
 
 import store from '../../store';
 import { Idcom, Ideid } from '../../services/resources';
@@ -142,9 +139,7 @@ export default {
 
         }
     },
-    components: {
-        'ModalForm': ModalForm
-    },
+    
     created(){
         if(this.isAuth) {     
             store.dispatch('load-ideas', this.mission_id);
