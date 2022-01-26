@@ -4,7 +4,7 @@
         <v-row>
             <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="buscarcat(count-1)"> PAGINA {{count}}</a><br><br>
             <div class="mb-3 xl:w-60 border-slate-300"  style="float:left">    
-                <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @change="buscarcat()">
+                <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @keyup="buscarcat()">
             </div>
             <div class='px-3 text-gray-500 shadow-xl' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;">
                 <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">CATEGORIAS:</span>

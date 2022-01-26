@@ -11,7 +11,7 @@ import {IdeasModel} from './ideas-model';
 import {CommentModel} from './comment-model';
 import JwtToken from './services/jwt-token';
 import {MissionModel} from './mission-model';
-import {Campos, MissionsDepts, Razaos, Deptos, User, Categories, Userid, Ideas, Missions, Comments, IdeaFile, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword} from './services/resources';
+import {Campos, MissionsDepts, Razaos, Catid, Deptosid, Deptos, User, Categories, Userid, Ideas, Missions, Comments, IdeaFile, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword} from './services/resources';
 import SessionStorage from './services/session-storage';
 import axios from 'axios';
 
@@ -186,6 +186,34 @@ const actions = {
 
             });    
     },
+    'load-buscadept'(context, page){
+        var search_up = document.getElementById('search').value;
+
+        Deptosid.query({ search: search_up, page: page}).then(response => {
+            var an_obj = response.data;
+            // console.log(an_obj)
+                // console.log(an_obj)
+            var responseobj = Object.values(an_obj);
+                // console.log(responseobj)
+            let depts = responseobj.map(element => new DeptosModel(element.id, element.dep_name, element.created_at));  
+            
+            context.commit('set-deptos', depts);
+        
+        });
+    },
+    'load-catbusca'(context, page){
+        var search_up = document.getElementById('search').value;
+
+        Catid.query({search: search_up, page: page}).then(response => {
+            var an_obj = response.data;
+                // console.log(an_obj)
+                    // console.log(an_obj)
+                var responseobj = Object.values(an_obj);
+                    // console.log(responseobj)
+                let categories = responseobj.map(element => new CategoriesModel(element.id, element.cat_name, element.created_at));  
+                context.commit('set-categories', categories);
+            });
+    },
 
     'load-userfiltrodept'(context, page){
         var dept = document.getElementById('dept_id').value;
@@ -201,7 +229,7 @@ const actions = {
             // console.log('load', user)
             context.commit('set-users', users);
 
-            });    
+        });    
     },
 
 

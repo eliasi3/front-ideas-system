@@ -5,7 +5,7 @@
         <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="buscardept(count-1)"> PAGINA {{count}}</a><br>
 
     <div class="mb-3 xl:w-60 border-slate-300"  style="float:left">    
-        <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @change="buscardept()">
+        <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @keyup="buscardept()">
     </div>
     <br><br>  
     <div class='px-3 text-gray-500 shadow-xl' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;">
