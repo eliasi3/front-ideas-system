@@ -2,6 +2,7 @@
     <div>
         <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="filtrardept(count-1)"> PAGINA {{count}}</a><br><br>
         <v-row>
+
             <div class="mb-3 xl:w-35" style="padding:5px;">
                 <select  class=" bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none" v-model="selectedept" ref='dept_id' id='dept_id' @change="filtrardept()">
                     <option value="">Selecione Departamento</option>
@@ -9,11 +10,11 @@
                 </select>
             </div>
             
-            <div class="relative mx-auto text-gray-600"  style="float:left; margin-left:120px; padding:5px;">  
+            <div class="relative mx-auto text-gray-600"  style="float:left; margin-left:50px; padding:5px ">  
                 <input class="border-8 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none" ref='search' id='search' type="search" placeholder="Busca" @keyup="filtrardept()">
             </div>
 
-                <br><br>  
+            <br><br>  
 
             <div class='px-3 text-gray-500 shadow-xl ' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;">
                 <span style='float:left;margin-left:10px;' class="font-bold text-3xl text-gray-900 text-sky-600" >USUÁRIOS:</span> 
