@@ -13,11 +13,11 @@
                     
                     <div class="w-full md:w-1/1 py-10 px-5 md:px-10">
                         <form @submit.prevent="cadastrar()" method="POST" name='editFrm'>
+                            <input type='hidden' id='mission_id_miss' value=''>
+                            <p v-if='mission_id'>Missão {{mission_id}} salvo com sucesso!</p>
                         <div>
                             <div class="text-center">
                                 <div class=" px-6 mb-5 text-left">
-                                    <b>{{userId.user_name}} </b>, você será o criador desta missão
-                                    <br><br><hr><br>
                                     <table class="w-full">
                                         <tr>
                                             <td>
@@ -40,56 +40,56 @@
                                     <br>
                                     <label for="" class="text-xs font-semibold px-3">DESCRIÇÃO</label>
                                         <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                            <textarea type="text" v-model="mis_description" style='width:100%;border:1px solid gray;padding:5px;' placeholder="Adicione uma descrição" ></textarea>
+                                            <textarea type="text" v-model="mis_description" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Adicione uma descrição" ></textarea>
                                         </div><br>
+
 
                                     <table>
                                         <tr>
-                                            <td style="width:55%;">
-                                                
+                                            <td>
+                                                <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
+                                                <div class="text-center flex items-center border-gray-500 py-2" >
+                                                    <b>{{userId.user_name}}</b>, você será o criador desta missão
+                                                </div><br>
+                                            </td>
+                                            <td style="padding-left: 70px;">
                                                 <label for="" class="text-xs font-semibold px-3">DATA LIMITE {{dat_limite}}</label>
                                                 <div class="text-left items-center py-2">
                                                 <input type="date" v-model="dat_limite" class="" required=''>
                                                 </div><br>
                                             </td>
-                                            <td style="width:45%;">
-                                                <div>
-                                                    <input type="checkbox" v-model="ies_multi" id="scales" @change="formatCheckMultiDepts(ies_multi)" name="scales" value='1'>
-                                                    <label for="scales">Multiplos departamentos podem responder</label>
-                                                </div>
-                                            </td>
                                         </tr>
                                     </table>
 
+                                    <div>
+                                        <input type="checkbox" v-model="ies_multi" id="scales" @change="formatCheckMultiDepts(ies_multi)" name="scales" value='1'>
+                                        <label for="scales">Multiplos departamentos podem responder: {{ies_multi}}</label>
+                                    </div>
                                             
                                         <center>
-                                            <div v-if='ies_multi == true'>
                                             <input type="hidden" name="hm_deptos">
 
-                                            <select multiple size="10" name="deptosfora" v-model="deptosfora" style="padding:5px; width:40%; height:140px;border:1px solid gray;">
+                                            <select multiple size="10" name="deptosfora" v-model="deptosfora" style="padding:5px; width:40%;border:1px solid gray;">
                                             
                                                 <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
 
                                             </select>
 
-                                            <select multiple size="10" name="deptosdentro" v-model="deptosdentro" style="padding:5px;width:40%;height:140px;border:1px solid gray;">
+                                            <select multiple size="10" name="deptosdentro" v-model="deptosdentro" style="padding:5px;width:40%;border:1px solid gray;">
                                                 
                                                 <option v-for="fim in final" :key='fim.dept_id' :value='fim.dept_id'>{{fim.dep_name}}</option>
 
                                             </select><br>
 
-                                            <input type="button" value="Adicionar" id='btn' @click="adddeptos()">
-                                            <input type="button" value="Remover" id='btn' @click="removedeptos()">
-                                            </div>
-
+                                            <input type="button" value=">" id='btn' @click="adddeptos()">
+                                            <input type="button" value="<" id='btn' @click="removedeptos()">
                                         </center>
-                                            <br><hr><br>
-                                    <!-- <br><label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
-                                        <div class="text-center flex items-center border border-gray-500 py-2" >
-                                        <select v-model="dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
-                                            <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
-                                        </select>    
-                                        </div><br>   -->
+
+                                        <br><hr><br>
+                                        <input type="checkbox" v-model="multicampos" id="scales" @change="formatCheckMultiCampos(multicampos)" name="scales" value='0'>
+                                        Campos adicionais?
+                                        <AdicCampos :id='mission_id' v-if='multicampos == 1'/>
+                                        <br><hr><br>
 
                                         <label for="avatar" class="text-xs font-semibold px-3">ADICIONAR CAPA</label>
                                         <div class="flex items-center justify-center pt-5" >
@@ -118,11 +118,12 @@
 </template>
 
 <script type="text/javascript">
+    import AdicCampos from './modal.vue'
     import VueModal from '@kouts/vue-modal'
     import '../vue-modal.css'
     import Vue from 'vue'
     import store from '../../store';
-    // import axios from 'axios'; 
+    import axios from 'axios'; 
     Vue.component('FormModal', VueModal)
     export default {
           name: 'Missoes',
@@ -132,8 +133,9 @@
         data(){
             return {
                 showModal: false,
-                mission_id: this.$route.params.id,
+                mission_id: null,
             
+                multicampos: 0,
                 mis_description: '',
                 dept_id: null,
                 user_id: store.state.auth.user.id,
@@ -150,8 +152,9 @@
             }
         }, 
         components: {
-        'FormModal': VueModal
-         },
+            'FormModal': VueModal,
+            'AdicCampos': AdicCampos
+        },
         created(){
             
             if(this.mission_id){
@@ -224,6 +227,14 @@
             },
             
 
+            formatCheckMultiCampos(CheckMD) {
+                if (CheckMD == false){
+                    this.multicampos = 0
+                }else{
+                    this.multicampos = 1
+                }
+                
+            },
             formatCheckMultiDepts(CheckMD) {
                 if (CheckMD == false){
                     this.ies_multi = 0
@@ -284,11 +295,20 @@
                             formData.append('ies_ativo', this.ies_ativo);
                             formData.append('ies_multi', this.ies_multi);
                             
-                            console.log([...formData])
-                            store.dispatch('savemission', formData)
+                            // // console.log('Formdata:', [...formData])
+                            // store.dispatch('savemission', formData)
+                            // .then(response => {
+                            //     // console.log('response')
+                            // })   
+                            
+                            axios.post('http://localhost:3000/missions', formData, { headers: {'Content-Type': 'multipart/form-data'}})
                             .then(response => {
-                                this.$router.push({name: 'listmiss'});
-                            })    
+                                document.getElementById('mission_id_miss').value = response.data.id;
+                                this.mission_id = document.getElementById('mission_id_miss').value
+                                // this.$router.push({name: 'listmiss'});
+                            }).catch(error => {
+                                console.log('Erro no cadastro:'+ error)
+                            })
                         
                         }else{
 

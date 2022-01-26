@@ -3,19 +3,17 @@
         <link rel="stylesheet" href="vue-modal.css">
 
         <div class="col">
-            <span style='float:right;margin-right:10px;font-size:40px;margin-top:-15px;' id='pointmouser' @click="showModal=true" class="font-bold text-3xl text-gray-900 text-sky-600">+</span>  
+            <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" @click="showModal=true, loadmission(`${id}`)">Adicionar campos</a> 
         </div>
 
-        <Modal :based-on="showModal" style='width:800px;'  title="CADASTRAR MISSÃO" @close="showModal = false">
+        <Modal :based-on="showModal" style='width:800px;'  title="CADASTRAR CAMPOS" @close="showModal = false">
 
-            Missão: 
-            <select v-model="add_campo.mission_id" @change="loadmission()">
-                <option v-for="miss in isMissions" :key='miss.id' :value='miss.id'>{{miss.mis_name}}</option>
-            </select>
-
+            Missão: {{id == null ? 'ANTES DE CADASTRAR OS CAMPOS, SALVE A MISSÃO!' : id}}
+            
             <br><br>
 
-            <form @submit.prevent="cadastrar()" method="POST" name='adicionarcampos'>
+            <form @submit.prevent="attconsulta()" method="POST" name='adicionar_campos'>
+                <input type='hidden' id='mission_id' :value='id'>
                 <table>
                     <tr>
                         <td>Nome do campo:</td>
@@ -38,12 +36,12 @@
                             <input type='checkbox' v-model='add_campo.ies_obrigatorio' @change='checkbox()'> Obrigatório?
                         </td>
                         <td >
-                            <button @click='attconsulta()'>+ Adicionar</button>
+                            <button>+ Adicionar</button>
                         </td>
                     </tr>
                 </table>
-                
             </form>
+
             <br>
             <table>
                 <tr>
@@ -74,7 +72,7 @@ import store from '../../store';
 Vue.component('Modal', VueModal)
 
 export default {
-    name: 'ModalForm',
+    name: 'AdicCampos',
     props: [
         'id'
     ],
@@ -85,9 +83,9 @@ export default {
                 add_campo: {
                     cam_nome: '',
                     cam_tipo: '',
-                    ies_obrigatorio: null,
-                    ies_ordem: '',
-                    mission_id: '43'
+                    ies_obrigatorio: 0,
+                    ies_ordem: 0,
+                    mission_id: null
                 },
                 
 
@@ -127,24 +125,36 @@ export default {
                     this.add_campo.ies_obrigatorio = 0
                 }
             },
-            loadmission(){
-                store.dispatch('load-campos', this.add_campo.mission_id);
-                alert('Missão Atualizada!')
+            loadmission(id){
+                store.dispatch('load-campos', id);
             },
             attconsulta(){
-                if(this.add_campo.cam_tipo && this.add_campo.cam_tipo){
-                    store.dispatch('savecampo', this.add_campo)
-                    .then((response) => {
-                        alert('Cadastrado com sucesso!')
-                        
-                        store.dispatch('load-campos', this.add_campo.mission_id);
-                        this.add_campo.cam_nome = ''
-                        this.add_campo.cam_tipo = ''
-                    })
+
+                this.add_campo.mission_id = document.getElementById('mission_id').value;
+                if (this.add_campo.mission_id == ''){
+                    alert('Salve a Missão primeiro!');
                 }else{
-                    alert('Cadastro inválido')
+
+                if(this.add_campo.cam_tipo && this.add_campo.cam_tipo){
+                    
+                    
+
+                        store.dispatch('savecampo', this.add_campo)
+                        .then((response) => {
+                            alert('Cadastrado com sucesso!')
+                            
+                            store.dispatch('load-campos', this.add_campo.mission_id);
+                            this.add_campo.cam_nome = ''
+                            this.add_campo.cam_tipo = ''
+                            this.add_campo.ies_ordem = 0
+                            this.add_campo.ies_obrigatorio = 0
+                        })
+
+                    
+                }else{
+                    alert('Dê um nome/tipo para o campo!')
                 }
-                
+                }
             },
             excluir(id, cam_name){
              if (confirm('Deseja excluir o campo ' + cam_name + '?')){

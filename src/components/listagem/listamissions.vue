@@ -26,8 +26,7 @@
         <div style='background-color:white; border-radius:10px; width:49%;margin-right:10px;padding:10px;margin-top:10px;float:left'
         v-for="(missions, i) in isMission" :key="i">
             <table class="border-collapse table-auto w-full text-sm">
-            <tbody class="bg-white bg-gray-800">
-                <b v-if='missions.ies_multi == 1' style='color:red;'>ESTA MISSÃO É PRIVADA PARA ALGUNS DEPARTAMENTOS: </b>
+            <tbody class="">
                     <tr>
                         <router-link v-bind:to="{ name: 'detalhesmiss', params: {id: missions.id}}">
                             <div class='bg-blue-200' style='border-radius:10px;'>
@@ -65,7 +64,7 @@
                         
                             
                         
-                        <td style='text-align:right;' v-if='missions.ies_multi == 0'>
+                        <td style='text-align:right;'>
                             
                             <!-- <router-link v-bind:to="{ name: 'cadastroidea', params: {id: missions.user.id, idmis: missions.id} }">
                                 <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >+ Adicionar Ideia</a>
