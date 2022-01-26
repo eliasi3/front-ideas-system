@@ -1,18 +1,19 @@
 <template>
 <div>
+    <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="buscardept(count-1)"> PAGINA {{count}}</a>
     <br>
-    <v-row>
-        <a class='mr-2' v-for="(count, i) in countResults" :key="i" v-on:click.prevent="buscardept(count-1)"> PAGINA {{count}}</a><br>
-
-    <div class="mb-3 xl:w-60 border-slate-300"  style="float:left">    
-        <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @keyup="buscardept()">
-    </div>
-    <br><br>  
+    <br>
+        <div class="relative mx-auto text-gray-600"  style="float:left">    
+            <input class="border-8 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none" ref='search' id='search' type="search" placeholder="Busca" @keyup="buscardept()">
+        </div>
+      <br>
+      <br>
     <div class='px-3 text-gray-500 shadow-xl' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;">
         <span style='float:left;' class="font-bold text-3xl text-gray-900 text-sky-600">DEPARTAMENTOS:</span>
-         <!-- <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adddep()' class="font-bold text-3xl text-gray-900 text-sky-600">+</span><br> -->
+
          <Departamentos :id="false" />
-        <table class="divide-y divide-gray-300 "  width='100%' style=''>
+
+            <table class="divide-y divide-gray-300 "  width='100%' style=''>
                     <thead class="bg-blue-200">
                         <tr>
                             <th class="px-6 py-2 text-xs text-gray-500 text-left">
@@ -63,7 +64,6 @@
                     </tbody>
                 </table>    
             </div>
-        </v-row>   
     </div>
 </template>
 
@@ -76,6 +76,8 @@ export default {
     
     data () {
         return {
+            rows: 100,
+            currentPage: 1,
             menuPerfil: false,
             selected: '0',
             options: [],

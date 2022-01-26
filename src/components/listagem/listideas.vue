@@ -5,32 +5,30 @@
         <br>
     <v-row>  
 
-    <div class="mb-3 xl:w-35">
-        <select class="form-select mr-3 border-slate-300 p-2" v-model="selectedcategorie" ref='category_id' id='category_id' @change="filtrarcategory()">
+    <div class="mb-3 xl:w-35" style="padding:5px">
+        <select class="w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none" v-model="selectedcategorie" ref='category_id' id='category_id' @change="filtrarcategory()">
             <option value="">Selecionar categoria</option>
             <option :value="categories.id" v-for="(categories, i) in isCategories" :key="i">{{categories.cat_name}}</option>
         </select>
     </div>
     
-    <div class="mb-3 xl:w-35">
-        <select class="form-select p-2 border-slate-300 mr-3" v-model="selectedmission" ref='mission_id' id='mission_id' @change="filtrarcategory()">
+    <div class="mb-3 xl:w-35" style="padding:5px">
+        <select class="w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"  v-model="selectedmission" ref='mission_id' id='mission_id' @change="filtrarcategory()">
             <option value="">Selecionar Missão</option>
             <option :value="missions.id" v-for="(missions, i) in isMissions" :key="i">{{missions.mis_name}}</option>
         </select>
     </div>
 
-    <div class="mb-3 xl:w-35">
-        <select class="form-select p-2 border-slate-300 mr-3"  v-model="ies_status" ref='ies_status' id='ies_status' @change="filtrarcategory()">
+    <div class="mb-3 xl:w-35" style="padding:5px">
+        <select class="w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"  v-model="ies_status" ref='ies_status' id='ies_status' @change="filtrarcategory()">
             <option value="">Selecionar Status</option>
             <option v-for="(item, i) in status" :key='i' :value='item.id'>{{ item.name}}</option>
         </select>
     </div>
 
-
-    <div class="mb-3 xl:w-60 border-slate-300" >    
-        <input class="form-select p-2" ref='search' id='search' type="text" placeholder="Busca" @keyup="filtrarcategory()">
+    <div class="relative mx-auto text-gray-600"  style="float:right;padding:5px">  
+        <input class="border-8 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none" ref='search' id='search' type="search" placeholder="Busca" @keyup="filtrarcategory()">
     </div>
-
     
     
     <div class='px-3 text-gray-500' style="padding:10px;background-color:white;width:100%;height:60px;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom: 10px;">
