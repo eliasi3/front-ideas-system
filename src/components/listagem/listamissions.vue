@@ -27,32 +27,15 @@
         v-for="(missions, i) in isMission" :key="i">
             <table class="border-collapse table-auto w-full text-sm">
             <tbody class="bg-white bg-gray-800">
-                <b v-if='missions.ies_multi == 1' style='color:red;'>EXISTE UMA LISTA DE DEPARTAMENTOS QUE TEM ACESSO A ESSA MISSÃO </b>
-                <p v-for="(missdep, i) in IsMissionDepts" :key="i">{{missdep.mission_id == missions.id ? deptos = missdep.dept_id : deptos = false}}</p>
-                    <tr v-if='missions.ies_multi == true'>
-                        
+                <b v-if='missions.ies_multi == 1' style='color:red;'>ESTA MISSÃO É PRIVADA PARA ALGUNS DEPARTAMENTOS: </b>
+                    <tr>
+                        <router-link v-bind:to="{ name: 'detalhesmiss', params: {id: missions.id}}">
                             <div class='bg-blue-200' style='border-radius:10px;'>
                                 <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400">
                                         <span style='font-size:16px;' class='flex-auto text-lg font-semibold text-gray-900'>
                                             <span style='float:left;margin-right:7px;' class="font-bold text-white-900 text-sky-600">
                                                 
                                                 TÍTULO: 
-                                            </span> {{missions.mis_name.toUpperCase()}}
-                                        </span><br>
-                                        <b>CRIADOR: </b> {{missions.user.user_name}}, {{missions.dept.dep_name}}
-                        
-                                </td>
-                            </div>
-                        
-                    </tr>
-                    <tr v-if='missions.ies_multi == 0'>
-                        <router-link v-bind:to="{ name: 'detalhesmiss', params: {id: missions.id} }">
-                            <div class='bg-blue-200' style='border-radius:10px;'>
-                                <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400">
-                                        <span style='font-size:16px;' class='flex-auto text-lg font-semibold text-gray-900'>
-                                            <span style='float:left;margin-right:7px;' class="font-bold text-white-900 text-sky-600">
-                                                
-                                                TÍTULO SEM MULTI: 
                                             </span> {{missions.mis_name.toUpperCase()}}
                                         </span><br>
                                         <b>CRIADOR: </b> {{missions.user.user_name}}, {{missions.dept.dep_name}}
@@ -118,6 +101,8 @@ export default {
     name: 'Listamissoes',
     data () {
         return {
+            tempermission: false,
+            user_dept: store.state.auth.user.dept.id,
             deptos: null,
             selectedept: "",
             countpage: Math.ceil(store.state.missions.length/2)
