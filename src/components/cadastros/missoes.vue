@@ -16,6 +16,8 @@
                         <div>
                             <div class="text-center">
                                 <div class=" px-6 mb-5 text-left">
+                                    <b>{{userId.user_name}} </b>, você será o criador desta missão
+                                    <br><br><hr><br>
                                     <table class="w-full">
                                         <tr>
                                             <td>
@@ -38,51 +40,50 @@
                                     <br>
                                     <label for="" class="text-xs font-semibold px-3">DESCRIÇÃO</label>
                                         <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                            <textarea type="text" v-model="mis_description" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Adicione uma descrição" ></textarea>
+                                            <textarea type="text" v-model="mis_description" style='width:100%;border:1px solid gray;padding:5px;' placeholder="Adicione uma descrição" ></textarea>
                                         </div><br>
-
 
                                     <table>
                                         <tr>
-                                            <td>
-                                                <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
-                                                <div class="text-center flex items-center border-gray-500 py-2" >
-                                                    <b>{{userId.user_name}}</b>, você será o criador desta missão
-                                                </div><br>
-                                            </td>
-                                            <td style="padding-left: 70px;">
+                                            <td style="width:55%;">
+                                                
                                                 <label for="" class="text-xs font-semibold px-3">DATA LIMITE {{dat_limite}}</label>
                                                 <div class="text-left items-center py-2">
                                                 <input type="date" v-model="dat_limite" class="" required=''>
                                                 </div><br>
                                             </td>
+                                            <td style="width:45%;">
+                                                <div>
+                                                    <input type="checkbox" v-model="ies_multi" id="scales" @change="formatCheckMultiDepts(ies_multi)" name="scales" value='1'>
+                                                    <label for="scales">Multiplos departamentos podem responder</label>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </table>
 
-                                    <div>
-                                        <input type="checkbox" v-model="ies_multi" id="scales" @change="formatCheckMultiDepts(ies_multi)" name="scales" value='1'>
-                                        <label for="scales">Multiplos departamentos podem responder: {{ies_multi}}</label>
-                                    </div>
                                             
                                         <center>
+                                            <div v-if='ies_multi == true'>
                                             <input type="hidden" name="hm_deptos">
 
-                                            <select multiple size="10" name="deptosfora" v-model="deptosfora" style="padding:5px; width:40%;border:1px solid gray;">
+                                            <select multiple size="10" name="deptosfora" v-model="deptosfora" style="padding:5px; width:40%; height:140px;border:1px solid gray;">
                                             
                                                 <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
 
                                             </select>
 
-                                            <select multiple size="10" name="deptosdentro" v-model="deptosdentro" style="padding:5px;width:40%;border:1px solid gray;">
+                                            <select multiple size="10" name="deptosdentro" v-model="deptosdentro" style="padding:5px;width:40%;height:140px;border:1px solid gray;">
                                                 
                                                 <option v-for="fim in final" :key='fim.dept_id' :value='fim.dept_id'>{{fim.dep_name}}</option>
 
                                             </select><br>
 
-                                            <input type="button" value=">" id='btn' @click="adddeptos()">
-                                            <input type="button" value="<" id='btn' @click="removedeptos()">
-                                        </center>
+                                            <input type="button" value="Adicionar" id='btn' @click="adddeptos()">
+                                            <input type="button" value="Remover" id='btn' @click="removedeptos()">
+                                            </div>
 
+                                        </center>
+                                            <br><hr><br>
                                     <!-- <br><label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
                                         <div class="text-center flex items-center border border-gray-500 py-2" >
                                         <select v-model="dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">

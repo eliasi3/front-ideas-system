@@ -1,10 +1,9 @@
 <template>
 <div>
     <link rel="stylesheet" href="vue-modal.css">
-
-        <div class="col"  colspan='2' style='text-align:right;width:85%;'> 
+ 
             <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" id='pointmouser' @click="showModal=true">+ Adicionar Ideia</a>
-        </div>
+     
 
         <FormModal :based-on="showModal" style='width:800px;'  title="CADASTRAR IDEIA" @close="showModal = false">
 

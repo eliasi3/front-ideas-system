@@ -27,14 +27,32 @@
         v-for="(missions, i) in isMission" :key="i">
             <table class="border-collapse table-auto w-full text-sm">
             <tbody class="bg-white bg-gray-800">
-                
-                    <tr style=''>
-                        <router-link v-bind:to="{ name: 'detalhesmiss', params: {id: missions.id} }">
-                            <div class='bg-blue-200' style='border-radius:10px;' id='pointmouser' >
+                <b v-if='missions.ies_multi == 1' style='color:red;'>EXISTE UMA LISTA DE DEPARTAMENTOS QUE TEM ACESSO A ESSA MISSÃO </b>
+                <p v-for="(missdep, i) in IsMissionDepts" :key="i">{{missdep.mission_id == missions.id ? deptos = missdep.dept_id : deptos = false}}</p>
+                    <tr v-if='missions.ies_multi == true'>
+                        
+                            <div class='bg-blue-200' style='border-radius:10px;'>
                                 <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400">
                                         <span style='font-size:16px;' class='flex-auto text-lg font-semibold text-gray-900'>
                                             <span style='float:left;margin-right:7px;' class="font-bold text-white-900 text-sky-600">
+                                                
                                                 TÍTULO: 
+                                            </span> {{missions.mis_name.toUpperCase()}}
+                                        </span><br>
+                                        <b>CRIADOR: </b> {{missions.user.user_name}}, {{missions.dept.dep_name}}
+                        
+                                </td>
+                            </div>
+                        
+                    </tr>
+                    <tr v-if='missions.ies_multi == 0'>
+                        <router-link v-bind:to="{ name: 'detalhesmiss', params: {id: missions.id} }">
+                            <div class='bg-blue-200' style='border-radius:10px;'>
+                                <td class="border-b border-gray-100 dark:border-gray-700 p-2 pl-3 text-gray-500 dark:text-gray-400">
+                                        <span style='font-size:16px;' class='flex-auto text-lg font-semibold text-gray-900'>
+                                            <span style='float:left;margin-right:7px;' class="font-bold text-white-900 text-sky-600">
+                                                
+                                                TÍTULO SEM MULTI: 
                                             </span> {{missions.mis_name.toUpperCase()}}
                                         </span><br>
                                         <b>CRIADOR: </b> {{missions.user.user_name}}, {{missions.dept.dep_name}}
@@ -64,14 +82,15 @@
                         
                             
                         
-                        <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400" colspan='2' style='text-align:right;width:85%;'>
-                            <span style='float:left;'>Existem {{ }} idéias nesta missão</span>
+                        <td style='text-align:right;' v-if='missions.ies_multi == 0'>
+                            
                             <!-- <router-link v-bind:to="{ name: 'cadastroidea', params: {id: missions.user.id, idmis: missions.id} }">
                                 <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >+ Adicionar Ideia</a>
                             </router-link> -->
                         
-                            <Ideias :id="missions.user.id" :idmis="missions.id"/>
-                            <router-link v-bind:to="{ name: 'detalhesmiss', params: {id: missions.id} }">
+                            <Ideias :id="missions.user.id" :idmis="missions.id" style='float:right;' />
+                            
+                            <router-link v-bind:to="{ name: 'detalhesmiss', params: {id: missions.id} }" style='float:right;'>
                                 <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Ver detalhes</a>
                             </router-link>
 
@@ -99,6 +118,7 @@ export default {
     name: 'Listamissoes',
     data () {
         return {
+            deptos: null,
             selectedept: "",
             countpage: Math.ceil(store.state.missions.length/2)
             }
@@ -107,12 +127,16 @@ export default {
         
             if(this.isAuth) {     
                 store.dispatch('load-missions');
-                store.dispatch('load-depts')
+                store.dispatch('load-depts');
+                store.dispatch('mission_depts');
             }
     },
     computed: {
+        IsMissionDepts(){
+            return store.state.missiondepts;
+        },
         isMission(){
-            return store.state.missions; 
+            return store.state.missions;
         },
         isAuth() {
             return store.state.auth.check;

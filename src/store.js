@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import {DeptosModel} from './deptos-model';
 import {RazaosModel} from './razaos-model';
 import {CamposModel} from './campos-model';
+import {MissionDepts} from './missionsDepts-model';
 import {IdeaFiles} from './ideafiles-model';
 import {UsersModel} from './users-model';
 import {CategoriesModel} from './categories-model';
@@ -10,7 +11,7 @@ import {IdeasModel} from './ideas-model';
 import {CommentModel} from './comment-model';
 import JwtToken from './services/jwt-token';
 import {MissionModel} from './mission-model';
-import {Campos, Razaos, Deptos, User, Categories, Userid, Ideas, Missions, Comments, IdeaFile, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword} from './services/resources';
+import {Campos, MissionsDepts, Razaos, Deptos, User, Categories, Userid, Ideas, Missions, Comments, IdeaFile, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword} from './services/resources';
 import SessionStorage from './services/session-storage';
 import axios from 'axios';
 
@@ -18,6 +19,7 @@ Vue.use(Vuex);
 
 
 const state = {
+    missiondepts: [],
     ideas_file: [],
     depts: [],
     categories: [],
@@ -54,6 +56,10 @@ const mutations = {
     'set-mission'(state, missions){
         state.missions = missions;
         // console.log(state.depts);
+    },
+    'set-missiondepts'(state, missiondepts){
+        state.missiondepts = missiondepts;
+        // console.log(state.users);
     },
     'set-users'(state, user){
         state.users = user;
@@ -303,9 +309,23 @@ const actions = {
                 // console.log('resposta em json:', response)
                 var responseinobj = Object.values(response);
                 // console.log('transformado em OBJECT: ', responseinobj);
-                let missions = responseinobj.map(element => new MissionModel(element.id, element.mis_name, element.mis_description, element.mis_image, element.dept, element.user));  
+                let missions = responseinobj.map(element => new MissionModel(element.id, element.mis_name, element.mis_description, element.mis_image, element.dept, element.user, element.ies_multi));  
                 // console.log('load', user)
                 context.commit('set-mission', missions);
+            
+            });
+        // }
+    },
+    'mission_depts'(context){
+            MissionsDepts.query().then(response => {
+                var response = response.data;
+                
+                // console.log('resposta em json:', response.data)
+                var responseinobj = Object.values(response);
+                // console.log('transformado em OBJECT: ', responseinobj);
+                let missiondepts = responseinobj.map(element => new MissionDepts(element.id, element.mission_id, element.dept_id));  
+                // console.log('load', user)
+                context.commit('set-missiondepts', missiondepts);
             
             });
         // }

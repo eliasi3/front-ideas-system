@@ -75,10 +75,11 @@ const Idept = Vue.resource(`http://localhost:3000/missions?dept_id={dept_id}&sea
 const IdeaFile = Vue.resource(`http://localhost:3000/idea_files?idea_id={idea_id}`);
 const Razaos = Vue.resource(`http://localhost:3000/razaos?ies_status={ies_status}`);
 const Campos = Vue.resource(`http://localhost:3000/campos?mission_id={mission_id}`);
+const MissionsDepts = Vue.resource(`http://localhost:3000/mission_deptos?mission_id={mission_id}&dept_id={dept_id}`);
 
 
 
 
 
-export {Campos, User, Razaos, Deptos, Userid, Categories, Deptosid, Ideas, Catid, Missions, Comments, Ideid, Missionid, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword, IdeaFile};
+export {Campos, MissionsDepts, User, Razaos, Deptos, Userid, Categories, Deptosid, Ideas, Catid, Missions, Comments, Ideid, Missionid, Idemis, Idcom, Userdept, Idecat, Idept, Resetpassword, IdeaFile};
 
