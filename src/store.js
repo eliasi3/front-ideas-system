@@ -424,7 +424,8 @@ const actions = {
         // console.log(mis_image)
         axios.post('http://localhost:3000/missions', miss, { headers: {'Content-Type': 'multipart/form-data'}})
         .then(response => {
-            alert('Adicionado com sucesso!')
+            document.getElementById('mission_id_miss').value = response.data.id;
+            console.log('docID:', document.getElementById('mission_id_miss').value)
             // this.$router.push({name: 'listmiss'});
         }).catch(error => {
             console.log('Erro no cadastro:'+ error)
