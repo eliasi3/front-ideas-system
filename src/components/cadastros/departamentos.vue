@@ -3,10 +3,11 @@
     <link rel="stylesheet" href="vue-modal.css">
 
         <div class="col">
-            <span style='float:right;margin-right:10px;font-size:40px;margin-top:-15px;' id='pointmouser' @click="showModal=true" class="font-bold text-3xl text-gray-900 text-sky-600">+</span>  
+            <span style='float:right;margin-right:10px;font-size:40px;margin-top:-15px;' id='pointmouser' @click="showModal=true" class="font-bold text-3xl text-gray-900 text-sky-600" v-if="!id">+</span> 
+            <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" @click="showModal=true" v-if="id">Editar</a> 
         </div>
 
-        <FormModal :based-on="showModal" style='width:600px;'  title="CADASTRAR DEPARTAMENTO" @close="showModal = false">
+        <FormModal :based-on="showModal" style='width:600px;'  :title="id==false?'CADASTRAR DEPARTAMENTO':'ATUALIZAR DEPARTAMENTO'" @close="showModal = false">
             <div class="bg-white text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:900px">
                 <div class="md:flex w-full">
                     
@@ -29,8 +30,8 @@
         
                             <div class="flex -mx-3">
                                 <div class="w-full px-3 mb-5">
-                                    <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="!dept_id" >CADASTRAR</button>
-                                    <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="dept_id">ATUALIZAR</button>
+                                    <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="!id" >CADASTRAR</button>
+                                    <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="id">ATUALIZAR</button>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +60,6 @@
         data(){
             return {
                 showModal: false,
-                dept_id: this.$route.params.id,
                 dep: {
                     dep_name: null,
                 },
@@ -72,8 +72,8 @@
          },
         created(){
         
-            if(this.dept_id){
-                Deptosid.query({id: this.dept_id}).then(response => {
+            if(this.id){
+                Deptosid.query({id: this.id}).then(response => {
                 this.dep.dep_name = response.data.dep_name
                
                 })
@@ -87,7 +87,7 @@
         },
         methods: {
             cadastrar(){
-                if(!this.dept_id){
+                if(!this.id){
                 store.dispatch('savedep', this.dep)
                     .then((response) => {
                         this.$router.push({name: 'listdep'});
@@ -99,7 +99,7 @@
                         console.log('erro no cadastro de departamento: /departamento.vue')
                     })
                 }else{
-                    Deptosid.update({id: this.dept_id}, {dept: this.dep}).then(response => {
+                    Deptosid.update({id: this.id}, {dept: this.dep}).then(response => {
                         location.reload(true);
                             alert('Departamento atualizado com sucesso!')
                             }, response => {  

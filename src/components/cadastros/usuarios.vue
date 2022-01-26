@@ -1,12 +1,13 @@
 <template>
-<div>
-    <link rel="stylesheet" href="vue-modal.css">
+    <div>
+        <link rel="stylesheet" href="vue-modal.css">
 
         <div class="col">
-            <span style='float:right;margin-right:10px;font-size:40px;margin-top:-15px;' id='pointmouser' @click="showModal=true" class="font-bold text-3xl text-gray-900 text-sky-600">+</span>  
+            <span style='float:right;margin-right:10px;font-size:40px;margin-top:-15px;' id='pointmouser' @click="showModal=true" class="font-bold text-3xl text-gray-900 text-sky-600" v-if="!id">+</span> 
+            <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" @click="showModal=true" v-if="id">Editar</a>  
         </div>
 
-        <FormModal :based-on="showModal" style='width:900px;'  title="CADASTRAR USUARIO" @close="showModal = false"> 
+        <FormModal :based-on="showModal" style='width:900px;'  :title="id==false?'CADASTRAR USUÁRIO':'ATUALIZAR USUÁRIO'"  @close="showModal = false"> 
             <div class="bg-white text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:900px">
                 <div class="md:flex w-full">
                     
@@ -16,71 +17,81 @@
                             <br><br>
                         </div> -->
                         <form  @submit.prevent="cadastrar()" method="POST">
-                        <div>
-                            <div class="text-center">
-                                <div class="w-full px-3 mb-5 text-left">
-                                   <table class="w-full">
-                                        <tr>
-                                            <td>                 
-                                                <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
-                                                <div class="text-center flex items-center border-b border-gray-500 py-2" style=''>
-                                                <input v-model="user.username" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Username do Usuário" >
-                                                </div><br>
-                                            </td>
-                                            <td style="padding-left: 10px;">
-                                                <label for="" class="text-xs font-semibold px-3">SENHA</label>
-                                                <div class="text-center items-center border-b border-gray-500 py-2">
-                                                <input v-model="user.password" required='' type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Digite a Senha" >
-                                                </div><br>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td > 
-                                                <label for="" class="text-xs font-semibold px-3">NOME</label>
-                                                <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                                <input v-model="user.user_name" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome e Sobrenome do Usuário" >
-                                                </div><br>
-                                            </td>
-                                            <td style="padding-left: 10px;">                
-                                                <label for="" class="text-xs font-semibold px-3">E-MAIL</label>
-                                                <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                                <input v-model="user.email" type="email" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="E-mail do usuário" >
-                                                </div><br>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label for="" class="text-xs font-semibold px-3">TELEFONE</label>
-                                                <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                                <input v-model="user.user_phone" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Telefone do usuário" >
-                                                </div><br>
-                                            </td>
-                                            <td style="padding-left: 10px;">
-                                                 <input style='margin-left:30px;' type="checkbox" id="scales"  @change="formatCheckAtivo(ies_ativo)" name="scales" value='1' checked>
-                                                     <label for="scales">Ativo {{user.ies_ativo}}</label><br>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
+                            <div>
+                                <div class="text-center">
+                                    <div class="w-full px-3 mb-5 text-left">
+                                    <table class="w-full">
+                                            <tr>
+                                                <td>                 
+                                                    <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
+                                                    <div class="text-center flex items-center border-b border-gray-500 py-2" style=''>
+                                                    <input v-model="user.username" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Username do Usuário" >
+                                                    </div><br>
+                                                </td>
+                                                <td  style="padding-left: 10px;">
+                                                    <label for="" class="text-xs font-semibold px-3">NOME</label>
+                                                    <div class="text-center flex items-center border-b border-gray-500 py-2">
+                                                    <input v-model="user.user_name" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome e Sobrenome do Usuário" >
+                                                    </div><br>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>                
+                                                    <label for="" class="text-xs font-semibold px-3">E-MAIL</label>
+                                                    <div class="text-center flex items-center border-b border-gray-500 py-2">
+                                                    <input v-model="user.email" type="email" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="E-mail do usuário" >
+                                                    </div><br>
+                                                </td>
+                                                <td style="padding-left: 10px;" v-if="!id">
+                                                    <label for="" class="text-xs font-semibold px-3">SENHA</label>
+                                                    <div class="text-center items-center border-b border-gray-500 py-2">
+                                                    <input v-model="user.password" required='' type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Digite a Senha" >
+                                                    </div><br>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label for="" class="text-xs font-semibold px-3">TELEFONE</label>
+                                                    <div class="text-center flex items-center border-b border-gray-500 py-2">
+                                                    <input v-model="user.user_phone" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Telefone do usuário" >
+                                                    </div><br>
+                                                </td>
+                                                <td style="padding-left: 10px;">
+                                                    <input style='margin-left:30px;' type="checkbox" id="scales"  @change="formatCheckAtivo(ies_ativo)" name="scales" value='1' checked>
+                                                        <label for="scales">Ativo {{user.ies_ativo}}</label><br>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
 
-                                                <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
-                                                <div class="text-center flex items-center border border-gray-500 py-2" >
-                                                <select v-model="user.dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
-                                                <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
-                                                </select>    
-                                                </div><br>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                                    <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
+                                                    <div class="text-center flex items-center border border-gray-500 py-2" >
+                                                    <select v-model="user.dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+                                                    <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
+                                                    </select>    
+                                                    </div><br>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+            
+                                <div class="flex -mx-3"  v-if="!id">
+                                    <div class="w-full px-3 mb-5">
+                                        <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" >CADASTRAR</button>
+                                    </div>
+                                </div>
+                                <div class="flex -mx-3" v-if="id">
+                                    <div class="w-full px-3 mb-5">
+                                        <router-link v-bind:to="{ name: 'listuser'}">
+                                                <a href="#" class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-center text-white rounded-lg px-3 py-3 font-semibold" >CANCELAR</a>
+                                        </router-link>
+                                    </div>
+                                    <div class="w-full px-3 mb-5">
+                                        <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" >CONCLUIR EDIÇÃO</button>
+                                    </div>
                                 </div>
                             </div>
-        
-                            <div class="flex -mx-3">
-                                <div class="w-full px-3 mb-5">
-                                    <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" >CADASTRAR</button>
-                                </div>
-                            </div>
-                        </div>
                         </form>
                     </div>
                 </div>
@@ -94,6 +105,7 @@
     import VueModal from '@kouts/vue-modal'
     import '../vue-modal.css'
     import Vue from 'vue'
+    import { Userid } from '../../services/resources';
 
     Vue.component('FormModal', VueModal)
     export default {
@@ -124,6 +136,19 @@
          },
         created(){
             store.dispatch('load-depts');
+
+            if(this.id){
+               Userid.query({id: this.id}).then(response => {
+                this.user.username = response.data.username,
+                this.user.user_name = response.data.user_name,
+                //this.user.password = response.data.password_digest
+                this.user.email = response.data.email
+                this.user.user_phone = response.data.user_phone
+                this.user.dept_id = response.data.dept_id
+               
+            })
+            }
+            
         },
         computed: {
             isDept(){
@@ -140,10 +165,8 @@
                 
             },
             cadastrar(){
-              
-                //alert('Comunicando com o Servidor API....');
-                 console.log( this.user)
-                if(this.user.username.length <= 4){
+               if (!this.id){
+               if(this.user.username.length <= 4){
                     alert('Preencha no mínimo 5 caracteres no username!');
                 }else{
                   if(this.user.email.length <= 7){
@@ -166,15 +189,30 @@
                             }
                         }
                     }
-                 }        
-                
-                
-                
+                }
+                }else{
+                    if(confirm("Deseja realmente editar esse usuário?")){
+                        Userid.update({id: this.id}, {user: this.user}).then(response => {
+                            location.reload(true);
+                            alert('Usuário atualizado com sucesso!')
+                            }, response => {    
+                            console.log('DEU ERRADO!')
+                            });
+                                
+                            this.$router.push({name: 'listuser'});
+                        }else{
+
+                    }
+
+                }          
             }
         }
     }
 </script>
 
-<style>
+<style scoped>
 
+#pointmouser:hover{
+    cursor:pointer;
+}
 </style>
