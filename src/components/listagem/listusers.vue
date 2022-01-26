@@ -18,7 +18,7 @@
             <div class='px-3 text-gray-500 shadow-xl ' style="padding:10px;background-color:white;width:100%;border-radius:10px 10px 0px 0px;font-size:30px;margin-bottom:10px;">
                 <span style='float:left;margin-left:10px;' class="font-bold text-3xl text-gray-900 text-sky-600" >USUÁRIOS:</span> 
                 <!-- <span style='float:right;margin-right:10px;font-size:40px;' id='add' @click='adduser()' class="font-bold text-3xl text-gray-900 text-sky-600 ">+</span><br> -->
-                <Usuarios />
+                <Usuarios :id="false"/>
 
                 <table class="divide-y divide-gray-300"  width='100%' style=''>
                     <thead class="bg-blue-200">
@@ -77,9 +77,10 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <router-link v-bind:to="{ name: 'editusuarios', params: {id: users.id} }">
+                                <Usuarios :id="users.id" />
+                                <!-- <router-link v-bind:to="{ name: 'editusuarios', params: {id: users.id} }">
                                     <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
-                                </router-link>
+                                </router-link> -->
                             </td>
                             <td class="px-6 py-4">
                                 <a href="#"  @click='deleteuser(users.id, users.user_name), reRender()' class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full">Excluir</a>

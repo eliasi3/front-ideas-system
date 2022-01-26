@@ -3,10 +3,11 @@
 <link rel="stylesheet" href="vue-modal.css">
 
         <div class="col">
-            <span style='float:right;margin-right:10px;font-size:40px;margin-top:-15px;' id='pointmouser' @click="showModal=true" class="font-bold text-3xl text-gray-900 text-sky-600">+</span>  
+            <span style='float:right;margin-right:10px;font-size:40px;margin-top:-15px;' id='pointmouser' @click="showModal=true" class="font-bold text-3xl text-gray-900 text-sky-600" v-if="!id">+</span>  
+            <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" @click="showModal=true" v-if="id">Editar</a>
         </div>
 
-        <FormModal :based-on="showModal" style='width:800px;'  title="CADASTRAR CATEGORIA" @close="showModal = false">
+        <FormModal :based-on="showModal" style='width:800px;'  :title="id==false?'CADASTRAR CATEGORIA':'ATUALIZAR CATEGORIA'" @close="showModal = false">
             <div class="bg-white text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:900px">
                 <div class="md:flex w-full">
                     
@@ -29,8 +30,8 @@
             
                                 <div class="flex -mx-3">
                                     <div class="w-full px-3 mb-5">
-                                        <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="!cat_id">CADASTRAR</button>
-                                        <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="cat_id">ATUALIZAR</button>
+                                        <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="!id">CADASTRAR</button>
+                                        <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="id">ATUALIZAR</button>
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +60,6 @@
         data(){
             return {
                 showModal: false,
-                cat_id: this.$route.params.id,
                 cat: {
                     cat_name: null,
                 },
@@ -72,8 +72,8 @@
         'FormModal': VueModal
          },
         created(){
-            if(this.cat_id){
-                Catid.query({id: this.cat_id}).then(response => {
+            if(this.id){
+                Catid.query({id: this.id}).then(response => {
                 this.cat.cat_name = response.data.cat_name
             
             })
@@ -87,7 +87,7 @@
         },
         methods: {
             cadastrar(){
-                if(!this.cat_id){
+                if(!this.id){
                 if(this.cat.cat_name.length <= 4){
                     alert('Preencha no mínimo 5 caracteres no nome da categoria!');
                 }else{
@@ -103,7 +103,7 @@
                 }
                 }else{
                      if(confirm("Deseja realmente editar esse categoria?")){
-                        Catid.update({id: this.cat_id}, {category: this.cat}).then(response => {
+                        Catid.update({id: this.id}, {category: this.cat}).then(response => {
                         console.log(this.cat_id)
                         location.reload(true);
                         alert('Categoria atualizada com sucesso!')
