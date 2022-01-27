@@ -2,10 +2,11 @@
 <div>
     <link rel="stylesheet" href="vue-modal.css">
  
-            <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" id='pointmouser' @click="showModal=true">+ Adicionar Ideia</a>
+            <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" id='pointmouser' @click="showModal=true" v-if="!id">+ Adicionar Ideia</a>
+            <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" @click="showModal=true" v-if="id">Editar</a> 
      
 
-        <FormModal :based-on="showModal" style='width:800px;'  title="CADASTRAR IDEIA" @close="showModal = false">
+        <FormModal :based-on="showModal" style='width:800px;'   :title="id==false?'CADASTRAR IDEIA':'ATUALIZAR IDEIA'" @close="showModal = false">
 
             <div class="bg-white text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:900px">
                 <div class="md:flex w-full">
@@ -82,6 +83,7 @@
     import Vue from 'vue'
     import store from '../../store';
     import { Missionid } from '../../services/resources';
+    import { Ideid } from '../../services/resources';
 
     Vue.component('FormModal', VueModal)
 
@@ -104,22 +106,29 @@
                 id_user: null,
                 category_id: null,
                 count: null,
-                moedas: null
+                moedas: null,
             }
         },
          components: {
         'FormModal': VueModal
          },
         created(){
+            if(!this.id){
+                Ideid.query({id: this.id}).then(response => {
+                    this.idea_name = response.data.idea_name,
+                    this.idea_description = response.data.idea_description,
+                    this.user_id = response.data.user_id,
+                    this.category_id = response.data.category_id,
+                    this.mission_id = response.data.mission_id
+                })     
+            }
+           
             store.dispatch('load-users');
             store.dispatch('load-categories');
             store.dispatch('load-missions');
             Missionid.query({id: this.idmis}).then(response => {
                this.mission_name = response.data.mis_name
-            // console.log(reponse.data)
-
-            // this.id_livro = response.data.id 
-        })
+            })
         },
         computed: {
             isUser(){
@@ -131,6 +140,9 @@
             isCats(){
                 return  store.state.categories;
             },
+            isMiss(){
+               return  store.state.missions; 
+            }
           
 
         },
@@ -146,7 +158,7 @@
 
             },
             cadastrar(){
-                //console.log(this.idea)
+               if(!this.id){
                 if(this.idea_name.length <= 4){
                     alert('Preencha no mínimo 5 caracteres na ideia!');
                 }else{
@@ -187,7 +199,43 @@
                     })
 
                     this.allimages = []
-                }     
+                }}else{
+                      if(confirm("Deseja realmente editar essa ideia?")){
+                        let formData = new FormData();
+                        var av = document.getElementById('avatar');
+                        // console.log('av', av.files)
+                        for( var i = 0; i < av.files.length; i++ ){
+                            let file = av.files[i];
+                            formData.append('file_' + i, file);
+                        }
+                        this.count = av.files.length;
+                        // console.log('append com stringify= ', JSON.stringify(this.allimages))
+
+                        formData.append('idea_name', this.idea_name);
+                        formData.append('idea_description', this.idea_description);
+                        formData.append('category_id', this.category_id);
+                        formData.append('mission_id', this.idmis);
+                        formData.append('user_id', this.user_id);
+                        formData.append('count', this.count);
+                        formData.append('ies_status', this.ies_status);
+            
+                        for (var i = 0; i < this.allimages.length; i++) {
+                            console.log('a imagem:', i, 'é', this.allimages[i].name);
+                        }
+                        console.log('conteudo do formdata', [...formData])
+                        
+                        Ideid.update({id: this.id}, {idea: formData}).then(response => {
+                            location.reload(true);
+                            alert('Ideia atualizado com sucesso!')
+                        }, response => {    
+                            console.log('DEU ERRADO!')
+                        });
+                        
+                        this.$router.push({name: 'listideas'});
+                        }else{
+
+                     }
+                }   
             }
         }
     }

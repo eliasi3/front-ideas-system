@@ -7,8 +7,7 @@
                     <a href="#" style='float:right;margin-right:10px;font-size:40px; ' id='pointmouser' class="font-bold text-3xl text-gray-900 text-sky-600" >+ </a>
             </router-link>
         </div> 
-        <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;'
-       v-for="(com, i) in isCom" :key="i">
+        <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-bottom:10px;' v-for="(com, i) in isCom" :key="i">
             <table class="border-collapse table-auto w-full text-sm">
                 <tbody class="bg-white bg-gray-800">
                 

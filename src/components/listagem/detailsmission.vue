@@ -17,7 +17,7 @@
         </span></div>
         <div style='background-color:white; border-radius:10px; width:100%;padding:10px;margin-top:10px;'>
             <table class="border-collapse table-auto w-full text-sm">
-            <tbody class="bg-white bg-gray-800">
+                <tbody class="bg-white bg-gray-800">
                 
                     <tr class='bg-blue-100'>
                         
@@ -63,7 +63,7 @@
                         </td>
                     </tr>
                 
-            </tbody>
+                </tbody>
             </table>
         </div>
         <br>
@@ -102,9 +102,10 @@
                     </tr>
                     <tr>
                         <td class="border-b border-gray-100 dark:border-gray-700 p-4 pl-8 text-gray-500 dark:text-gray-400" colspan='2' style='text-align:right;width:85%;'>
-                            <router-link v-bind:to="{ name: 'editarideia', params: {id: ideas.id} }">
+                           <Ideias :id="ideas.id"/> 
+                            <!-- <router-link v-bind:to="{ name: 'editarideia', params: {id: ideas.id} }">
                                 <a href="#" v-if='editar' class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Editar</a>
-                            </router-link>
+                            </router-link> -->
                             <a href="#" class="px-4 py-1 text-sm text-red-400 bg-red-200 rounded-full" v-if='excluir' @click='deleteidea(ideas.id,ideas.idea_name)'>Excluir</a>
                 
                         </td>

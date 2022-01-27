@@ -66,7 +66,7 @@
                                     <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >+ Adicionar Ideia</a>
                                 </router-link> -->
                             
-                                <Ideias :id="missions.user.id" :idmis="missions.id" style='float:right;' />
+                                <Ideias :id="false" :idmis="missions.id" style='float:right;' />
                                 
                                 <router-link v-bind:to="{ name: 'detalhesmiss', params: {id: missions.id} }" style='float:right;'>
                                     <a href="#" class="px-4 py-1 text-sm text-blue-600 bg-blue-200 rounded-full" >Ver detalhes</a>
