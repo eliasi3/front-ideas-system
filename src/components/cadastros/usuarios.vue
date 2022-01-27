@@ -12,69 +12,58 @@
                 <div class="md:flex w-full">
                     
                     <div class="w-full md:w-1/1 py-10 px-5 md:px-10">
-                        <!-- <div class="text-center mb-100">
-                            <h1 class="font-bold text-3xl text-gray-900 text-sky-600">CADASTRAR USUÁRIO</h1>
-                            <br><br>
-                        </div> -->
                         <form  @submit.prevent="cadastrar()" method="POST">
                             <div>
-                                <div class="text-center">
-                                    <div class="w-full px-3 mb-5 text-left">
-                                    <table class="w-full">
+                                <div class="md:flex items-center mt-12">
+                                    <div class="w-full md:w-1/2 flex flex-col">
+                                        <label class="font-semibold leading-none">USUÁRIO</label>
+                                        <input type="text" v-model="user.username" class="leading-none text-gray-900 p-3 focus:outline-none focus:border-blue-700 mt-4 bg-gray-100 border rounded border-gray-200" />
+                                    </div>
+                                    <div class="w-full md:w-1/2 flex flex-col md:ml-6 md:mt-0 mt-4">
+                                        <label class="font-semibold leading-none">NOME</label>
+                                        <input type="text" v-model="user.user_name" class="leading-none text-gray-900 p-3 focus:outline-none focus:border-blue-700 mt-4 bg-gray-100 border rounded border-gray-200"/>
+                                    </div>
+                                </div>
+                                <div class="md:flex items-center mt-12">
+                                    <div class="w-full md:w-1/2 flex flex-col">
+                                        <label class="font-semibold leading-none">E-MAIL</label>
+                                        <input type="text" v-model="user.email" class="leading-none text-gray-900 p-3 focus:outline-none focus:border-blue-700 mt-4 bg-gray-100 border rounded border-gray-200" />
+                                    </div>
+                                    <div class="w-full md:w-1/2 flex flex-col md:ml-6 md:mt-0 mt-4" v-if="!id">
+                                        <label class="font-semibold leading-none">SENHA</label>
+                                        <input v-model="user.password" required='' type="password" class="leading-none text-gray-900 p-3 focus:outline-none focus:border-blue-700 mt-4 bg-gray-100 border rounded border-gray-200"/>
+                                    </div>
+                                </div>
+                                <div class="md:flex items-center mt-12">
+                                    <div class="w-full md:w-1/2 flex flex-col">
+                                        <label class="font-semibold leading-none">TELEFONE</label>
+                                        <input type="text" v-model="user.user_phone" class="leading-none text-gray-900 p-3 focus:outline-none focus:border-blue-700 mt-4 bg-gray-100 border rounded border-gray-200" />
+                                    </div>
+                                    <div class="w-full md:w-1/2 flex flex-col md:ml-6 md:mt-0 mt-4">
+                                        <table>
                                             <tr>
-                                                <td>                 
-                                                    <label for="" class="text-xs font-semibold px-3">USUÁRIO</label>
-                                                    <div class="text-center flex items-center border-b border-gray-500 py-2" style=''>
-                                                    <input v-model="user.username" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Username do Usuário" >
-                                                    </div><br>
-                                                </td>
-                                                <td  style="padding-left: 10px;">
-                                                    <label for="" class="text-xs font-semibold px-3">NOME</label>
-                                                    <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                                    <input v-model="user.user_name" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome e Sobrenome do Usuário" >
-                                                    </div><br>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>                
-                                                    <label for="" class="text-xs font-semibold px-3">E-MAIL</label>
-                                                    <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                                    <input v-model="user.email" type="email" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="E-mail do usuário" >
-                                                    </div><br>
-                                                </td>
-                                                <td style="padding-left: 10px;" v-if="!id">
-                                                    <label for="" class="text-xs font-semibold px-3">SENHA</label>
-                                                    <div class="text-center items-center border-b border-gray-500 py-2">
-                                                    <input v-model="user.password" required='' type="password" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Digite a Senha" >
-                                                    </div><br>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label for="" class="text-xs font-semibold px-3">TELEFONE</label>
-                                                    <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                                    <input v-model="user.user_phone" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Telefone do usuário" >
-                                                    </div><br>
-                                                </td>
                                                 <td style="padding-left: 10px;">
                                                     <input style='margin-left:30px;' type="checkbox" id="scales"  @change="formatCheckAtivo(ies_ativo)" name="scales" value='1' checked>
-                                                        <label for="scales">Ativo {{user.ies_ativo}}</label><br>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-
-                                                    <label for="" class="text-xs font-semibold px-3">DEPARTAMENTO</label>
-                                                    <div class="text-center flex items-center border border-gray-500 py-2" >
-                                                    <select v-model="user.dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
-                                                    <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
-                                                    </select>    
-                                                    </div><br>
+                                                    <label for="scales">Ativo {{user.ies_ativo}}</label><br>
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
+                                <br>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <label for="" class="font-semibold leading-none">DEPARTAMENTO</label>
+                                            <div class="leading-none text-gray-900 p-3 focus:outline-none focus:border-blue-700 mt-4 bg-gray-100 border rounded border-gray-200">
+                                                <select v-model="user.dept_id" required='' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+                                                    <option value="">Selecione Departamento</option>
+                                                    <option v-for="depto in isDept" :key='depto.id' :value='depto.id'>{{depto.dep_name}}</option>
+                                                </select>    
+                                            </div><br>
+                                        </td>
+                                    </tr>
+                                </table>
             
                                 <div class="flex -mx-3"  v-if="!id">
                                     <div class="w-full px-3 mb-5">

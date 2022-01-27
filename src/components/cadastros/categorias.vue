@@ -17,17 +17,15 @@
                                 <h1 class="font-bold text-3xl text-gray-900 text-sky-600" v-if="cat_id">ATUALIZAR CATEGORIA</h1>
                                 <br>
                             </div> -->
-                            <form  @submit.prevent="cadastrar()" method="POST">
+                        <form  @submit.prevent="cadastrar()" method="POST">
                             <div>
-                                <div class="text-center">
-                                    <div class="w-full px-3 mb-5 text-left"> 
-                                        <label for="" class="text-xs font-semibold px-3">NOME</label>
-                                            <div class="text-center flex items-center border-b border-gray-500 py-2" style=''>
-                                                <input v-model="cat.cat_name" type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Digite o nome da categoria" >
-                                            </div><br>
+                                <div class="md:flex items-center mt-12">
+                                    <div class="w-full md:w-1/2 flex flex-col">
+                                        <label class="font-semibold leading-none">Nome</label>
+                                        <input type="text" v-model="cat.cat_name" class="leading-none text-gray-900 p-3 focus:outline-none focus:border-blue-700 mt-4 bg-gray-100 border rounded border-gray-200" />
                                     </div>
                                 </div>
-            
+                                <br>           
                                 <div class="flex -mx-3">
                                     <div class="w-full px-3 mb-5">
                                         <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="!id">CADASTRAR</button>
@@ -35,10 +33,10 @@
                                     </div>
                                 </div>
                             </div>
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
+            </div>
         </FormModal>
     </div>
 </template>

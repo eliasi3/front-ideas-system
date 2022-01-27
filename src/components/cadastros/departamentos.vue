@@ -9,6 +9,7 @@
 
         <FormModal :based-on="showModal" style='width:600px;'  :title="id==false?'CADASTRAR DEPARTAMENTO':'ATUALIZAR DEPARTAMENTO'" @close="showModal = false">
             <div class="bg-white text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:900px">
+
                 <div class="md:flex w-full">
                     
                     <div class="w-full md:w-1/1 py-10 px-5 md:px-10">
@@ -18,23 +19,21 @@
                             <br>
                         </div> -->
                         <form  @submit.prevent="cadastrar()" method="POST">
-                        <div>
-                            <div class="text-center">
-                                <div class="w-full px-3 mb-5 text-left">
-                                    <label for="" class="text-xs font-semibold px-3">NOME</label>
-                                    <div class="text-center flex items-center border-b border-gray-500 py-2">
-                                        <input  v-model="dep.dep_name" type="text"  class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="Nome do departamento" >
+                            <div>
+                                <div class="md:flex items-center mt-12">
+                                    <div class="w-full md:w-1/2 flex flex-col">
+                                        <label class="font-semibold leading-none">Nome</label>
+                                        <input type="text"  v-model="dep.dep_name" class="leading-none text-gray-900 p-3 focus:outline-none focus:border-blue-700 mt-4 bg-gray-100 border rounded border-gray-200" />
                                     </div>
                                 </div>
-                            </div><br>
-        
-                            <div class="flex -mx-3">
-                                <div class="w-full px-3 mb-5">
-                                    <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="!id" >CADASTRAR</button>
-                                    <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="id">ATUALIZAR</button>
+                                <br>
+                                <div class="flex -mx-3">
+                                    <div class="w-full px-3 mb-5">
+                                        <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="!id" >CADASTRAR</button>
+                                        <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold" v-if="id">ATUALIZAR</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </form>
                     </div>
                 </div>
